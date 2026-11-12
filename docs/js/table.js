@@ -3,13 +3,12 @@ import { cardHTML } from './cards.js';
 import { newGame as createGame, clearSession } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
-import { record, settings } from './store.js';
+import { record, settings, calm } from './store.js';
 import { sfx } from './sfx.js';
 import { createLog } from './log.js';
 
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const MOVING = '.center [data-id], .staged [data-id], .hand [data-id]';
-const still = matchMedia('(prefers-reduced-motion: reduce)');
 
 export function startTable(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
@@ -49,7 +48,7 @@ export function startTable(root, def, opts, onExit, resume) {
   function render() {
     if (!alive) return;
     const prev = new Map();
-    if (!still.matches) root.querySelectorAll(MOVING).forEach(el => prev.set(el.dataset.id, { r: el.getBoundingClientRect(), html: el.outerHTML }));
+    if (!calm()) root.querySelectorAll(MOVING).forEach(el => prev.set(el.dataset.id, { r: el.getBoundingClientRect(), html: el.outerHTML }));
 
     const v = g.view(), N = names(), st = v.staged;
     const playing = g.phase === 'play' && !g.pending;
@@ -91,7 +90,7 @@ export function startTable(root, def, opts, onExit, resume) {
     const myTable = me.up ? `<div class="tcards mine" title="${t('play.tableCards')}">` +
       me.up.map(c => btn(c, (v.source === 'up' || v.swap) && usable(c.id))).join('') +
       Array.from({ length: me.down }, (_, k) => cardHTML(null, {
-        tag: 'button', disabled: !(v.source === 'down' && myTurn), cls: hintId === 'down-' + k ? 'hinted' : '', attrs: ` data-id="down-${k}"`
+        tag: 'button', label: t('play.faceDown'), disabled: !(v.source === 'down' && myTurn), cls: hintId === 'down-' + k ? 'hinted' : '', attrs: ` data-id="down-${k}"`
       })).join('') + '</div>' : '';
     const lastBtn = g.kind === 'trick' || g.kind === 'fishing'
       ? `<button type="button" class="icon hint" data-last title="${t('play.last')}" aria-label="${t('play.last')}"${last ? '' : ' disabled'}><svg><use href="#i-last"/></svg></button>` : '';
@@ -111,12 +110,12 @@ export function startTable(root, def, opts, onExit, resume) {
 
     if (!chooser && myTurn && v.ask) {                   // a question from the engine (auction, choice of suit)
       overlay = `<div class="chooser"><div class="chooser-box"><h3>${t(v.ask.title)}</h3><div class="asks">` +
-        v.ask.options.map(o => `<button type="button" class="opt" data-choice="${o.id}">` +
+        v.ask.options.map(o => `<button type="button" class="opt${hintId === 'c:' + o.id ? ' hinted' : ''}" data-choice="${o.id}">` +
           (o.card ? cardHTML(o.card, { label: label(o.card) }) : o.suit ? `${suitIcon(o.suit)}<span>${t('suit.' + o.suit)}</span>` : `<span>${t(o.text)}</span>`) + '</button>').join('') +
         '</div></div></div>';
     }
 
-    const status = msg ? msg() : myTurn ? t('play.yourTurn') : playing ? t('play.turnOf', { name: N[g.current] }) : '';
+    const status = msg ? msg() : myTurn ? t(opts.coach ? 'learn.coach' : 'play.yourTurn') : playing ? t('play.turnOf', { name: N[g.current] }) : '';
     const size = me.hand.length > 10 ? ' many huge' : me.hand.length > 5 ? ' many' : '';
     root.innerHTML =
       `<div class="table"><div class="opps n${g.n - 1}">${opps}</div>` +
@@ -131,7 +130,7 @@ export function startTable(root, def, opts, onExit, resume) {
   function animate(prev) {
     const seat = freshSeat, dest = flyTo;
     freshSeat = null; flyTo = null;
-    if (still.matches) return;
+    if (calm()) return;
     const dur = 280 * settings.speed, ease = 'cubic-bezier(.2,.8,.2,1)';
     const mid = r => ({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
     const box = sel => root.querySelector(sel)?.getBoundingClientRect();
@@ -187,7 +186,7 @@ export function startTable(root, def, opts, onExit, resume) {
     if (!pick || chooser) return;
     if (e.target.closest('[data-hint]')) {
       const h = g.hint();
-      hintId = h.id || (h.opt && h.opt.pickup ? 'pickup' : h.opt && h.opt.ready ? 'ready' : null);
+      showHint(h);
       render(); return;
     }
     const ch = e.target.closest('[data-choice]');
@@ -204,6 +203,10 @@ export function startTable(root, def, opts, onExit, resume) {
   }, { signal: ctl.signal });
 
   const humanMove = () => new Promise(res => { pick = res; });
+  const showHint = h => {
+    const o = h.opt || {};
+    hintId = h.id || (o.pickup ? 'pickup' : o.ready ? 'ready' : o.choice != null ? 'c:' + o.choice : null);
+  };
 
   async function showSummary() {
     const s = g.summary, TN = s.players ? names() : teamNames(), sign = v => (v > 0 ? '+' + v : v);
@@ -224,7 +227,7 @@ export function startTable(root, def, opts, onExit, resume) {
 
   async function finish() {
     const r = g.result(), TN = r.players ? names() : teamNames();
-    record(def.id, r); clearSession();
+    if (!opts.coach) record(def.id, r, opts); clearSession();
     sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
     const note = g.kind === 'shedding' ? `<p>${t('end.cardsLeft')}</p>` : '';
     const body = note + '<ul class="final">' + r.scores.map((sc, k) =>
@@ -246,6 +249,8 @@ export function startTable(root, def, opts, onExit, resume) {
     const mine = g;
     while (alive && g === mine) {
       if (g.round && g.round !== seenRound && g.phase === 'play') { seenRound = g.round; log.head(t('round.title', { n: g.round })); }
+      // practice game: the suggested move is always shown
+      if (opts.coach && hintId == null && g.phase === 'play' && !g.pending && g.current === 0 && !g.announce) showHint(g.hint());
       render();
       if (g.announce) {                      // e.g. Tressette declarations at the start of a deal
         const a = g.announce; g.announce = null;

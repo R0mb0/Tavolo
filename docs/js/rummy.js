@@ -27,6 +27,7 @@ export function startRummy(root, def, opts, onExit, resume) {
 
   function render() {
     if (!alive) return;
+    if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
     const v = g.view(), N = names(), me = v.players[0], myTurn = mine(), B = g.kind === 'burraco', myTeam = g.teamOf(0);
     const canPlay = myTurn && v.step === 'play';
 
@@ -94,7 +95,7 @@ export function startRummy(root, def, opts, onExit, resume) {
 
   async function finish() {
     const r = g.result(), B = g.kind === 'burraco', N = B ? teamNames() : names();
-    record(def.id, r); clearSession();
+    if (!opts.coach) record(def.id, r, opts); clearSession();
     sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
     const body = (B ? '' : `<p>${t('rum.lowWins')}</p>`) + '<ul class="final">' + r.scores.map((sc, k) => `<li class="${k === g.teamOf(0) ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });

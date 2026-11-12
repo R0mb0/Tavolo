@@ -23,6 +23,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
 
   function render() {
     if (!alive) return;
+    if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
     const v = g.view(), N = names(), me = v.players[0], myTurn = mine();
     const cls = c => (sel.has(c.id) ? 'sel ' : '') + (hint && hint.ids && hint.ids.includes(c.id) ? 'hinted' : '');
     const btn = c => cardHTML(c, { tag: 'button', label: label(c), disabled: !myTurn, cls: cls(c) });
@@ -65,7 +66,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
 
   async function finish() {
     const r = g.result(), N = names();
-    record(def.id, r); clearSession();
+    if (!opts.coach) record(def.id, r, opts); clearSession();
     sfx(r.outcome === 'win' ? 'win' : 'lose');
     const body = `<p>${t('end.cardsLeft')}</p><ul class="final">` + r.scores.map((sc, k) => `<li class="${k === 0 ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });

@@ -29,6 +29,7 @@ export function startBanking(root, def, opts, onExit, resume) {
 
   function render() {
     if (!alive) return;
+    if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
     const v = g.view(), N = names(), myTurn = mine();
     const cards = (cs, hidden) => cs.map((c, k) => (hidden && k === 0 ? cardHTML(null) : cardHTML(c, { label: label(c) }))).join('');
     const outcome = p => (p.delta ? `<span class="badge ${p.delta > 0 ? 'gold' : 'lost'}">${p.delta > 0 ? '+' : ''}${p.delta}</span>` : p.state === 'bust' ? `<span class="badge lost">${t('sm.bust')}</span>` : '');
@@ -62,7 +63,7 @@ export function startBanking(root, def, opts, onExit, resume) {
 
   async function finish() {
     const r = g.result(), N = names();
-    record(def.id, r); clearSession();
+    if (!opts.coach) record(def.id, r, opts); clearSession();
     sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
     const body = '<ul class="final">' + r.scores.map((sc, k) => `<li class="${k === 0 ? 'mine' : ''}"><span>${N[k]}</span><b>● ${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });

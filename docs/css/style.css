@@ -2,7 +2,7 @@
 :root {
   --bg: #f2efe6; --ink: #1d2a24; --muted: #5d6b63; --surface: #fffdf8; --line: #d9d4c5;
   --accent: #1f6f4f; --accent-ink: #fff; --gold: #a8740f; --danger: #b3261e;
-  --felt1: #2f8a63; --felt2: #1c5d43; --felt-ink: #f3f7f1;
+  --felt1: #267654; --felt2: #1c5d43; --felt-ink: #f3f7f1; --gold-ink: #7d5400;
   --card: #fffdf7; --card-ink: #22302a; --card-line: #cfc9b8; --back1: #8c2f39; --back2: #6c2029;
   --c-denari: #bf8500; --c-coppe: #c0392b; --c-spade: #2563a8; --c-bastoni: #2e7d32;
   --c-hearts: #c0392b; --c-diamonds: #c0392b; --c-spades: #1b1f23; --c-clubs: #1b1f23;
@@ -12,7 +12,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #0c1714; --ink: #ecebe3; --muted: #9aa89f; --surface: #15231f; --line: #2a3c33;
-  --accent: #58c193; --accent-ink: #06261a; --gold: #e3b04b; --danger: #ff8a80;
+  --accent: #58c193; --accent-ink: #06261a; --gold: #e3b04b; --gold-ink: #e3b04b; --danger: #ff8a80;
   --felt1: #1f5f46; --felt2: #0f3526;
   --card: #f4f1e6; --back1: #7a2831; --back2: #561920;
   --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 8px 22px rgb(0 0 0 / .35);
@@ -212,7 +212,7 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .badges { display: flex; flex-wrap: wrap; gap: .3rem; }
 .badge { display: inline-flex; align-items: center; gap: .25rem; padding: .05rem .45rem; border-radius: 99rem; font-size: .8rem; font-variant-numeric: tabular-nums; background: color-mix(in srgb, var(--ink) 9%, transparent); }
 .badge.strong { font-weight: 700; }
-.badge.gold { color: var(--gold); font-weight: 700; }
+.badge.gold { color: var(--gold-ink); font-weight: 700; }
 .badge .ic { width: .85rem; height: .85rem; }
 .piletop { --cw: 2.3rem; }
 
@@ -227,7 +227,7 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .count { position: absolute; inset: 0; display: grid; place-items: center; font-weight: 800; color: #fff; text-shadow: 0 1px 3px #000; font-size: 1.1rem; }
 .trump, .trump-suit, .slot { display: flex; flex-direction: column; align-items: center; gap: .2rem; }
 .trump-suit .si { width: 2.2rem; height: 2.2rem; padding: .35rem; border-radius: 50%; background: var(--card); box-sizing: content-box; }
-.owner { font-size: .72rem; font-weight: 600; opacity: .9; white-space: nowrap; max-width: 6.5rem; overflow: hidden; text-overflow: ellipsis; }
+.owner { font-size: .72rem; font-weight: 600; white-space: nowrap; max-width: 6.5rem; overflow: hidden; text-overflow: ellipsis; }
 .mid { flex: 1; display: flex; align-items: center; justify-content: center; gap: .9rem; min-width: 0; }
 .center { display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: .5rem; min-width: 0; }
 .slot.hl .card { outline: .22em dashed var(--gold); outline-offset: .12em; transform: translateY(-.35em); }
@@ -282,6 +282,7 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .badge.big { font-size: 1.15rem; padding: .1rem .7rem; }
 .badge.lost { color: var(--danger); font-weight: 700; }
 .bseat .badge.lost { color: #ffb4ab; }
+.bseat .badge.gold { color: #ffe0a0; }
 .rum-bar.center { justify-content: center; }
 
 /* ---------- rummy ---------- */
@@ -300,7 +301,7 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .meld.burraco { background: color-mix(in srgb, var(--gold) 35%, transparent); }
 .mgroup { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .7rem; padding-bottom: .5rem; border-bottom: 1px dashed rgb(255 255 255 / .25); }
 .mgroup:last-child { border-bottom: 0; }
-.mlabel { flex: 1 1 100%; font-size: .75rem; font-weight: 700; opacity: .85; }
+.mlabel { flex: 1 1 100%; font-size: .75rem; font-weight: 700; }
 .mgrp { align-items: center; }
 .mach button.card { touch-action: none; }
 .dragrow { display: flex; }
@@ -393,3 +394,34 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .opp.gone { opacity: .55; }
 .sum.byp th small { display: block; font-weight: 400; }
 .sum.byp .me-row th { color: var(--accent); }
+
+/* v1.0: tutorial, richer statistics, accessibility */
+.skip { position: absolute; left: .5rem; top: -4rem; z-index: 50; padding: .6rem 1rem; border-radius: .6rem; border: 0; background: var(--accent); color: var(--accent-ink); font: inherit; font-weight: 700; }
+.skip:focus { top: .5rem; }
+#app:focus { outline: none; }
+:root[data-still="1"] *, :root[data-still="1"] *::before, :root[data-still="1"] *::after { animation: none !important; transition: none !important; }
+.btn-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .8rem; }
+.btn-row .btn { margin-top: 0; }
+.learn .meter { margin: .2rem 0 1rem; }
+.learn-step { min-height: 11rem; }
+.learn-step h2 { margin-top: 0; }
+.learn-step .big, .learn-step li { font-size: 1.08rem; line-height: 1.55; }
+.learn-nav { display: flex; align-items: center; gap: .6rem; margin-top: 1rem; }
+.learn-nav .btn { margin-top: 0; }
+.bydiff { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin-top: .7rem; }
+.chart { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: .25rem; align-items: end; margin: .4rem 0 .6rem; }
+.chart .bar { min-width: 0; display: grid; gap: .2rem; justify-items: center; font-size: .72rem; color: var(--muted); }
+.chart .cbar { height: 6rem; width: 100%; display: flex; align-items: flex-end; border-bottom: 1px solid var(--line); }
+.chart .cbar i { display: flex; align-items: flex-end; width: 100%; min-height: 3px; border-radius: .25rem .25rem 0 0; background: color-mix(in srgb, var(--ink) 28%, transparent); overflow: hidden; }
+.chart .cbar b { display: block; width: 100%; background: var(--accent); }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.legend i { width: .8em; height: .8em; border-radius: .2em; display: inline-block; margin-left: .6rem; }
+.legend i:first-child { margin-left: 0; }
+.legend .k1 { background: color-mix(in srgb, var(--ink) 28%, transparent); }
+.legend .k2 { background: var(--accent); }
+/* narrow screens: the player's badges and tools sit above the hand, so three large cards always fit */
+.table { grid-template-columns: minmax(0, 1fr); }
+@media (max-width: 30rem) {
+  .me { flex-direction: column; align-items: center; gap: .4rem; }
+  .me-info { flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; }
+}

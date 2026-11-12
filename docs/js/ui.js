@@ -9,6 +9,7 @@ export function dialog({ title, body = '', actions = [], onReady }) {
   return new Promise(resolve => {
     const d = document.createElement('dialog');
     d.className = 'dlg';
+    d.setAttribute('aria-label', String(title).replace(/<[^>]*>/g, ''));
     d.innerHTML = `<h2>${title}</h2><div class="dlg-body">${body}</div><div class="dlg-actions">` +
       actions.map((a, i) => `<button type="button" class="btn${a.primary ? ' primary' : ''}" data-act="${i}">${a.label}</button>`).join('') + '</div>';
     document.body.appendChild(d);

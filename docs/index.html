@@ -31,6 +31,7 @@
   <symbol id="i-pile" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="3" width="11" height="15" rx="2"/><path d="M9 21.500h8.500a2 2 0 0 0 2-2V8"/></g></symbol>
 </svg>
 
+<button type="button" class="skip" id="btn-skip" data-i18n-text="nav.skip">Skip to content</button>
 <header class="bar">
   <button type="button" class="icon" id="btn-back" data-i18n="nav.back" hidden><svg><use href="#i-back"/></svg></button>
   <button type="button" class="brand" id="btn-home" data-i18n="nav.home">Tavolo</button>
@@ -41,7 +42,7 @@
   <button type="button" class="icon" id="btn-full" data-i18n="nav.fullscreen"><svg><use href="#i-full"/></svg></button>
   <button type="button" class="icon" id="btn-settings" data-i18n="nav.settings"><svg><use href="#i-set"/></svg></button>
 </header>
-<main id="app"></main>
+<main id="app" tabindex="-1"></main>
 <noscript>Tavolo needs JavaScript to deal the cards.</noscript>
 <script type="module" src="js/app.js"></script>
 </body>

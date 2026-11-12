@@ -3,11 +3,13 @@ import { t, gt } from './i18n.js';
 import { cardHTML, DECKS } from './cards.js';
 import { esc } from './ui.js';
 
-export function manualHTML(def) {
+/** The guide as a list of sections: { key, title, body }. */
+export function manualParts(def) {
+  const parts = [];
   const deck = def.deck, R = def.rules, S = def.scoring || {}, kind = def.engine;
   const card = (id, cls = '') => { const [r, s] = id.split('-'); return cardHTML({ id, r: +r, s, deck }, { cls }); };
   const list = a => `<ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
-  const sec = (title, body) => `<section class="man-sec"><h2>${title}</h2>${body}</section>`;
+  const sec = (title, body) => { parts.push({ title, body }); return ''; };
   const fig = (id, cap) => `<figure>${card(id)}<figcaption>${cap}</figcaption></figure>`;
   const suit = DECKS[deck].suits[0];
   const div = R.scoreDivisor || 1;
@@ -54,5 +56,8 @@ export function manualHTML(def) {
   if (kind !== 'patience') ctl.splice(-2, 0, 'man.c.log');
   ctl.push('man.c.resume');
   out += sec(t('man.controls'), list(ctl.map(k => t(k))));
-  return `<div class="manual">${out}</div>`;
+  return parts;
 }
+
+export const manualHTML = def =>
+  `<div class="manual">${manualParts(def).map(p => `<section class="man-sec"><h2>${p.title}</h2>${p.body}</section>`).join('')}</div>`;

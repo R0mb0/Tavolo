@@ -38,7 +38,7 @@ export function cardHTML(card, opts = {}) {
   const tag = opts.tag || 'div';
   const cls = opts.cls ? ' ' + opts.cls : '';
   if (!card) return tag === 'button'
-    ? `<button type="button" class="card back${cls}"${opts.disabled ? ' disabled' : ''} aria-label="?"${opts.attrs || ''}></button>`
+    ? `<button type="button" class="card back${cls}"${opts.disabled ? ' disabled' : ''} aria-label="${opts.label || '?'}"${opts.attrs || ''}></button>`
     : `<${tag} class="card back${cls}" aria-hidden="true"></${tag}>`;
   let idx, mid;
   if (card.r === 0) {                                   // joker

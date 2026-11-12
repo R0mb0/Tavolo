@@ -4,12 +4,11 @@ import { cardHTML, suitHTML } from './cards.js';
 import { newGame as createGame, clearSession } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
-import { record, settings } from './store.js';
+import { record, settings, calm } from './store.js';
 import { sfx } from './sfx.js';
 
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const NAMED_RANKS = [1, 8, 9, 10];
-const still = matchMedia('(prefers-reduced-motion: reduce)');
 
 export function startSolitaire(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
@@ -21,8 +20,9 @@ export function startSolitaire(root, def, opts, onExit, resume) {
 
   function render() {
     if (!alive) return;
+    if (opts.coach && !hint) hint = g.hint();              // practice game: the suggested move is always shown
     const prev = new Map();
-    if (!still.matches && !noFlip) root.querySelectorAll('.sol [data-id]').forEach(el => prev.set(el.dataset.id, el.getBoundingClientRect()));
+    if (!calm() && !noFlip) root.querySelectorAll('.sol [data-id]').forEach(el => prev.set(el.dataset.id, el.getBoundingClientRect()));
     const v = g.view();
     const up = (c, loc) => cardHTML(c, {
       tag: 'button', label: label(c),
@@ -46,7 +46,7 @@ export function startSolitaire(root, def, opts, onExit, resume) {
       `<button type="button" class="btn" data-do="new">${t('sol.new')}</button></div></div>`;
     nope = null;
 
-    if (still.matches || noFlip) { noFlip = false; return; }
+    if (calm() || noFlip) { noFlip = false; return; }
     const from = root.querySelector('.stock')?.getBoundingClientRect();
     root.querySelectorAll('.sol [data-id]').forEach(el => {
       const r = el.getBoundingClientRect(), old = prev.get(el.dataset.id) || (prev.size && el.closest('.waste') ? from : null);
@@ -59,7 +59,7 @@ export function startSolitaire(root, def, opts, onExit, resume) {
 
   async function win() {
     const r = g.result();
-    record(def.id, r); clearSession();
+    if (!opts.coach) record(def.id, r, opts); clearSession();
     sfx('win');
     const val = await dialog({
       title: t('end.win'), body: `<p>${t('end.moves', { n: g.moves })}</p>`,

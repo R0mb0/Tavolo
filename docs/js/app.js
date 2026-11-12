@@ -1,6 +1,6 @@
 // App shell: routing (deck -> game -> setup -> table), settings, statistics, PWA glue.
-import { setLang, t, gt, LANGS } from './i18n.js';
-import { settings, saveSettings, getStats, resetStats } from './store.js';
+import { setLang, getLang, t, gt, LANGS } from './i18n.js';
+import { settings, saveSettings, getStats, resetStats, getHistory, exportData, importData } from './store.js';
 import { cardHTML } from './cards.js';
 import { startTable } from './table.js';
 import { startSolitaire } from './solitaire.js';
@@ -10,11 +10,12 @@ import { startBanking } from './banking.js';
 import { dialog, esc } from './ui.js';
 import { loadSession, clearSession } from './session.js';
 import { manualHTML } from './manual.js';
+import { learnHTML } from './learn.js';
 
 const $ = s => document.querySelector(s);
 const app = $('#app');
 const dark = matchMedia('(prefers-color-scheme: dark)');
-let catalog = null, defs = {}, active = null, installEvt = null, fresh = false;
+let catalog = null, defs = {}, active = null, installEvt = null, fresh = false, coach = false;
 
 // ---------- settings ----------
 function applySettings() {
@@ -22,6 +23,7 @@ function applySettings() {
   const theme = settings.theme === 'auto' ? (dark.matches ? 'dark' : 'light') : settings.theme;
   root.dataset.theme = theme;
   root.dataset.cb = settings.cb ? '1' : '0';
+  root.dataset.still = settings.still ? '1' : '0';
   root.style.setProperty('--zoom', settings.zoom);
   $('meta[name=theme-color]').content = theme === 'dark' ? '#0c1714' : '#1f6f4f';
 }
@@ -32,6 +34,7 @@ function chrome() {
     const s = t(el.dataset.i18n);
     el.setAttribute('aria-label', s); el.title = s;
   }
+  for (const el of document.querySelectorAll('[data-i18n-text]')) el.textContent = t(el.dataset.i18nText);
   $('#btn-install').hidden = !installEvt;
   $('#btn-full').hidden = !document.documentElement.requestFullscreen;
 }
@@ -46,6 +49,7 @@ function openSettings() {
     `<div class="field"><span>${t('set.zoom')}</span>${seg('zoom', [[1, '100%'], [1.15, '115%'], [1.3, '130%'], [1.5, '150%']], settings.zoom)}</div>` +
     `<div class="field"><span>${t('set.speed')}</span>${seg('speed', [[1.6, t('speed.slow')], [1, t('speed.normal')], [0.5, t('speed.fast')]], settings.speed)}</div>` +
     `<label class="field row"><span>${t('set.colorblind')}</span><input type="checkbox" id="set-cb"${settings.cb ? ' checked' : ''}></label>` +
+    `<label class="field row"><span>${t('set.still')}</span><input type="checkbox" id="set-still"${settings.still ? ' checked' : ''}></label>` +
     `<label class="field row"><span>${t('set.sound')}</span><input type="checkbox" id="set-sound"${settings.sound ? ' checked' : ''}></label>`;
   dialog({
     title: t('nav.settings'), body: body(), actions: [{ label: t('set.close'), val: 1, primary: true }],
@@ -62,6 +66,7 @@ function openSettings() {
       d.addEventListener('change', e => {
         if (e.target.id === 'set-lang') { settings.lang = e.target.value; refresh(true); }
         if (e.target.id === 'set-cb') { settings.cb = e.target.checked; refresh(); }
+        if (e.target.id === 'set-still') { settings.still = e.target.checked; refresh(); }
         if (e.target.id === 'set-sound') { settings.sound = e.target.checked; saveSettings(); }
       });
       d.addEventListener('click', e => {
@@ -135,7 +140,7 @@ function screenSetup(id) {
     def.matchWins.map(k => `<button type="button" data-wins="${k}" aria-pressed="${k === o.wins}">${k}</button>`).join('') + '</div></div>' : '') + `<div>${lvl ? `<small>${t('sol.draw', { n: lvl.draw })} · ${t('sol.passes', { n: lvl.passes < 0 ? '∞' : lvl.passes })}</small>` : ''}</div>` + (saved ? `<a class="btn primary big" href="#/play/${id}">${t('resume.go')}</a><a class="btn big second" href="#/play/${id}" data-fresh>${t('resume.new')}</a>`
       : `<a class="btn primary big" href="#/play/${id}" data-fresh>${t('setup.start')}</a>`) + `</div>` +
     `<details class="rules" open><summary>${t('setup.rules')}</summary><ul>${gt(def, 'rules').map(r => `<li>${esc(r)}</li>`).join('')}</ul>` +
-    `<a class="btn" href="#/help/${id}">${t('setup.manual')}</a></details></section>`;
+    `<div class="btn-row"><a class="btn" href="#/learn/${id}">${t('setup.learn')}</a><a class="btn" href="#/help/${id}">${t('setup.manual')}</a></div></details></section>`;
 }
 
 function screenHelp(id) {
@@ -147,19 +152,33 @@ function screenHelp(id) {
 
 function screenStats() {
   const st = getStats(), ids = Object.keys(st).filter(k => defs[k]);
-  if (!ids.length) return `<section class="screen narrow"><h1>${t('nav.stats')}</h1><p class="lead">${t('stats.empty')}</p><p class="note">${t('stats.note')}</p></section>`;
+  const io = `<input type="file" id="import-file" accept="application/json,.json" hidden>`;
+  if (!ids.length) return `<section class="screen narrow"><h1>${t('nav.stats')}</h1><p class="lead">${t('stats.empty')}</p><p class="note">${t('stats.note')}</p>` +
+    `<div class="btn-row"><button type="button" class="btn" id="import-stats">${t('stats.import')}</button></div>${io}</section>`;
   const cell = (v, l) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`;
   const block = (title, s, extra = '') => {
     const rate = s.played ? Math.round(100 * s.won / s.played) : 0;
+    const by = ['easy', 'medium', 'hard'].filter(d => s.diff && s.diff[d]).map(d => `<span class="pill ghost">${t('diff.' + d)} ${s.diff[d].won} / ${s.diff[d].played}</span>`).join('');
     return `<div class="panel"><h2>${title}</h2><div class="stats">${cell(s.played, t('stats.played'))}${cell(s.won, t('stats.won'))}` +
       `${cell(s.lost, t('stats.lost'))}${cell(s.tied, t('stats.tied'))}${extra}</div>` +
-      `<div class="meter" role="img" aria-label="${t('stats.winrate')} ${rate}%"><i style="width:${rate}%"></i></div><small>${t('stats.winrate')} ${rate}%</small></div>`;
+      `<div class="meter" role="img" aria-label="${t('stats.winrate')} ${rate}%"><i style="width:${rate}%"></i></div><small>${t('stats.winrate')} ${rate}%</small>` +
+      (by ? `<div class="bydiff"><small>${t('stats.byDiff')}</small>${by}</div>` : '') + '</div>';
   };
   const tot = ids.reduce((a, k) => ({ played: a.played + st[k].played, won: a.won + st[k].won, lost: a.lost + st[k].lost, tied: a.tied + st[k].tied }),
     { played: 0, won: 0, lost: 0, tied: 0 });
-  return `<section class="screen narrow"><h1>${t('nav.stats')}</h1>${block(t('stats.total'), tot)}` +
+  // games of the last two weeks, one bar per day
+  const DAY = 864e5, today = new Date().setHours(0, 0, 0, 0), days = Array.from({ length: 14 }, (_, k) => ({ at: today - (13 - k) * DAY, played: 0, won: 0 }));
+  for (const [ts, , res] of getHistory()) { const d = days[13 - Math.floor((today + DAY - 1 - ts) / DAY)]; if (d) { d.played++; if (res === 'w') d.won++; } }
+  const max = Math.max(1, ...days.map(d => d.played)), sum = days.reduce((a, d) => ({ played: a.played + d.played, won: a.won + d.won }), { played: 0, won: 0 });
+  const fmt = new Intl.DateTimeFormat(getLang(), { day: 'numeric', month: 'short' });
+  const chart = `<div class="panel"><h2>${t('stats.history')}</h2><div class="chart" role="img" aria-label="${t('stats.historyAria', sum)}">` +
+    days.map(d => `<div class="bar" title="${fmt.format(d.at)}: ${d.won} / ${d.played}"><div class="cbar">${d.played ? `<i style="height:${100 * d.played / max}%"><b style="height:${100 * d.won / d.played}%"></b></i>` : ''}</div><span>${new Date(d.at).getDate()}</span></div>`).join('') +
+    `</div><small class="legend"><i class="k1"></i>${t('stats.played')}: ${sum.played}<i class="k2"></i>${t('stats.won')}: ${sum.won}</small></div>`;
+  return `<section class="screen narrow"><h1>${t('nav.stats')}</h1>${block(t('stats.total'), tot)}${chart}` +
     ids.map(k => block(esc(gt(defs[k], 'name')), st[k], cell(st[k].bestStreak, t('stats.streak')) + cell(st[k].bestScore, t('stats.best')))).join('') +
-    `<p class="note">${t('stats.note')}</p><button type="button" class="btn danger" id="reset-stats">${t('stats.reset')}</button></section>`;
+    `<p class="note">${t('stats.note')}</p><div class="btn-row"><button type="button" class="btn" id="export-stats">${t('stats.export')}</button>` +
+    `<button type="button" class="btn" id="import-stats">${t('stats.import')}</button></div>${io}` +
+    `<button type="button" class="btn danger" id="reset-stats">${t('stats.reset')}</button></section>`;
 }
 
 function render() {
@@ -171,11 +190,13 @@ function render() {
   $('#btn-stats').hidden = a === 'play';
   if (a === 'play' && defs[b]) {
     const def = defs[b], ses = loadSession(), resume = !fresh && ses && ses.id === b ? ses : null;
-    fresh = false;
+    // a practice game started from the tutorial: easiest level, suggested move always shown, not counted in the statistics
+    const o = resume ? resume.opts : coach ? { ...optsFor(def), difficulty: def.difficulty[0], coach: true } : optsFor(def);
+    fresh = false; coach = false;
     app.innerHTML = '';
-    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, machiavelli: startMachiavelli, banking: startBanking }[def.engine] || startTable)(app, def, resume ? resume.opts : optsFor(def), () => go('game/' + b), resume);
+    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, machiavelli: startMachiavelli, banking: startBanking }[def.engine] || startTable)(app, def, o, () => go('game/' + b), resume);
   } else {
-    app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'help' ? screenHelp(b) : a === 'stats' ? screenStats() : screenHome();
+    app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'help' ? screenHelp(b) : a === 'learn' && defs[b] ? learnHTML(defs[b], route()[2]) : a === 'stats' ? screenStats() : screenHome();
     window.scrollTo(0, 0);
   }
   document.title = 'Tavolo — ' + t('app.tagline');
@@ -184,13 +205,14 @@ function render() {
 function back() {
   const [a, b] = route();
   if (a === 'play' && active) active.quit();
-  else if (a === 'help' && defs[b]) go('game/' + b);
+  else if ((a === 'help' || a === 'learn') && defs[b]) go('game/' + b);
   else if (a === 'game' && defs[b]) go('deck/' + defs[b].deck);
   else go('');
 }
 
 app.addEventListener('click', async e => {
   if (e.target.closest('[data-fresh]')) { fresh = true; clearSession(); }
+  coach = !!e.target.closest('[data-coach]');
   const p = e.target.closest('[data-players],[data-diff],[data-wins]');
   if (p) {
     const id = route()[1], o = optsFor(defs[id]);
@@ -200,6 +222,13 @@ app.addEventListener('click', async e => {
     settings.last[id] = o; saveSettings(); render();
     return;
   }
+  if (e.target.id === 'export-stats') {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([exportData()], { type: 'application/json' }));
+    a.download = `tavolo-stats-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+  if (e.target.id === 'import-stats') $('#import-file').click();
   if (e.target.id === 'reset-stats') {
     const ok = await dialog({
       title: t('stats.reset'), body: `<p>${t('stats.resetConfirm')}</p>`,
@@ -209,6 +238,19 @@ app.addEventListener('click', async e => {
   }
 });
 
+app.addEventListener('change', async e => {
+  if (e.target.id !== 'import-file' || !e.target.files[0]) return;
+  const text = await e.target.files[0].text();
+  const ok = await dialog({
+    title: t('stats.import'), body: `<p>${t('stats.importConfirm')}</p>`,
+    actions: [{ label: t('common.cancel'), val: false, primary: true }, { label: t('common.confirm'), val: true }]
+  });
+  if (!ok) { e.target.value = ''; return; }
+  const done = importData(text);
+  render();
+  dialog({ title: t('stats.import'), body: `<p>${t(done ? 'stats.imported' : 'stats.importBad')}</p>`, actions: [{ label: t('set.close'), val: 1, primary: true }] });
+});
+$('#btn-skip').addEventListener('click', () => app.focus());
 $('#btn-back').addEventListener('click', back);
 $('#btn-home').addEventListener('click', () => (active ? active.quit() : go('')));
 $('#btn-stats').addEventListener('click', () => { if (!active) go('stats'); else active.quit(); });
@@ -234,6 +276,7 @@ addEventListener('appinstalled', () => { installEvt = null; chrome(); });
 addEventListener('hashchange', () => {
   document.querySelectorAll('dialog.dlg').forEach(d => d.close());   // a dialog must not survive a change of screen
   render();
+  app.focus({ preventScroll: true });                                // keyboard and screen readers start from the new screen
 });
 
 // ---------- boot ----------
