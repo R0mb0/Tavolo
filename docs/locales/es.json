@@ -220,5 +220,13 @@
  "sm.round": "Mano {n} de {of}",
  "man.b.bank": "La banca está arriba: su primera carta queda tapada hasta que todos los jugadores han terminado.",
  "man.b.you": "Tus cartas y tu total están abajo: «Carta» pide otra carta, «Me planto» termina tu turno. La primera carta de los demás jugadores está oculta.",
- "man.b.chips": "El número junto a ● son las fichas de cada jugador. Tras cada mano una etiqueta muestra lo que ganó o perdió cada uno; «Siguiente mano» reparte de nuevo."
+ "man.b.chips": "El número junto a ● son las fichas de cada jugador. Tras cada mano una etiqueta muestra lo que ganó o perdió cada uno; «Siguiente mano» reparte de nuevo.",
+ "resume.banner": "Tienes una partida en curso: {name}",
+ "resume.go": "Reanudar la partida",
+ "resume.new": "Nueva partida",
+ "play.last": "Última baza",
+ "play.lastBy": "Se la llevó: {name}",
+ "man.c.resume": "Si cierras o recargas la página, la partida en curso queda guardada en este dispositivo: puedes reanudarla desde la página inicial o desde las opciones del juego.",
+ "man.c.last": "El botón de la flecha con reloj vuelve a mostrar las cartas de la última baza o captura.",
+ "man.m.drag": "También puedes arrastrar: suelta una carta (o las seleccionadas) sobre una combinación para añadirla, o sobre una zona vacía de la mesa para crear una nueva."
 }

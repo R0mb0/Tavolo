@@ -1,6 +1,6 @@
 // The shared game table: renders any engine's view and drives the turn loop (human + bots).
 import { cardHTML } from './cards.js';
-import { ENGINES } from './engines/index.js';
+import { newGame as createGame, clearSession } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
@@ -10,10 +10,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const MOVING = '.center [data-id], .staged [data-id], .hand [data-id]';
 const still = matchMedia('(prefers-reduced-motion: reduce)');
 
-export function startTable(root, def, opts, onExit) {
+export function startTable(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, g, msg = null, pick = null, chooser = null;
-  let freshSeat = null, flyTo = null, hintId = null;
+  let freshSeat = null, flyTo = null, hintId = null, last = null;
 
   const names = () => Array.from({ length: opts.players }, (_, i) =>
     i === 0 ? t('play.you') : t('play.bot', { n: i }) + (g.teams && i === 2 ? ` (${t('play.partner')})` : ''));
@@ -91,6 +91,8 @@ export function startTable(root, def, opts, onExit) {
       Array.from({ length: me.down }, (_, k) => cardHTML(null, {
         tag: 'button', disabled: !(v.source === 'down' && myTurn), cls: hintId === 'down-' + k ? 'hinted' : '', attrs: ` data-id="down-${k}"`
       })).join('') + '</div>' : '';
+    const lastBtn = g.kind === 'trick' || g.kind === 'fishing'
+      ? `<button type="button" class="icon hint" data-last title="${t('play.last')}" aria-label="${t('play.last')}"${last ? '' : ' disabled'}><svg><use href="#i-last"/></svg></button>` : '';
     const hintBtn = `<button type="button" class="icon hint" data-hint title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>`;
     const actions = (v.actions || []).map(a => `<button type="button" class="btn primary${hintId === a ? ' hinted' : ''}" data-move="${a}">${t('play.' + a + 'Btn')}</button>`).join('');
 
@@ -118,7 +120,7 @@ export function startTable(root, def, opts, onExit) {
       `<div class="table"><div class="opps n${g.n - 1}">${opps}</div>` +
       `<div class="felt">${side}<div class="mid"><div class="center">${center}</div>${staged}</div></div>` +
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${actions || status}</div>` +
-      `<div class="me${myTurn ? ' active' : ''}" data-seat="0"><div class="me-info"><div class="badges">${badges(me)}</div>${top(me)}${myTable}${hintBtn}</div>` +
+      `<div class="me${myTurn ? ' active' : ''}" data-seat="0"><div class="me-info"><div class="badges">${badges(me)}</div>${top(me)}${myTable}<div class="tools">${hintBtn}${lastBtn}</div></div>` +
       `<div class="hand${size}">${hand}</div></div>${overlay}</div>`;
     animate(prev);
   }
@@ -169,6 +171,16 @@ export function startTable(root, def, opts, onExit) {
       res({ id: c.id, opt: c.opts[+o.dataset.opt] });
       return;
     }
+    if (e.target.closest('[data-last]') && last) {
+      const N = names();
+      dialog({
+        title: t('play.last'),
+        body: `<p>${t('play.lastBy', { name: N[last.by] })}</p><div class="man-ex lastcards">` +
+          last.cards.map(x => `<div class="slot${x.p === last.by ? ' hl' : ''}">${cardHTML(x.card, { label: label(x.card) })}<span class="owner">${x.p != null ? N[x.p] : '·'}</span></div>`).join('') + '</div>',
+        actions: [{ label: t('set.close'), val: 1, primary: true }]
+      });
+      return;
+    }
     if (!pick || chooser) return;
     if (e.target.closest('[data-hint]')) {
       const h = g.hint();
@@ -203,7 +215,7 @@ export function startTable(root, def, opts, onExit) {
 
   async function finish() {
     const r = g.result(), TN = teamNames();
-    record(def.id, r);
+    record(def.id, r); clearSession();
     sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
     const note = g.kind === 'shedding' ? `<p>${t('end.cardsLeft')}</p>` : '';
     const body = note + '<ul class="final">' + r.scores.map((sc, k) =>
@@ -217,8 +229,8 @@ export function startTable(root, def, opts, onExit) {
   }
 
   function newGame() {
-    g = ENGINES[def.engine](def, opts);
-    msg = null; pick = null; chooser = null; freshSeat = null; flyTo = null; hintId = null;
+    g = createGame(def, opts, resume); resume = null;
+    msg = null; pick = null; chooser = null; freshSeat = null; flyTo = null; hintId = null; last = null;
   }
 
   async function loop() {
@@ -240,7 +252,12 @@ export function startTable(root, def, opts, onExit) {
         if (!alive || g !== mine) return;
         const st = g.staged;
         flyTo = g.flyTarget ? g.flyTarget() : g.kind === 'trick' ? g.winner : st && (st.take.length || st.steal != null) ? st.p : null;
-        if (flyTo != null) sfx('take');
+        if (flyTo != null) {
+          sfx('take');
+          const vw = g.view();                             // remember what was just taken, for the review button
+          if (g.kind === 'trick') last = { by: flyTo, cards: vw.center.map(x => ({ card: x.card, p: x.p })) };
+          else if (st) last = { by: flyTo, cards: [{ card: st.card, p: st.p }, ...vw.center.filter(x => x.hl).map(x => ({ card: x.card, p: null }))] };
+        }
         g.advance(); msg = null; continue;
       }
       let mv;
@@ -267,7 +284,7 @@ export function startTable(root, def, opts, onExit) {
         title: t('play.quit'), body: `<p>${t('play.quitHint')}</p>`,
         actions: [{ label: t('play.stay'), val: false, primary: true }, { label: t('play.leave'), val: true }]
       });
-      if (ok && alive) onExit();
+      if (ok && alive) { clearSession(); onExit(); }
     }
   };
 }

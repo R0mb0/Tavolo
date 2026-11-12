@@ -23,7 +23,7 @@ export function manualHTML(def) {
     else if (kind === 'called') tb = ['man.t.hand', 'man.t.opps', 'man.t.turn', 'man.k.auction', 'man.k.card', 'man.t.center.trick'];
     else if (kind === 'banking') tb = ['man.b.bank', 'man.b.you', 'man.b.chips'];
     else if (kind === 'shedding') tb.push('man.d.pile', 'man.d.table');
-    else if (kind === 'machiavelli') tb = ['man.t.opps', 'man.t.turn', 'man.m.table', 'man.m.buttons', 'man.m.draw'];
+    else if (kind === 'machiavelli') tb = ['man.t.opps', 'man.t.turn', 'man.m.table', 'man.m.buttons', 'man.m.drag', 'man.m.draw'];
     else if (kind === 'rummy' || kind === 'burraco') tb = ['man.t.opps', 'man.t.turn', 'man.r.piles', 'man.r.melds', 'man.r.hand'];
     else tb.push('man.t.center.fishing', 'man.t.pile');
   }
@@ -50,6 +50,8 @@ export function manualHTML(def) {
 
   out += sec(t('man.tips'), list(gt(def, 'tips')));
   const ctl = kind === 'banking' ? ['man.c.leave', 'man.c.settings'] : kind === 'patience' ? ['man.c.hint', 'man.c.undo', 'man.c.leave', 'man.c.settings'] : ['man.c.hint', 'man.c.leave', 'man.c.settings'];
+  if (['trick', 'called', 'fishing'].includes(kind)) ctl.splice(1, 0, 'man.c.last');
+  ctl.push('man.c.resume');
   out += sec(t('man.controls'), list(ctl.map(k => t(k))));
   return `<div class="manual">${out}</div>`;
 }

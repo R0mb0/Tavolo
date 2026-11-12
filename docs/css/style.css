@@ -121,6 +121,14 @@ select { padding: .6rem .7rem; border-radius: .6rem; border: 1px solid var(--lin
 .meter { height: .5rem; border-radius: 99rem; background: color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; margin-bottom: .3rem; }
 .meter i { display: block; height: 100%; background: var(--accent); border-radius: inherit; }
 
+.resume { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1rem; margin-bottom: 1.2rem; border-radius: .9rem;
+  background: color-mix(in srgb, var(--gold) 16%, var(--surface)); border: 1px solid var(--gold); color: var(--ink); text-decoration: none; }
+.resume b { white-space: nowrap; color: var(--accent); }
+.btn.second { margin-top: .6rem; }
+.tools { display: flex; gap: .4rem; }
+.lastcards { justify-content: center; --cw: 3.4rem; margin: 0; }
+.lastcards .slot.hl .card { transform: none; }
+
 /* dialogs */
 .dlg {
   width: min(28rem, calc(100vw - 2rem)); max-height: calc(100dvh - 2rem); padding: 1.3rem; border: 1px solid var(--line); border-radius: 1.1rem;
@@ -294,6 +302,9 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .mgroup:last-child { border-bottom: 0; }
 .mlabel { flex: 1 1 100%; font-size: .75rem; font-weight: 700; opacity: .85; }
 .mgrp { align-items: center; }
+.mach button.card { touch-action: none; }
+.dragrow { display: flex; }
+.dragrow .card + .card { margin-left: calc(var(--cw) * -.45); }
 .mgrp.bad { border-color: var(--danger); border-style: dashed; background: color-mix(in srgb, var(--danger) 22%, transparent); }
 .mgrp button.card:not(:disabled):hover { transform: none; }
 .mgrp .card.sel { transform: translateY(-.45em); outline: .22em solid var(--gold); outline-offset: .06em; z-index: 2; }

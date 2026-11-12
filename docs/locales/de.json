@@ -220,5 +220,13 @@
  "sm.round": "Runde {n} von {of}",
  "man.b.bank": "Die Bank ist oben: Ihre erste Karte bleibt verdeckt, bis alle Spieler fertig sind.",
  "man.b.you": "Deine Karten und deine Summe sind unten: „Karte“ fordert eine weitere Karte, „Bleiben“ beendet deinen Zug. Die erste Karte der anderen Spieler siehst du nicht.",
- "man.b.chips": "Die Zahl neben ● sind die Chips jedes Spielers. Nach jeder Runde zeigt ein Feld, was jeder gewonnen oder verloren hat; „Nächste Runde“ gibt neu."
+ "man.b.chips": "Die Zahl neben ● sind die Chips jedes Spielers. Nach jeder Runde zeigt ein Feld, was jeder gewonnen oder verloren hat; „Nächste Runde“ gibt neu.",
+ "resume.banner": "Du hast ein laufendes Spiel: {name}",
+ "resume.go": "Spiel fortsetzen",
+ "resume.new": "Neues Spiel",
+ "play.last": "Letzter Stich",
+ "play.lastBy": "Gewonnen von: {name}",
+ "man.c.resume": "Wenn du die Seite schließt oder neu lädst, bleibt das laufende Spiel auf diesem Gerät gespeichert: Du kannst es auf der Startseite oder in den Spieloptionen fortsetzen.",
+ "man.c.last": "Die Taste mit dem Uhr-Pfeil zeigt noch einmal die Karten des letzten Stichs oder Fangs.",
+ "man.m.drag": "Du kannst auch ziehen: Lege eine Karte (oder die ausgewählten Karten) auf einer Kombination ab, um sie dort anzulegen, oder auf einer freien Stelle des Tisches für eine neue."
 }

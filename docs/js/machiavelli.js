@@ -1,6 +1,6 @@
 // Table for Machiavelli: every card on the table can be picked up and placed in another combination.
 import { cardHTML } from './cards.js';
-import { ENGINES } from './engines/index.js';
+import { newGame as createGame, clearSession } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
@@ -9,9 +9,9 @@ import { sfx } from './sfx.js';
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const SUITS = ['spades', 'hearts', 'clubs', 'diamonds'];
 
-export function startMachiavelli(root, def, opts, onExit) {
+export function startMachiavelli(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
-  let alive = true, busy = false, g, msg = null, hint = null, bySuit = true;
+  let alive = true, busy = false, g, msg = null, hint = null, bySuit = true, drag = null, dragEnd = 0;
   const sel = new Set();
 
   const names = () => Array.from({ length: opts.players }, (_, i) => (i === 0 ? t('play.you') : t('play.bot', { n: i })));
@@ -35,7 +35,7 @@ export function startMachiavelli(root, def, opts, onExit) {
       (v.stock ? `<span class="stack">${cardHTML(null)}<span class="count">${v.stock}</span></span>` : '<span class="pile empty"><span class="glyph">✕</span></span>') + '</button></div>';
 
     const groups = v.groups.map((gr, i) =>
-      `<div class="meld mgrp${gr.valid ? '' : ' bad'}${hint && hint.group === i ? ' hinted' : ''}">${gr.cards.map(btn).join('')}` +
+      `<div class="meld mgrp${gr.valid ? '' : ' bad'}${hint && hint.group === i ? ' hinted' : ''}" data-gi="${i}">${gr.cards.map(btn).join('')}` +
       `<button type="button" class="plus" data-group="${i}" aria-label="${t('mach.add')}" title="${t('mach.add')}"${myTurn && sel.size ? '' : ' disabled'}>+</button></div>`).join('');
 
     const order = c => (bySuit ? SUITS.indexOf(c.s) * 20 + c.r : c.r * 10 + SUITS.indexOf(c.s));
@@ -44,7 +44,7 @@ export function startMachiavelli(root, def, opts, onExit) {
     const status = msg ? msg() : !myTurn ? (g.phase === 'play' ? t('play.turnOf', { name: N[g.current] }) : '') : t('mach.turn');
     const b = (act, key, on, extra = '') => `<button type="button" class="btn ${extra}" data-do="${act}"${on ? '' : ' disabled'}>${t(key)}</button>`;
     root.innerHTML =
-      `<div class="table rum"><div class="opps n${g.n - 1}">${opps}</div>` +
+      `<div class="table rum mach"><div class="opps n${g.n - 1}">${opps}</div>` +
       `<div class="felt">${pile}<div class="melds">${groups}</div></div>` +
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
       `<div class="rum-bar">` + b('new', 'mach.new', myTurn && sel.size > 0, 'primary') +
@@ -63,12 +63,12 @@ export function startMachiavelli(root, def, opts, onExit) {
 
   async function finish() {
     const r = g.result(), N = names();
-    record(def.id, r);
+    record(def.id, r); clearSession();
     sfx(r.outcome === 'win' ? 'win' : 'lose');
     const body = `<p>${t('end.cardsLeft')}</p><ul class="final">` + r.scores.map((sc, k) => `<li class="${k === 0 ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
-    if (val === 'again') { g = ENGINES[def.engine](def, opts); sel.clear(); msg = null; run(); } else onExit();
+    if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; run(); } else onExit();
   }
 
   // bot turns and end of game
@@ -89,7 +89,49 @@ export function startMachiavelli(root, def, opts, onExit) {
     if (alive && g === game && g.phase === 'over') finish();
   }
 
+  // ---- drag and drop: a card (or the whole selection) onto a combination, or onto the felt for a new one ----
+  const endDrag = () => {
+    if (drag && drag.fl) { drag.fl.remove(); drag.els.forEach(x => { x.style.visibility = ''; }); }
+    drag = null;
+  };
+  root.addEventListener('pointerdown', e => {
+    if (!mine() || e.button) return;
+    const el = e.target.closest('button.card');
+    if (el && !el.disabled) drag = { el, id: e.pointerId, x: e.clientX, y: e.clientY };
+  }, { signal: ctl.signal });
+  addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.fl) {
+      if (Math.hypot(dx, dy) < 8) return;
+      const id = drag.el.dataset.id;
+      drag.ids = sel.has(id) ? [...sel] : [id];
+      drag.els = drag.ids.map(k => root.querySelector(`button.card[data-id="${k}"]`)).filter(Boolean);
+      const r = drag.el.getBoundingClientRect(), fl = document.createElement('div');
+      fl.className = 'fly drag dragrow';
+      fl.style.cssText = `left:${r.left}px;top:${r.top}px;--cw:${r.width}px`;
+      fl.innerHTML = drag.els.map(x => x.outerHTML).join('');
+      document.body.appendChild(fl);
+      drag.els.forEach(x => { x.style.visibility = 'hidden'; });
+      drag.fl = fl;
+    }
+    drag.fl.style.transform = `translate(${dx}px,${dy}px)`;
+  }, { signal: ctl.signal });
+  addEventListener('pointerup', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const d = drag, dragged = !!d.fl;
+    endDrag();
+    if (!dragged) return;
+    dragEnd = Date.now();
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    const grp = under && under.closest('.mgrp'), felt = under && under.closest('.felt');
+    if (grp) done(g.move(d.ids, +grp.dataset.gi), 'take'); else if (felt) done(g.move(d.ids, 'new'), 'take');
+    render();
+  }, { signal: ctl.signal });
+  addEventListener('pointercancel', endDrag, { signal: ctl.signal });
+
   root.addEventListener('click', e => {
+    if (Date.now() - dragEnd < 350) return;
     const d = e.target.closest('[data-do]');
     if (d && d.dataset.do === 'sort') { bySuit = !bySuit; render(); return; }
     if (!mine()) return;
@@ -112,19 +154,19 @@ export function startMachiavelli(root, def, opts, onExit) {
     }
   }, { signal: ctl.signal });
 
-  g = ENGINES[def.engine](def, opts);
+  g = createGame(def, opts, resume);
   run();
 
   return {
     rerender: render,
-    stop() { alive = false; ctl.abort(); },
+    stop() { alive = false; endDrag(); ctl.abort(); },
     async quit() {
       if (g.phase === 'over') { onExit(); return; }
       const ok = await dialog({
         title: t('play.quit'), body: `<p>${t('play.quitHint')}</p>`,
         actions: [{ label: t('play.stay'), val: false, primary: true }, { label: t('play.leave'), val: true }]
       });
-      if (ok && alive) onExit();
+      if (ok && alive) { clearSession(); onExit(); }
     }
   };
 }

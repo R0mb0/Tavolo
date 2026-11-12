@@ -1,6 +1,6 @@
 // Table for rummy games (Scala 40, Burraco): deck and discard pile, combinations on the table, a large hand with selection.
 import { cardHTML } from './cards.js';
-import { ENGINES } from './engines/index.js';
+import { newGame as createGame, clearSession } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
@@ -9,7 +9,7 @@ import { sfx } from './sfx.js';
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const SUITS = ['spades', 'hearts', 'clubs', 'diamonds', 'joker'];
 
-export function startRummy(root, def, opts, onExit) {
+export function startRummy(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, g, msg = null, hint = null, bySuit = true;
   const sel = new Set();
@@ -90,12 +90,12 @@ export function startRummy(root, def, opts, onExit) {
 
   async function finish() {
     const r = g.result(), B = g.kind === 'burraco', N = B ? teamNames() : names();
-    record(def.id, r);
+    record(def.id, r); clearSession();
     sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
     const body = (B ? '' : `<p>${t('rum.lowWins')}</p>`) + '<ul class="final">' + r.scores.map((sc, k) => `<li class="${k === g.teamOf(0) ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
-    if (val === 'again') { g = ENGINES[def.engine](def, opts); sel.clear(); msg = null; run(); } else onExit();
+    if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; run(); } else onExit();
   }
 
   // Drives everything that is not the human's own action: bot turns, end of round, end of game.
@@ -159,7 +159,7 @@ export function startRummy(root, def, opts, onExit) {
     }
   }, { signal: ctl.signal });
 
-  g = ENGINES[def.engine](def, opts);
+  g = createGame(def, opts, resume);
   run();
 
   return {
@@ -171,7 +171,7 @@ export function startRummy(root, def, opts, onExit) {
         title: t('play.quit'), body: `<p>${t('play.quitHint')}</p>`,
         actions: [{ label: t('play.stay'), val: false, primary: true }, { label: t('play.leave'), val: true }]
       });
-      if (ok && alive) onExit();
+      if (ok && alive) { clearSession(); onExit(); }
     }
   };
 }

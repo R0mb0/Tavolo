@@ -1,7 +1,7 @@
 // Table for patience games: stock, waste, foundations and columns.
 // Tap a card and it moves to the best legal place, or drag it where you want.
 import { cardHTML, suitHTML } from './cards.js';
-import { ENGINES } from './engines/index.js';
+import { newGame as createGame, clearSession } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
@@ -11,10 +11,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const NAMED_RANKS = [1, 8, 9, 10];
 const still = matchMedia('(prefers-reduced-motion: reduce)');
 
-export function startSolitaire(root, def, opts, onExit) {
+export function startSolitaire(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, hint = null, nope = null, drag = null, dragEnd = 0, noFlip = false;
-  const g = ENGINES[def.engine](def, opts);
+  const g = createGame(def, opts, resume);
 
   const label = c => `${(c.deck === 'french' ? [1, 11, 12, 13] : NAMED_RANKS).includes(c.r) ? t((c.deck === 'french' ? 'frank.' : 'rank.') + c.r) : c.r} · ${t('suit.' + c.s)}`;
   const hinted = loc => !!hint && hint.from === loc.from && (loc.from !== 'col' || (hint.c === loc.c && hint.i === loc.i));
@@ -59,7 +59,7 @@ export function startSolitaire(root, def, opts, onExit) {
 
   async function win() {
     const r = g.result();
-    record(def.id, r);
+    record(def.id, r); clearSession();
     sfx('win');
     const val = await dialog({
       title: t('end.win'), body: `<p>${t('end.moves', { n: g.moves })}</p>`,
@@ -158,7 +158,7 @@ export function startSolitaire(root, def, opts, onExit) {
         title: t('play.quit'), body: `<p>${t('play.quitHint')}</p>`,
         actions: [{ label: t('play.stay'), val: false, primary: true }, { label: t('play.leave'), val: true }]
       });
-      if (ok && alive) onExit();
+      if (ok && alive) { clearSession(); onExit(); }
     }
   };
 }

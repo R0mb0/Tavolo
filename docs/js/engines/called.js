@@ -10,6 +10,7 @@ export function createCalledGame(def, opts) {
   const P = Array.from({ length: n }, () => ({ hand: deck.splice(-def.setup.handSize) }));
   const first = Math.floor(rng() * n), score = [0, 0], own = Array(n).fill(0), active = new Set([0, 1, 2, 3, 4]);
   let bid = -1, bidder = null, trump = null, calledId = null;
+  const susp = Array(n).fill(0);            // how much each player looks like the caller's partner
 
   const g = {
     kind: 'trick', n, teams: false, nTeams: 2, phase: 'play', stage: 'bid', pending: false, current: first,
@@ -38,6 +39,11 @@ export function createCalledGame(def, opts) {
       g.pending = true;
     } else {
       const h = P[i].hand, c = h.splice(h.findIndex(x => x.id === id), 1)[0];
+      if (g.trick.length && i !== g.caller) {           // feeding the caller looks friendly, beating the caller does not
+        const best = leaderOf(g.trick);
+        if (best.p === g.caller) susp[i] += beats(c, best.card) ? -2 : pts(c) >= 10 ? 3 : pts(c) > 0 ? 1 : 0;
+        else if (pts(c) >= 10 && !beats(c, best.card)) susp[i] -= 1;   // giving points to a defender
+      }
       g.trick.push({ p: i, card: c });
       g.lastEvent = null;
       if (c.id === calledId && !g.revealed) { g.revealed = true; if (i !== g.caller) g.lastEvent = { type: 'partner', p: i }; }
@@ -94,7 +100,7 @@ export function createCalledGame(def, opts) {
 
   function botBid(i) {
     const hand = P[i].hand, s = bestSuit(hand), force = power(hand, s);
-    const limit = force < 5 ? -1 : Math.min(order.length - 1, lacks(hand, s) + Math.floor((force - 5) / 1.5));
+    const limit = force < 4.5 ? -1 : Math.min(order.length - 1, lacks(hand, s) + Math.floor(force - 4));
     const k = bid + 1;
     if (bidder == null && active.size === 1) return String(Math.max(0, Math.min(k, order.length - 1)));   // somebody has to call
     return k <= limit && !(diff === 'easy' && rng() < 0.3) ? String(k) : 'pass';
@@ -106,8 +112,8 @@ export function createCalledGame(def, opts) {
   // who does player i believe to be on their side? The partner is secret until the called card is played.
   function mate(i, j) {
     if (g.revealed || i === g.holder) return g.teamOf(i) === g.teamOf(j);
-    if (i === g.caller) return false;
-    return j !== g.caller;
+    if (i === g.caller) return susp[j] >= 3;
+    return j !== g.caller && susp[j] <= -2;                 // a defender trusts only who has openly fought the caller
   }
   const keep = c => pts(c) + (c.s === trump ? 6 + str(c) * 0.5 : str(c) * 0.1);
   function botCard(i, level) {

@@ -1,6 +1,6 @@
 // Table for banking games (Sette e mezzo): the bank at the top, each player's cards face up, hit or stand.
 import { cardHTML } from './cards.js';
-import { ENGINES } from './engines/index.js';
+import { newGame as createGame, clearSession } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
@@ -9,7 +9,7 @@ import { sfx } from './sfx.js';
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const frac = v => (v == null ? '?' : (Math.floor(v) || (v % 1 ? '' : 0)) + (v % 1 ? '½' : ''));
 
-export function startBanking(root, def, opts, onExit) {
+export function startBanking(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, g, hint = null;
 
@@ -50,12 +50,12 @@ export function startBanking(root, def, opts, onExit) {
 
   async function finish() {
     const r = g.result(), N = names();
-    record(def.id, r);
+    record(def.id, r); clearSession();
     sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
     const body = '<ul class="final">' + r.scores.map((sc, k) => `<li class="${k === 0 ? 'mine' : ''}"><span>${N[k]}</span><b>● ${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
-    if (val === 'again') { g = ENGINES[def.engine](def, opts); run(); } else onExit();
+    if (val === 'again') { g = createGame(def, opts); run(); } else onExit();
   }
 
   // bots and the bank play by themselves; the loop stops whenever the human has to act
@@ -89,7 +89,7 @@ export function startBanking(root, def, opts, onExit) {
     run();
   }, { signal: ctl.signal });
 
-  g = ENGINES[def.engine](def, opts);
+  g = createGame(def, opts, resume);
   run();
 
   return {
@@ -101,7 +101,7 @@ export function startBanking(root, def, opts, onExit) {
         title: t('play.quit'), body: `<p>${t('play.quitHint')}</p>`,
         actions: [{ label: t('play.stay'), val: false, primary: true }, { label: t('play.leave'), val: true }]
       });
-      if (ok && alive) onExit();
+      if (ok && alive) { clearSession(); onExit(); }
     }
   };
 }

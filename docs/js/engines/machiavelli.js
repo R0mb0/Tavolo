@@ -39,6 +39,7 @@ export function createMachiavelliGame(def, opts) {
         if (k >= 0 && gr !== dest) { cards.push(gr.splice(k, 1)[0]); break; }
       }
     }
+    if (!cards.length) return fail('invalid');
     dest.push(...cards);
     if (target === 'new') groups.push(dest);
     groups = groups.filter(x => x.length);
@@ -100,8 +101,12 @@ export function createMachiavelliGame(def, opts) {
     }
     return null;
   }
-  // next useful thing to do with the cards in hand; `deep` also borrows a spare card from the table
-  function nextPlay(p, deep) {
+  // table cards that can be taken away leaving their combination valid
+  const spare = () => groups.flatMap((gr, gi) => (gr.length >= 4 && valid(gr) ? gr.filter(x => valid(gr.filter(c => c !== x))).map(x => ({ x, gi })) : []));
+  // next useful thing to do with the cards in hand.
+  // depth 1 also borrows one spare card from the table; depth 2 also splits runs and borrows two cards.
+  function nextPlay(p, depth) {
+    const deep = depth >= 1;
     const m = findMeld(p.hand);
     if (m) return { ids: m.map(c => c.id), target: 'new' };
     for (const c of p.hand) {
@@ -116,12 +121,23 @@ export function createMachiavelliGame(def, opts) {
         if (m2) return { ids: m2.map(c => c.id), target: 'new' };
       }
     }
+    if (depth >= 2) {
+      for (const c of p.hand) for (const gr of groups) {        // split a run around a twin of a card in hand
+        const a = analyze(gr, 0);
+        if (!a || a.type !== 'run') continue;
+        const k = a.cards.findIndex(x => x.r === c.r && x.s === c.s), tail = a.cards.slice(k + 1);
+        if (k >= 2 && tail.length >= 2 && valid([c, ...tail])) return { ids: [c.id, ...tail.map(x => x.id)], target: 'new' };
+      }
+      const sp = spare();
+      for (const c of p.hand) for (let a = 0; a < sp.length; a++) for (let b = a + 1; b < sp.length; b++)
+        if (sp[a].gi !== sp[b].gi && valid([c, sp[a].x, sp[b].x])) return { ids: [c.id, sp[a].x.id, sp[b].x.id], target: 'new' };
+    }
     return null;
   }
 
   g.botStep = (level = diff) => {
     const i = g.current, p = P[i];
-    const mv = level === 'easy' && !dirty && rng() < 0.35 ? null : nextPlay(p, level === 'hard');
+    const mv = level === 'easy' && !dirty && rng() < 0.35 ? null : nextPlay(p, level === 'hard' ? 2 : level === 'medium' ? 1 : 0);
     if (mv) { g.move(mv.ids, mv.target); return { type: mv.target === 'new' ? 'meld' : 'layoff', p: i }; }
     if (dirty && g.endTurn().ok) return { type: 'end', p: i };
     if (dirty) g.reset();
@@ -130,7 +146,7 @@ export function createMachiavelliGame(def, opts) {
   };
 
   g.hint = () => {
-    const mv = nextPlay(P[g.current], true);
+    const mv = nextPlay(P[g.current], 2);
     return mv ? { ids: mv.ids, group: mv.target } : dirty && groups.every(valid) ? { end: true } : { pile: 'stock' };
   };
 

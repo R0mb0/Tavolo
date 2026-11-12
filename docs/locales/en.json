@@ -220,5 +220,13 @@
  "sm.round": "Hand {n} of {of}",
  "man.b.bank": "The bank is at the top: its first card stays face down until every player has finished.",
  "man.b.you": "Your cards and your total are at the bottom: “Card” asks for another card, “Stand” ends your turn. The other players’ first card is hidden from you.",
- "man.b.chips": "The number next to ● is each player’s chips. After every hand a badge shows what each player won or lost; “Next hand” deals again."
+ "man.b.chips": "The number next to ● is each player’s chips. After every hand a badge shows what each player won or lost; “Next hand” deals again.",
+ "resume.banner": "You have a game in progress: {name}",
+ "resume.go": "Resume the game",
+ "resume.new": "New game",
+ "play.last": "Last trick",
+ "play.lastBy": "Taken by: {name}",
+ "man.c.resume": "If you close or reload the page, the game in progress is saved on this device: you can resume it from the home page or from the game options.",
+ "man.c.last": "The clock-arrow button shows again the cards of the last trick or capture.",
+ "man.m.drag": "You can also drag: drop a card (or the selected cards) onto a combination to add it there, or onto an empty part of the table to start a new one."
 }

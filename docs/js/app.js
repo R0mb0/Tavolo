@@ -8,12 +8,13 @@ import { startRummy } from './rummy.js';
 import { startMachiavelli } from './machiavelli.js';
 import { startBanking } from './banking.js';
 import { dialog, esc } from './ui.js';
+import { loadSession, clearSession } from './session.js';
 import { manualHTML } from './manual.js';
 
 const $ = s => document.querySelector(s);
 const app = $('#app');
 const dark = matchMedia('(prefers-color-scheme: dark)');
-let catalog = null, defs = {}, active = null, installEvt = null;
+let catalog = null, defs = {}, active = null, installEvt = null, fresh = false;
 
 // ---------- settings ----------
 function applySettings() {
@@ -87,7 +88,9 @@ const SAMPLE = {
 const fan = id => `<div class="fan" aria-hidden="true">${SAMPLE[id].map(c => cardHTML({ ...c, id: `${c.r}-${c.s}`, deck: id })).join('')}</div>`;
 
 function screenHome() {
-  return `<section class="screen"><h1>${t('home.title')}</h1><p class="lead">${t('home.sub')}</p><div class="tiles decks">` +
+  const s = loadSession(), saved = s && defs[s.id]
+    ? `<a class="resume" href="#/play/${s.id}"><span>${t('resume.banner', { name: esc(gt(defs[s.id], 'name')) })}</span><b>${t('resume.go')} ›</b></a>` : '';
+  return `<section class="screen"><h1>${t('home.title')}</h1><p class="lead">${t('home.sub')}</p>${saved}<div class="tiles decks">` +
     catalog.decks.map(d => `<a class="tile deck" href="#/deck/${d.id}">${fan(d.id)}<h2>${t(`deck.${d.id}.name`)}</h2>` +
       `<p>${t(`deck.${d.id}.desc`)}</p><span class="pill">${t('deck.games', { n: d.games.length + d.planned.length })}</span></a>`).join('') +
     '</div></section>';
@@ -120,6 +123,7 @@ function optsFor(def) {
 function screenSetup(id) {
   const def = defs[id];
   if (!def) return screenHome();
+  const ses = loadSession(), saved = ses && ses.id === id;
   const o = optsFor(def), teams = (def.players.teamsAt || []).includes(o.players), lvl = def.levels && def.levels[o.difficulty];
   return `<section class="screen narrow"><h1>${esc(gt(def, 'name'))}</h1><p class="lead">${esc(gt(def, 'tagline'))}</p>` +
     `<div class="panel">` + (solo(def) ? '' : `<div class="field"><span>${t('setup.players')}</span><div class="seg">` +
@@ -128,7 +132,8 @@ function screenSetup(id) {
     `<div class="field"><span>${t('setup.difficulty')}</span><div class="seg">` +
     def.difficulty.map(k => `<button type="button" data-diff="${k}" aria-pressed="${k === o.difficulty}">${t('diff.' + k)}</button>`).join('') +
     `</div></div>` + (def.matchWins ? `<div class="field"><span>${t('setup.wins')}</span><div class="seg">` +
-    def.matchWins.map(k => `<button type="button" data-wins="${k}" aria-pressed="${k === o.wins}">${k}</button>`).join('') + '</div></div>' : '') + `<div>${lvl ? `<small>${t('sol.draw', { n: lvl.draw })} · ${t('sol.passes', { n: lvl.passes < 0 ? '∞' : lvl.passes })}</small>` : ''}</div><a class="btn primary big" href="#/play/${id}">${t('setup.start')}</a></div>` +
+    def.matchWins.map(k => `<button type="button" data-wins="${k}" aria-pressed="${k === o.wins}">${k}</button>`).join('') + '</div></div>' : '') + `<div>${lvl ? `<small>${t('sol.draw', { n: lvl.draw })} · ${t('sol.passes', { n: lvl.passes < 0 ? '∞' : lvl.passes })}</small>` : ''}</div>` + (saved ? `<a class="btn primary big" href="#/play/${id}">${t('resume.go')}</a><a class="btn big second" href="#/play/${id}" data-fresh>${t('resume.new')}</a>`
+      : `<a class="btn primary big" href="#/play/${id}" data-fresh>${t('setup.start')}</a>`) + `</div>` +
     `<details class="rules" open><summary>${t('setup.rules')}</summary><ul>${gt(def, 'rules').map(r => `<li>${esc(r)}</li>`).join('')}</ul>` +
     `<a class="btn" href="#/help/${id}">${t('setup.manual')}</a></details></section>`;
 }
@@ -165,9 +170,10 @@ function render() {
   $('#btn-help').hidden = !(['game', 'play'].includes(a) && defs[b]);
   $('#btn-stats').hidden = a === 'play';
   if (a === 'play' && defs[b]) {
-    const def = defs[b];
+    const def = defs[b], ses = loadSession(), resume = !fresh && ses && ses.id === b ? ses : null;
+    fresh = false;
     app.innerHTML = '';
-    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, machiavelli: startMachiavelli, banking: startBanking }[def.engine] || startTable)(app, def, optsFor(def), () => go('game/' + b));
+    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, machiavelli: startMachiavelli, banking: startBanking }[def.engine] || startTable)(app, def, resume ? resume.opts : optsFor(def), () => go('game/' + b), resume);
   } else {
     app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'help' ? screenHelp(b) : a === 'stats' ? screenStats() : screenHome();
     window.scrollTo(0, 0);
@@ -184,6 +190,7 @@ function back() {
 }
 
 app.addEventListener('click', async e => {
+  if (e.target.closest('[data-fresh]')) { fresh = true; clearSession(); }
   const p = e.target.closest('[data-players],[data-diff],[data-wins]');
   if (p) {
     const id = route()[1], o = optsFor(defs[id]);

@@ -220,5 +220,13 @@
  "sm.round": "Donne {n} sur {of}",
  "man.b.bank": "La banque est en haut : sa première carte reste cachée jusqu’à ce que tous les joueurs aient fini.",
  "man.b.you": "Vos cartes et votre total sont en bas : « Carte » demande une carte, « Je reste » termine votre tour. La première carte des autres joueurs vous est cachée.",
- "man.b.chips": "Le nombre à côté de ● indique les jetons de chaque joueur. Après chaque donne, une étiquette montre ce que chacun a gagné ou perdu ; « Donne suivante » redistribue."
+ "man.b.chips": "Le nombre à côté de ● indique les jetons de chaque joueur. Après chaque donne, une étiquette montre ce que chacun a gagné ou perdu ; « Donne suivante » redistribue.",
+ "resume.banner": "Vous avez une partie en cours : {name}",
+ "resume.go": "Reprendre la partie",
+ "resume.new": "Nouvelle partie",
+ "play.last": "Dernier pli",
+ "play.lastBy": "Remporté par : {name}",
+ "man.c.resume": "Si vous fermez ou rechargez la page, la partie en cours est enregistrée sur cet appareil : vous pouvez la reprendre depuis l’accueil ou les options du jeu.",
+ "man.c.last": "Le bouton flèche-horloge montre à nouveau les cartes du dernier pli ou de la dernière prise.",
+ "man.m.drag": "Vous pouvez aussi faire glisser : déposez une carte (ou les cartes sélectionnées) sur une combinaison pour l’y ajouter, ou sur une zone vide de la table pour en créer une nouvelle."
 }
