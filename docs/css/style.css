@@ -53,6 +53,7 @@ h1 { font: 600 clamp(1.6rem, 5vw, 2.3rem)/1.15 "Iowan Old Style", "Palatino Lino
   width: 2.75rem; height: 2.75rem; display: grid; place-items: center; border: 0; border-radius: .7rem; background: none; color: var(--ink);
 }
 .icon svg { width: 1.4rem; height: 1.4rem; }
+.icon:disabled { opacity: .35; cursor: default; }
 .icon:hover { background: color-mix(in srgb, var(--ink) 8%, transparent); }
 
 /* screens */
@@ -224,20 +225,47 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .slot.hl .card { outline: .22em dashed var(--gold); outline-offset: .12em; transform: translateY(-.35em); }
 .slot.staged { padding-left: .9rem; border-left: 2px dashed rgb(255 255 255 / .3); }
 .slot.staged.sweep .card { box-shadow: 0 0 0 .25em var(--gold), 0 0 1.6em var(--gold); }
-.pop { animation: pop .28s ease-out; }
-@keyframes pop { from { transform: translateY(-1rem) scale(.85); opacity: 0; } }
 
 .status { text-align: center; font-weight: 600; min-height: 1.6rem; color: var(--muted); }
 .status.mine { color: var(--accent); }
 .me { display: flex; align-items: flex-end; justify-content: center; gap: .8rem; padding: .5rem; border-radius: 1rem; border: 2px solid transparent; }
 .me.active { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 9%, transparent); }
-.me-info { display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; min-width: 0; }
+.me-info { display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; min-width: 0; flex: none; }
 .hand { display: flex; justify-content: center; gap: clamp(.4rem, 2vw, .8rem); --cw: clamp(4rem, 21vw, 6.4rem); }
 
 .chooser { position: absolute; inset: 0; display: grid; place-items: center; padding: 1rem; background: rgb(0 0 0 / .45); border-radius: 1rem; z-index: 5; }
 .chooser-box { display: flex; flex-direction: column; gap: .6rem; padding: 1rem; border-radius: 1rem; background: var(--surface); border: 1px solid var(--line); max-height: 100%; overflow: auto; width: min(24rem, 100%); }
 .opt { display: flex; align-items: center; justify-content: center; gap: .4rem; flex-wrap: wrap; padding: .6rem; min-height: 3rem; border-radius: .8rem; border: 2px solid var(--line); background: var(--bg); font-weight: 600; --cw: 3.6rem; }
 .opt:hover, .opt:focus-visible { border-color: var(--accent); }
+
+.hand.many { flex-wrap: wrap; gap: .3rem; --cw: clamp(2.6rem, 15.5vw, 4.6rem); max-width: calc(5 * var(--cw) + 1.3rem); }
+.me:has(.hand.many) { flex-direction: column; align-items: center; gap: .4rem; }
+.me:has(.hand.many) .me-info { flex-direction: row; align-items: center; }
+@media (min-width: 48rem) { .hand.many { max-width: none; flex-wrap: nowrap; } }
+.hint { border: 1px solid var(--line); background: var(--surface); }
+.card.hinted { outline: .25em solid var(--gold); outline-offset: .1em; animation: nudge .7s ease-in-out infinite alternate; }
+@keyframes nudge { to { transform: translateY(-.6em); } }
+.ghost { position: fixed; z-index: 50; pointer-events: none; }
+
+/* ---------- manual ---------- */
+.eyebrow { margin: 0 0 .2rem; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.manual { text-align: left; }
+.man-sec { margin-bottom: 1.4rem; }
+.man-sec h2 { font-size: 1.1rem; margin-bottom: .5rem; padding-bottom: .3rem; border-bottom: 1px solid var(--line); }
+.man-sec p { margin: 0 0 .5rem; color: var(--ink); }
+.man-sec ul { margin: 0; padding-left: 1.2rem; }
+.man-sec li { margin-bottom: .4rem; }
+.man-row, .man-ex { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; padding: .8rem; border-radius: .9rem; --cw: 3rem;
+  background: radial-gradient(ellipse at 50% 40%, var(--felt1), var(--felt2)); color: var(--felt-ink); }
+.man-ex { margin-bottom: .6rem; --cw: 3.4rem; }
+.man-row figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: .2rem; }
+.man-row figcaption { font-size: .78rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.man-scale { display: flex; justify-content: space-between; font-size: .8rem; color: var(--muted) !important; margin-top: .3rem !important; }
+.man-arrow { font-size: 1.6rem; font-weight: 700; padding: 0 .2rem; }
+.man-note { display: inline-flex; align-items: center; gap: .4rem; margin-left: .4rem; font-weight: 600; font-size: .9rem; }
+.man-note .si { width: 1.6rem; height: 1.6rem; padding: .25rem; border-radius: 50%; background: var(--card); box-sizing: content-box; }
+.card.win { outline: .22em dashed var(--gold); outline-offset: .12em; }
+.rules .btn { margin-top: .6rem; }
 
 @media (max-height: 34rem) {
   .hand { --cw: clamp(3rem, 13vh, 4.5rem); }

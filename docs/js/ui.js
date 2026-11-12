@@ -20,5 +20,6 @@ export function dialog({ title, body = '', actions = [], onReady }) {
     d.addEventListener('close', () => { d.remove(); resolve(val); });
     if (onReady) onReady(d);
     d.showModal();
+    d.scrollTop = 0;
   });
 }

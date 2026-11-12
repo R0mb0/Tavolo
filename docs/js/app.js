@@ -4,6 +4,7 @@ import { settings, saveSettings, getStats, resetStats } from './store.js';
 import { cardHTML } from './cards.js';
 import { startTable } from './table.js';
 import { dialog, esc } from './ui.js';
+import { manualHTML } from './manual.js';
 
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -38,7 +39,9 @@ function openSettings() {
     Object.entries(LANGS).map(([k, v]) => `<option value="${k}"${settings.lang === k ? ' selected' : ''}>${v}</option>`).join('') + '</select></label>' +
     `<div class="field"><span>${t('set.theme')}</span>${seg('theme', [['auto', t('set.auto')], ['light', t('set.light')], ['dark', t('set.dark')]], settings.theme)}</div>` +
     `<div class="field"><span>${t('set.zoom')}</span>${seg('zoom', [[1, '100%'], [1.15, '115%'], [1.3, '130%'], [1.5, '150%']], settings.zoom)}</div>` +
-    `<label class="field row"><span>${t('set.colorblind')}</span><input type="checkbox" id="set-cb"${settings.cb ? ' checked' : ''}></label>`;
+    `<div class="field"><span>${t('set.speed')}</span>${seg('speed', [[1.6, t('speed.slow')], [1, t('speed.normal')], [0.5, t('speed.fast')]], settings.speed)}</div>` +
+    `<label class="field row"><span>${t('set.colorblind')}</span><input type="checkbox" id="set-cb"${settings.cb ? ' checked' : ''}></label>` +
+    `<label class="field row"><span>${t('set.sound')}</span><input type="checkbox" id="set-sound"${settings.sound ? ' checked' : ''}></label>`;
   dialog({
     title: t('nav.settings'), body: body(), actions: [{ label: t('set.close'), val: 1, primary: true }],
     onReady(d) {
@@ -54,12 +57,14 @@ function openSettings() {
       d.addEventListener('change', e => {
         if (e.target.id === 'set-lang') { settings.lang = e.target.value; refresh(true); }
         if (e.target.id === 'set-cb') { settings.cb = e.target.checked; refresh(); }
+        if (e.target.id === 'set-sound') { settings.sound = e.target.checked; saveSettings(); }
       });
       d.addEventListener('click', e => {
-        const b = e.target.closest('[data-theme],[data-zoom]');
+        const b = e.target.closest('[data-theme],[data-zoom],[data-speed]');
         if (!b) return;
         if (b.dataset.theme) settings.theme = b.dataset.theme;
         if (b.dataset.zoom) settings.zoom = +b.dataset.zoom;
+        if (b.dataset.speed) settings.speed = +b.dataset.speed;
         refresh();
       });
     }
@@ -117,7 +122,15 @@ function screenSetup(id) {
     `<div class="field"><span>${t('setup.difficulty')}</span><div class="seg">` +
     def.difficulty.map(k => `<button type="button" data-diff="${k}" aria-pressed="${k === o.difficulty}">${t('diff.' + k)}</button>`).join('') +
     `</div></div><a class="btn primary big" href="#/play/${id}">${t('setup.start')}</a></div>` +
-    `<details class="rules" open><summary>${t('setup.rules')}</summary><ul>${gt(def, 'rules').map(r => `<li>${esc(r)}</li>`).join('')}</ul></details></section>`;
+    `<details class="rules" open><summary>${t('setup.rules')}</summary><ul>${gt(def, 'rules').map(r => `<li>${esc(r)}</li>`).join('')}</ul>` +
+    `<a class="btn" href="#/help/${id}">${t('setup.manual')}</a></details></section>`;
+}
+
+function screenHelp(id) {
+  const def = defs[id];
+  if (!def) return screenHome();
+  return `<section class="screen narrow"><p class="eyebrow">${t('setup.rules')}</p><h1>${esc(gt(def, 'name'))}</h1><p class="lead">${esc(gt(def, 'tagline'))}</p>` +
+    `${manualHTML(def)}<a class="btn primary big" href="#/game/${id}">${t('man.play')}</a></section>`;
 }
 
 function screenStats() {
@@ -142,12 +155,14 @@ function render() {
   const [a, b] = route();
   document.body.dataset.screen = a || 'home';
   $('#btn-back').hidden = !a;
+  $('#btn-help').hidden = !(['game', 'play'].includes(a) && defs[b]);
+  $('#btn-stats').hidden = a === 'play';
   if (a === 'play' && defs[b]) {
     const def = defs[b];
     app.innerHTML = '';
     active = startTable(app, def, optsFor(def), () => go('game/' + b));
   } else {
-    app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'stats' ? screenStats() : screenHome();
+    app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'help' ? screenHelp(b) : a === 'stats' ? screenStats() : screenHome();
     window.scrollTo(0, 0);
   }
   document.title = 'Tavolo — ' + t('app.tagline');
@@ -156,6 +171,7 @@ function render() {
 function back() {
   const [a, b] = route();
   if (a === 'play' && active) active.quit();
+  else if (a === 'help' && defs[b]) go('game/' + b);
   else if (a === 'game' && defs[b]) go('deck/' + defs[b].deck);
   else go('');
 }
@@ -182,6 +198,12 @@ $('#btn-back').addEventListener('click', back);
 $('#btn-home').addEventListener('click', () => (active ? active.quit() : go('')));
 $('#btn-stats').addEventListener('click', () => { if (!active) go('stats'); else active.quit(); });
 $('#btn-settings').addEventListener('click', openSettings);
+$('#btn-help').addEventListener('click', () => {
+  const id = route()[1], def = defs[id];
+  if (!def) return;
+  if (active) dialog({ title: esc(gt(def, 'name')), body: manualHTML(def), actions: [{ label: t('set.close'), val: 1, primary: true }] });
+  else go('help/' + id);
+});
 $('#btn-full').addEventListener('click', () => {
   if (document.fullscreenElement) document.exitFullscreen();
   else document.documentElement.requestFullscreen().catch(() => {});

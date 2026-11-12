@@ -20,10 +20,11 @@ Open an Issue using the feature request template. Describe the problem you're tr
 2. Keep each pull request focused on a single reason for change — don't bundle unrelated fixes together.
 3. If your change relates to an existing Issue, reference it in the pull request description.
 4. Try to match the existing coding style and conventions used in the project:
-   - plain Bash, no extra dependencies beyond what a stock Linux Mint has (or what `install.sh` installs);
-   - every message shown to the user exists in English **and** Italian, side by side: `L "english" "italiano"` (or `Lf` with a printf format);
-   - nothing that runs as root should be able to make the PC unbootable: when in doubt, do nothing and alert;
-   - the scripts must pass `shellcheck -x -S warning` (the GitHub Action checks it on every push).
+   - plain HTML, CSS and JavaScript (ES modules): no build step, no frameworks, no runtime dependencies;
+   - everything the app needs lives in `docs/` and must keep working offline — when you add a file, add it to the `ASSETS` list in `docs/sw.js`;
+   - every text shown to the player exists in all 9 languages: interface strings in `tools/build-locales.mjs` (then run `node tools/build-locales.mjs`), game texts in the game's JSON file;
+   - a new game should be a JSON file in `docs/games/` whenever an existing engine can play it; a new engine only for a new family of games;
+   - the table must stay usable with touch, mouse and keyboard, on a phone as well as on a desktop.
 5. Describe **why** the change is needed, not just what it changes — this makes review much faster.
 6. Open the pull request using the provided template.
 

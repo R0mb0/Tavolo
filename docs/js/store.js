@@ -4,7 +4,7 @@ const KS = 'tavolo.settings.v1', KT = 'tavolo.stats.v1';
 const load = k => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch { return {}; } };
 const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage unavailable */ } };
 
-export const settings = Object.assign({ lang: 'auto', theme: 'auto', cb: false, zoom: 1, last: {} }, load(KS));
+export const settings = Object.assign({ lang: 'auto', theme: 'auto', cb: false, zoom: 1, speed: 1, sound: true, last: {} }, load(KS));
 export const saveSettings = () => save(KS, settings);
 
 let stats = load(KT);

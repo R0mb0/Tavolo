@@ -3,9 +3,24 @@
   "version": 1,
   "deck": "italian",
   "engine": "fishing",
-  "players": { "options": [2, 3, 4], "default": 2, "teamsAt": [] },
-  "difficulty": ["easy", "medium", "hard"],
-  "setup": { "handSize": 3, "tableCards": 4 },
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 2,
+    "teamsAt": []
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 3,
+    "tableCards": 4
+  },
   "rules": {
     "captureSums": false,
     "singleFirst": true,
@@ -13,7 +28,9 @@
     "steal": true,
     "lastCaptureTakesTable": true
   },
-  "scoring": { "type": "mostCards" },
+  "scoring": {
+    "type": "mostCards"
+  },
   "i18n": {
     "en": {
       "name": "Rubamazzo",
@@ -23,6 +40,12 @@
         "If your card matches the top card of an opponent's pile, you can steal their whole pile.",
         "If your card captures nothing it stays on the table.",
         "When all the cards have been played, whoever has the most cards wins."
+      ],
+      "goal": "Have more cards in your pile than anyone else when the deck runs out.",
+      "tips": [
+        "Watch the top card of every pile: it is the key to stealing it.",
+        "A big pile is a big target: think about which card you leave on top of yours.",
+        "If you hold two cards of the same value, lay one down and capture it with the other on your next turn."
       ]
     },
     "it": {
@@ -33,6 +56,12 @@
         "Se la tua carta è uguale a quella in cima al mazzetto di un avversario, puoi rubargli tutto il mazzetto.",
         "Se la tua carta non prende nulla resta sul tavolo.",
         "Quando tutte le carte sono state giocate, vince chi ha più carte."
+      ],
+      "goal": "Avere nel proprio mazzetto più carte di tutti quando il mazzo finisce.",
+      "tips": [
+        "Tieni d’occhio la carta in cima a ogni mazzetto: è la chiave per rubarlo.",
+        "Un mazzetto grosso fa gola a tutti: pensa a quale carta lasci in cima al tuo.",
+        "Se hai due carte dello stesso valore, calane una e prendila con l’altra al turno successivo."
       ]
     },
     "es": {
@@ -43,6 +72,12 @@
         "Si tu carta coincide con la de arriba del montón de un rival, puedes robarle todo el montón.",
         "Si tu carta no captura nada, se queda en la mesa.",
         "Cuando se han jugado todas las cartas, gana quien tiene más."
+      ],
+      "goal": "Tener en tu montón más cartas que nadie cuando se acabe el mazo.",
+      "tips": [
+        "Fíjate en la carta de arriba de cada montón: es la llave para robarlo.",
+        "Un montón grande es un gran objetivo: piensa qué carta dejas arriba del tuyo.",
+        "Si tienes dos cartas del mismo valor, deja una en la mesa y captúrala con la otra en tu siguiente turno."
       ]
     },
     "fr": {
@@ -53,6 +88,12 @@
         "Si votre carte est identique à celle du dessus du paquet d'un adversaire, vous pouvez lui voler tout son paquet.",
         "Si votre carte ne ramasse rien, elle reste sur la table.",
         "Quand toutes les cartes ont été jouées, celui qui en a le plus gagne."
+      ],
+      "goal": "Avoir plus de cartes que les autres dans son paquet quand la pioche est épuisée.",
+      "tips": [
+        "Surveillez la carte du dessus de chaque paquet : c’est la clé pour le voler.",
+        "Un gros paquet attire les convoitises : pensez à la carte que vous laissez sur le vôtre.",
+        "Si vous avez deux cartes de même valeur, posez-en une et ramassez-la avec l’autre au tour suivant."
       ]
     },
     "de": {
@@ -63,6 +104,12 @@
         "Passt deine Karte zur obersten Karte eines gegnerischen Stapels, darfst du den ganzen Stapel stehlen.",
         "Fängt deine Karte nichts, bleibt sie auf dem Tisch.",
         "Sind alle Karten gespielt, gewinnt, wer die meisten Karten hat."
+      ],
+      "goal": "Mehr Karten im eigenen Stapel haben als alle anderen, wenn der Nachziehstapel leer ist.",
+      "tips": [
+        "Achte auf die oberste Karte jedes Stapels: Sie ist der Schlüssel zum Stehlen.",
+        "Ein großer Stapel ist ein großes Ziel: Überlege, welche Karte du oben liegen lässt.",
+        "Hast du zwei Karten mit gleichem Wert, lege eine ab und fange sie im nächsten Zug mit der anderen."
       ]
     },
     "pt": {
@@ -73,6 +120,12 @@
         "Se a sua carta for igual à do topo do monte de um adversário, pode roubar o monte inteiro.",
         "Se a sua carta não captura nada, fica na mesa.",
         "Quando todas as cartas forem jogadas, ganha quem tiver mais cartas."
+      ],
+      "goal": "Ter no seu monte mais cartas do que todos quando o baralho acabar.",
+      "tips": [
+        "Fique de olho na carta do topo de cada monte: é a chave para roubá-lo.",
+        "Um monte grande é um grande alvo: pense em que carta deixa no topo do seu.",
+        "Se tiver duas cartas do mesmo valor, deixe uma na mesa e capture-a com a outra na próxima vez."
       ]
     },
     "zh": {
@@ -83,6 +136,12 @@
         "如果你的牌与对手牌堆顶的牌点数相同，可以抢走对方整个牌堆。",
         "如果什么都收不到，这张牌留在桌上。",
         "所有牌打完后，牌最多的玩家获胜。"
+      ],
+      "goal": "牌堆发完时，自己牌堆里的牌比其他人都多。",
+      "tips": [
+        "留意每个牌堆顶上的牌：它是抢走牌堆的关键。",
+        "牌堆越大越容易被盯上：想好把哪张牌留在自己牌堆顶上。",
+        "如果手里有两张点数相同的牌，先打出一张，下一回合再用另一张收回。"
       ]
     },
     "ja": {
@@ -93,6 +152,12 @@
         "出したカードが相手の山の一番上と同じ数なら、その山を丸ごと奪えます。",
         "何も取れなければ、そのカードは場に残ります。",
         "すべてのカードを出し終えたとき、枚数が最も多い人の勝ちです。"
+      ],
+      "goal": "山札がなくなったとき、自分の山のカードが誰よりも多いことを目指します。",
+      "tips": [
+        "それぞれの山の一番上のカードに注目しましょう。山を奪う鍵です。",
+        "大きな山は狙われます。自分の山の一番上にどのカードを残すか考えましょう。",
+        "同じ数のカードを2枚持っていたら、1枚を場に出し、次の番にもう1枚で取りましょう。"
       ]
     },
     "ko": {
@@ -103,7 +168,28 @@
         "낸 카드가 상대 더미 맨 위 카드와 숫자가 같으면 그 더미를 통째로 빼앗을 수 있습니다.",
         "아무것도 가져오지 못하면 그 카드는 바닥에 남습니다.",
         "모든 카드를 다 내면 카드가 가장 많은 사람이 이깁니다."
+      ],
+      "goal": "덱이 다 떨어졌을 때 내 더미의 카드가 누구보다 많은 것이 목표입니다.",
+      "tips": [
+        "각 더미의 맨 위 카드를 잘 보세요. 더미를 빼앗는 열쇠입니다.",
+        "더미가 클수록 표적이 됩니다. 내 더미 맨 위에 어떤 카드를 남길지 생각하세요.",
+        "같은 숫자 카드를 두 장 들고 있다면 한 장을 바닥에 내고 다음 차례에 다른 한 장으로 가져오세요."
       ]
     }
+  },
+  "manual": {
+    "examples": [
+      {
+        "play": "5-spade",
+        "table": [
+          "5-coppe",
+          "2-denari",
+          "9-bastoni"
+        ],
+        "take": [
+          "5-coppe"
+        ]
+      }
+    ]
   }
 }

@@ -1,10 +1,10 @@
 // Service worker: offline support (stale-while-revalidate). Bump VERSION on every release.
-const VERSION = 'tavolo-v0.1.0';
+const VERSION = 'tavolo-v0.2.0';
 const ASSETS = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
-  'js/app.js', 'js/cards.js', 'js/i18n.js', 'js/store.js', 'js/table.js', 'js/ui.js',
+  'js/app.js', 'js/cards.js', 'js/i18n.js', 'js/store.js', 'js/table.js', 'js/ui.js', 'js/manual.js', 'js/sfx.js',
   'js/engines/index.js', 'js/engines/trick.js', 'js/engines/fishing.js',
-  'games/index.json', 'games/briscola.json', 'games/scopa.json', 'games/rubamazzo.json',
+  'games/index.json', 'games/briscola.json', 'games/scopa.json', 'games/scopone.json', 'games/rubamazzo.json',
   'locales/en.json', 'locales/it.json', 'locales/es.json', 'locales/fr.json', 'locales/de.json',
   'locales/pt.json', 'locales/zh.json', 'locales/ja.json', 'locales/ko.json',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png'

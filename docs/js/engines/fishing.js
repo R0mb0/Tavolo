@@ -137,7 +137,7 @@ export function createFishingGame(def, opts) {
   };
 
   // ---------- bots ----------
-  g.botMove = () => {
+  g.botMove = (level = diff) => {
     const i = g.current, hand = P[i].hand, moves = [];
     for (const c of hand) {
       const o = g.options(c.id, i);
@@ -145,8 +145,8 @@ export function createFishingGame(def, opts) {
       else o.forEach(opt => moves.push({ id: c.id, opt, c }));
     }
     const out = m => ({ id: m.id, opt: m.opt });
-    if (diff === 'easy' && rng() < 0.5) return out(moves[Math.floor(rng() * moves.length)]);
-    const smart = diff === 'hard';
+    if (level === 'easy' && rng() < 0.5) return out(moves[Math.floor(rng() * moves.length)]);
+    const smart = level === 'hard';
     const tsum = table.reduce((a, x) => a + x.r, 0);
     const unseen = r => Math.max(0, 4 - (seenR[r] || 0) - hand.filter(x => x.r === r).length);
     const pair = c => hand.filter(x => x.r === c.r).length > 1;
@@ -182,6 +182,8 @@ export function createFishingGame(def, opts) {
     for (const m of moves) { const v = ev(m) + rng() * 0.01; if (v > top) { top = v; best = m; } }
     return out(best);
   };
+
+  g.hint = () => g.botMove('hard');
 
   return g;
 }

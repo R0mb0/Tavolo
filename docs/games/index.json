@@ -2,7 +2,7 @@
   "decks": [
     {
       "id": "italian",
-      "games": ["briscola", "scopa", "rubamazzo"],
+      "games": ["briscola", "scopa", "scopone", "rubamazzo"],
       "planned": ["Solitario"]
     },
     {

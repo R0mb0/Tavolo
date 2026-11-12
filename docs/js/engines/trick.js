@@ -110,17 +110,19 @@ export function createTrickGame(def, opts) {
     return best;
   }
 
-  g.botMove = () => {
+  g.botMove = (level = diff) => {
     const i = g.current, legal = g.legal(i);
     const rnd = () => legal[Math.floor(rng() * legal.length)];
-    if (diff === 'easy' && rng() < 0.55) return { id: rnd().id };
-    if (diff === 'medium' && rng() < 0.12) return { id: rnd().id };
-    if (diff === 'hard' && n === 2 && !deck.length && !R.followSuit) {
+    if (level === 'easy' && rng() < 0.55) return { id: rnd().id };
+    if (level === 'medium' && rng() < 0.12) return { id: rnd().id };
+    if (level === 'hard' && n === 2 && !deck.length && !R.followSuit) {
       const hands = [P[0].hand, P[1].hand];
       return { id: solve(hands, g.trick.length ? g.trick[0].card : null, i, i).card.id };
     }
     return { id: heuristic(i, legal).id };
   };
+
+  g.hint = () => g.botMove('hard');
 
   return g;
 }

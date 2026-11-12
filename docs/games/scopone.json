@@ -1,0 +1,220 @@
+{
+  "id": "scopone",
+  "version": 1,
+  "deck": "italian",
+  "engine": "fishing",
+  "players": {
+    "options": [
+      4
+    ],
+    "default": 4,
+    "teamsAt": [
+      4
+    ]
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 10,
+    "tableCards": 0
+  },
+  "rules": {
+    "captureSums": true,
+    "singleFirst": true,
+    "sweeps": true,
+    "steal": false,
+    "lastCaptureTakesTable": true
+  },
+  "scoring": {
+    "type": "scopa",
+    "items": [
+      "cards",
+      "coins",
+      "settebello",
+      "primiera",
+      "sweeps"
+    ],
+    "coinSuit": "denari",
+    "settebello": "7-denari",
+    "primiera": {
+      "1": 16,
+      "2": 12,
+      "3": 13,
+      "4": 14,
+      "5": 15,
+      "6": 18,
+      "7": 21,
+      "8": 10,
+      "9": 10,
+      "10": 10
+    },
+    "target": 11
+  },
+  "i18n": {
+    "en": {
+      "name": "Scopone scientifico",
+      "tagline": "Scopa for four in two teams: all 40 cards are dealt and the table starts empty.",
+      "rules": [
+        "Four players in two teams; your partner sits opposite you. Each player receives 10 cards and the table starts empty.",
+        "Captures work as in Scopa: take a card of the same value, or several cards that add up to it; a single matching card has priority. Clearing the table is a scopa.",
+        "Scoring is the same as in Scopa: cards, coins, seven of coins, primiera and one point for every scopa. The first team to reach 11 points wins."
+      ],
+      "goal": "Work with your partner to capture the most valuable cards and reach 11 points before the other team.",
+      "tips": [
+        "The table starts empty, so the first cards are simply laid down: choose ones the opponents are unlikely to match.",
+        "All 40 cards are in play from the start: by counting what has been played you can work out what the others still hold.",
+        "Help your partner: leave on the table cards that they can capture, not the opponents."
+      ]
+    },
+    "it": {
+      "name": "Scopone scientifico",
+      "tagline": "La scopa in quattro, a coppie: tutte le 40 carte in mano e tavolo vuoto.",
+      "rules": [
+        "Quattro giocatori in due coppie; il compagno siede di fronte a te. Ognuno riceve 10 carte e il tavolo parte vuoto.",
+        "Le prese funzionano come a Scopa: prendi una carta dello stesso valore o più carte la cui somma è uguale; la carta singola ha la precedenza. Svuotare il tavolo è una scopa.",
+        "Il punteggio è quello della Scopa: carte, denari, settebello, primiera e un punto per ogni scopa. Vince la coppia che arriva per prima a 11 punti."
+      ],
+      "goal": "Gioca d’intesa con il compagno per prendere le carte migliori e arrivare a 11 punti prima dell’altra coppia.",
+      "tips": [
+        "Il tavolo parte vuoto, quindi le prime carte vengono solo calate: scegli quelle che gli avversari difficilmente possono prendere.",
+        "Tutte le 40 carte sono in gioco dall’inizio: contando quelle uscite puoi capire cosa hanno ancora in mano gli altri.",
+        "Aiuta il compagno: lascia sul tavolo carte che può prendere lui, non gli avversari."
+      ]
+    },
+    "es": {
+      "name": "Scopone scientifico",
+      "tagline": "La scopa para cuatro, por parejas: se reparten las 40 cartas y la mesa empieza vacía.",
+      "rules": [
+        "Cuatro jugadores en dos parejas; tu compañero se sienta enfrente. Cada uno recibe 10 cartas y la mesa empieza vacía.",
+        "Las capturas son como en la Scopa: llévate una carta del mismo valor o varias que sumen ese valor; la carta suelta tiene prioridad. Vaciar la mesa es una scopa.",
+        "La puntuación es la de la Scopa: cartas, oros, siete de oros, primiera y un punto por cada scopa. Gana la pareja que llega primero a 11 puntos."
+      ],
+      "goal": "Colabora con tu compañero para capturar las mejores cartas y llegar a 11 puntos antes que la otra pareja.",
+      "tips": [
+        "La mesa empieza vacía, así que las primeras cartas solo se dejan: elige las que los rivales difícilmente puedan capturar.",
+        "Las 40 cartas están en juego desde el principio: contando las que han salido puedes deducir qué tienen los demás.",
+        "Ayuda a tu compañero: deja en la mesa cartas que pueda capturar él, no los rivales."
+      ]
+    },
+    "fr": {
+      "name": "Scopone scientifico",
+      "tagline": "La scopa à quatre, en deux équipes : les 40 cartes sont distribuées et la table est vide.",
+      "rules": [
+        "Quatre joueurs en deux équipes ; votre partenaire est assis en face. Chacun reçoit 10 cartes et la table est vide au départ.",
+        "Les prises se font comme à la Scopa : ramassez une carte de même valeur ou plusieurs cartes dont la somme est égale ; la carte seule est prioritaire. Vider la table est une scopa.",
+        "Le décompte est celui de la Scopa : cartes, deniers, sept de deniers, primiera et un point par scopa. La première équipe à 11 points gagne."
+      ],
+      "goal": "Jouez avec votre partenaire pour ramasser les meilleures cartes et atteindre 11 points avant l’autre équipe.",
+      "tips": [
+        "La table est vide au départ, les premières cartes sont donc simplement posées : choisissez celles que les adversaires auront du mal à ramasser.",
+        "Les 40 cartes sont en jeu dès le début : en comptant celles déjà jouées, vous pouvez deviner ce que les autres ont encore en main.",
+        "Aidez votre partenaire : laissez sur la table des cartes qu’il peut ramasser, pas les adversaires."
+      ]
+    },
+    "de": {
+      "name": "Scopone scientifico",
+      "tagline": "Scopa zu viert in zwei Teams: Alle 40 Karten werden verteilt, der Tisch ist anfangs leer.",
+      "rules": [
+        "Vier Spieler in zwei Teams; dein Partner sitzt dir gegenüber. Jeder erhält 10 Karten, der Tisch ist anfangs leer.",
+        "Gefangen wird wie bei Scopa: eine Karte mit gleichem Wert oder mehrere Karten mit passender Summe; die einzelne Karte hat Vorrang. Den Tisch abzuräumen ist eine Scopa.",
+        "Gewertet wird wie bei Scopa: Karten, Münzen, Münz-Sieben, Primiera und ein Punkt pro Scopa. Das Team, das zuerst 11 Punkte erreicht, gewinnt."
+      ],
+      "goal": "Spiele mit deinem Partner zusammen, fange die wertvollsten Karten und erreiche vor dem anderen Team 11 Punkte.",
+      "tips": [
+        "Der Tisch ist anfangs leer, die ersten Karten werden also nur abgelegt: Wähle solche, die die Gegner kaum fangen können.",
+        "Alle 40 Karten sind von Anfang an im Spiel: Wer mitzählt, weiß, was die anderen noch auf der Hand haben.",
+        "Hilf deinem Partner: Lass Karten liegen, die er fangen kann – nicht die Gegner."
+      ]
+    },
+    "pt": {
+      "name": "Scopone scientifico",
+      "tagline": "A scopa para quatro, em duplas: as 40 cartas são distribuídas e a mesa começa vazia.",
+      "rules": [
+        "Quatro jogadores em duas duplas; o seu parceiro senta-se à sua frente. Cada um recebe 10 cartas e a mesa começa vazia.",
+        "As capturas são como na Scopa: leve uma carta do mesmo valor ou várias que somem esse valor; a carta única tem prioridade. Limpar a mesa é uma scopa.",
+        "A pontuação é a da Scopa: cartas, ouros, sete de ouros, primiera e um ponto por scopa. Ganha a dupla que chegar primeiro a 11 pontos."
+      ],
+      "goal": "Jogue em conjunto com o seu parceiro para capturar as melhores cartas e chegar a 11 pontos antes da outra dupla.",
+      "tips": [
+        "A mesa começa vazia, por isso as primeiras cartas são apenas baixadas: escolha as que os adversários dificilmente capturam.",
+        "As 40 cartas estão em jogo desde o início: contando as que saíram, dá para saber o que os outros ainda têm.",
+        "Ajude o seu parceiro: deixe na mesa cartas que ele possa capturar, não os adversários."
+      ]
+    },
+    "zh": {
+      "name": "Scopone scientifico",
+      "tagline": "四人两队的 Scopa：40 张牌全部发完，桌面一开始是空的。",
+      "rules": [
+        "四名玩家分成两队，队友坐在你的对面。每人发 10 张牌，桌面一开始是空的。",
+        "收牌方式与 Scopa 相同：收走点数相同的一张牌，或点数之和相同的几张牌；单张相同的牌优先。清空桌面即为 scopa。",
+        "计分与 Scopa 相同：牌数、钱币、钱币七、primiera，每次 scopa 加 1 分。先达到 11 分的队伍获胜。"
+      ],
+      "goal": "与队友配合，收到最有价值的牌，抢在对方队伍之前拿到 11 分。",
+      "tips": [
+        "桌面一开始是空的，最先打出的牌只能放在桌上：选对手不容易收走的牌。",
+        "40 张牌从一开始就全部在场：数一数已出的牌，就能推断其他人手里还有什么。",
+        "帮助队友：把队友能收、对手收不了的牌留在桌上。"
+      ]
+    },
+    "ja": {
+      "name": "スコポーネ",
+      "tagline": "4人2チームのスコーパ。40枚すべてを配り、場は空から始まります。",
+      "rules": [
+        "4人が2チームに分かれ、味方は向かいに座ります。各自10枚ずつ配られ、場は空から始まります。",
+        "取り方はスコーパと同じです。同じ数の1枚、または合計が同じになる複数枚を取ります。同じ数の1枚が優先です。場を空にするとスコーパです。",
+        "得点もスコーパと同じです。枚数、コイン、コインの7、プリミエラ、そしてスコーパ1回につき1点。先に11点に達したチームの勝ちです。"
+      ],
+      "goal": "味方と協力して価値の高いカードを取り、相手チームより先に11点に到達することを目指します。",
+      "tips": [
+        "場は空から始まるので、最初のカードは置くだけです。相手に取られにくいカードを選びましょう。",
+        "40枚すべてが最初から使われます。出たカードを数えれば、他の人の手札を推測できます。",
+        "味方を助けましょう。相手ではなく、味方が取れるカードを場に残します。"
+      ]
+    },
+    "ko": {
+      "name": "스코포네",
+      "tagline": "4인 2팀 스코파. 40장을 모두 나누고 바닥은 빈 채로 시작합니다.",
+      "rules": [
+        "네 명이 두 팀으로 나뉘며 파트너는 맞은편에 앉습니다. 각자 10장씩 받고 바닥은 빈 채로 시작합니다.",
+        "카드를 가져오는 방법은 스코파와 같습니다. 같은 숫자 한 장 또는 합이 같은 여러 장을 가져오며, 같은 숫자 한 장이 우선입니다. 바닥을 비우면 스코파입니다.",
+        "점수도 스코파와 같습니다. 카드 수, 동전, 동전 7, 프리미에라, 그리고 스코파마다 1점. 먼저 11점에 도달한 팀이 이깁니다."
+      ],
+      "goal": "파트너와 협력해 가치 있는 카드를 가져오고 상대 팀보다 먼저 11점에 도달하는 것이 목표입니다.",
+      "tips": [
+        "바닥이 빈 채로 시작하므로 처음 카드는 그냥 내려놓게 됩니다. 상대가 가져가기 어려운 카드를 고르세요.",
+        "40장이 처음부터 모두 쓰입니다. 나온 카드를 세면 다른 사람의 손패를 짐작할 수 있습니다.",
+        "파트너를 도우세요. 상대가 아니라 파트너가 가져갈 수 있는 카드를 바닥에 남기세요."
+      ]
+    }
+  },
+  "manual": {
+    "examples": [
+      {
+        "play": "7-spade",
+        "table": [
+          "3-coppe",
+          "4-denari",
+          "9-bastoni"
+        ],
+        "take": [
+          "3-coppe",
+          "4-denari"
+        ]
+      },
+      {
+        "play": "10-denari",
+        "table": [
+          "10-coppe",
+          "6-spade",
+          "4-bastoni"
+        ],
+        "take": [
+          "10-coppe"
+        ]
+      }
+    ]
+  }
+}
