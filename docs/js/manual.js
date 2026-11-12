@@ -20,6 +20,8 @@ export function manualHTML(def) {
   else {
     tb = ['man.t.hand', 'man.t.opps', 'man.t.turn', 'man.t.deck'];
     if (kind === 'trick') { if (R.trump !== 'none') tb.push('man.t.trump'); tb.push('man.t.center.trick'); }
+    else if (kind === 'called') tb = ['man.t.hand', 'man.t.opps', 'man.t.turn', 'man.k.auction', 'man.k.card', 'man.t.center.trick'];
+    else if (kind === 'banking') tb = ['man.b.bank', 'man.b.you', 'man.b.chips'];
     else if (kind === 'shedding') tb.push('man.d.pile', 'man.d.table');
     else if (kind === 'machiavelli') tb = ['man.t.opps', 'man.t.turn', 'man.m.table', 'man.m.buttons', 'man.m.draw'];
     else if (kind === 'rummy' || kind === 'burraco') tb = ['man.t.opps', 'man.t.turn', 'man.r.piles', 'man.r.melds', 'man.r.hand'];
@@ -47,7 +49,7 @@ export function manualHTML(def) {
   }
 
   out += sec(t('man.tips'), list(gt(def, 'tips')));
-  const ctl = kind === 'patience' ? ['man.c.hint', 'man.c.undo', 'man.c.leave', 'man.c.settings'] : ['man.c.hint', 'man.c.leave', 'man.c.settings'];
+  const ctl = kind === 'banking' ? ['man.c.leave', 'man.c.settings'] : kind === 'patience' ? ['man.c.hint', 'man.c.undo', 'man.c.leave', 'man.c.settings'] : ['man.c.hint', 'man.c.leave', 'man.c.settings'];
   out += sec(t('man.controls'), list(ctl.map(k => t(k))));
   return `<div class="manual">${out}</div>`;
 }

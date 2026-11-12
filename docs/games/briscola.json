@@ -63,7 +63,8 @@
         "Each player holds 3 cards. The card turned face up next to the deck sets the trump suit (briscola).",
         "Play one card per turn; you never have to follow suit. The highest card of the suit led wins the trick, unless a trump is played.",
         "Card order: Ace, Three, King, Knight, Knave, 7, 6, 5, 4, 2. Points: Ace 11, Three 10, King 4, Knight 3, Knave 2.",
-        "After each trick everyone draws a card, winner first. Whoever collects more than 60 of the 120 points wins."
+        "After each trick everyone draws a card, winner first. Whoever collects more than 60 of the 120 points wins.",
+        "In the options you can ask for a longer match: the first side to win two or three deals wins."
       ],
       "goal": "Win the tricks that contain valuable cards and collect more than 60 of the 120 points.",
       "tips": [
@@ -79,7 +80,8 @@
         "Ogni giocatore ha 3 carte. La carta scoperta accanto al mazzo indica il seme di briscola.",
         "Si gioca una carta a turno; non c'è obbligo di rispondere al seme. Vince la presa la carta più alta del seme d'uscita, a meno che non venga giocata una briscola.",
         "Ordine delle carte: Asso, Tre, Re, Cavallo, Fante, 7, 6, 5, 4, 2. Punti: Asso 11, Tre 10, Re 4, Cavallo 3, Fante 2.",
-        "Dopo ogni presa tutti pescano una carta, per primo chi ha vinto. Vince chi supera 60 punti su 120."
+        "Dopo ogni presa tutti pescano una carta, per primo chi ha vinto. Vince chi supera 60 punti su 120.",
+        "Nelle opzioni puoi scegliere una partita più lunga: vince chi si aggiudica per primo due o tre mani."
       ],
       "goal": "Vinci le prese che contengono carte di valore e raccogli più di 60 dei 120 punti.",
       "tips": [
@@ -95,7 +97,8 @@
         "Cada jugador tiene 3 cartas. La carta descubierta junto al mazo marca el palo de triunfo.",
         "Se juega una carta por turno; no es obligatorio seguir el palo. Gana la baza la carta más alta del palo de salida, salvo que se juegue un triunfo.",
         "Orden: As, Tres, Rey, Caballo, Sota, 7, 6, 5, 4, 2. Puntos: As 11, Tres 10, Rey 4, Caballo 3, Sota 2.",
-        "Tras cada baza todos roban una carta, primero el ganador. Gana quien supera 60 de los 120 puntos."
+        "Tras cada baza todos roban una carta, primero el ganador. Gana quien supera 60 de los 120 puntos.",
+        "En las opciones puedes elegir una partida más larga: gana quien se lleva primero dos o tres manos."
       ],
       "goal": "Gana las bazas que contienen cartas de valor y reúne más de 60 de los 120 puntos.",
       "tips": [
@@ -111,7 +114,8 @@
         "Chaque joueur a 3 cartes. La carte retournée près de la pioche indique l'atout.",
         "On joue une carte à son tour ; on n'est jamais obligé de fournir. La plus forte carte de la couleur demandée remporte le pli, sauf si un atout est joué.",
         "Ordre : As, Trois, Roi, Cavalier, Valet, 7, 6, 5, 4, 2. Points : As 11, Trois 10, Roi 4, Cavalier 3, Valet 2.",
-        "Après chaque pli, chacun pioche une carte, le gagnant en premier. Il faut dépasser 60 points sur 120 pour gagner."
+        "Après chaque pli, chacun pioche une carte, le gagnant en premier. Il faut dépasser 60 points sur 120 pour gagner.",
+        "Dans les options, vous pouvez choisir une partie plus longue : le premier camp à gagner deux ou trois donnes l’emporte."
       ],
       "goal": "Remportez les plis qui contiennent des cartes de valeur et réunissez plus de 60 des 120 points.",
       "tips": [
@@ -127,7 +131,8 @@
         "Jeder Spieler hält 3 Karten. Die offen neben dem Stapel liegende Karte bestimmt die Trumpffarbe.",
         "Reihum wird eine Karte gespielt; es besteht kein Farbzwang. Die höchste Karte der angespielten Farbe gewinnt den Stich, außer es wird Trumpf gespielt.",
         "Rangfolge: Ass, Drei, König, Reiter, Bube, 7, 6, 5, 4, 2. Punkte: Ass 11, Drei 10, König 4, Reiter 3, Bube 2.",
-        "Nach jedem Stich ziehen alle eine Karte, der Gewinner zuerst. Wer mehr als 60 der 120 Punkte sammelt, gewinnt."
+        "Nach jedem Stich ziehen alle eine Karte, der Gewinner zuerst. Wer mehr als 60 der 120 Punkte sammelt, gewinnt.",
+        "In den Optionen kannst du eine längere Partie wählen: Wer zuerst zwei oder drei Spiele gewinnt, siegt."
       ],
       "goal": "Gewinne die Stiche mit wertvollen Karten und sammle mehr als 60 der 120 Punkte.",
       "tips": [
@@ -143,7 +148,8 @@
         "Cada jogador tem 3 cartas. A carta virada ao lado do monte indica o trunfo.",
         "Joga-se uma carta por vez; não é obrigatório seguir o naipe. Ganha a vaza a carta mais alta do naipe de saída, a menos que se jogue um trunfo.",
         "Ordem: Ás, Três, Rei, Cavalo, Valete, 7, 6, 5, 4, 2. Pontos: Ás 11, Três 10, Rei 4, Cavalo 3, Valete 2.",
-        "Depois de cada vaza todos compram uma carta, primeiro o vencedor. Ganha quem passar de 60 dos 120 pontos."
+        "Depois de cada vaza todos compram uma carta, primeiro o vencedor. Ganha quem passar de 60 dos 120 pontos.",
+        "Nas opções pode escolher uma partida mais longa: ganha quem vencer primeiro duas ou três mãos."
       ],
       "goal": "Ganhe as vazas que têm cartas de valor e junte mais de 60 dos 120 pontos.",
       "tips": [
@@ -159,7 +165,8 @@
         "每人 3 张手牌。牌堆旁翻开的那张牌决定王牌花色。",
         "每回合出一张牌，不必跟花色。领出花色中最大的牌赢得这一墩，除非有人出王牌。",
         "大小顺序：A、3、国王、骑士、侍从、7、6、5、4、2。分值：A 11，3 10，国王 4，骑士 3，侍从 2。",
-        "每墩之后所有人各摸一张牌，赢家先摸。总共 120 分，超过 60 分者获胜。"
+        "每墩之后所有人各摸一张牌，赢家先摸。总共 120 分，超过 60 分者获胜。",
+        "在选项中可以选择更长的比赛：先赢下两局或三局的一方获胜。"
       ],
       "goal": "赢下含有高分牌的墩，在 120 分中拿到 60 分以上。",
       "tips": [
@@ -175,7 +182,8 @@
         "各プレイヤーの手札は3枚。山札の横に表向きで置かれたカードが切り札のスートを決めます。",
         "順番に1枚ずつ出します。スートを合わせる義務はありません。最初に出されたスートで最も強いカードが勝ち、切り札が出ればそちらが勝ちます。",
         "強さ：エース、3、キング、ナイト、ジャック、7、6、5、4、2。点数：エース11、3は10、キング4、ナイト3、ジャック2。",
-        "トリックごとに勝者から順に1枚ずつ引きます。120点中60点を超えた側の勝ちです。"
+        "トリックごとに勝者から順に1枚ずつ引きます。120点中60点を超えた側の勝ちです。",
+        "オプションで長い試合を選べます。先に2ディールまたは3ディール勝った側の勝ちです。"
       ],
       "goal": "点数の高いカードを含むトリックを取り、120点中60点を超えることを目指します。",
       "tips": [
@@ -191,7 +199,8 @@
         "각자 손패는 3장입니다. 덱 옆에 펼쳐 놓은 카드가 트럼프 무늬를 정합니다.",
         "차례마다 카드 한 장을 냅니다. 무늬를 따라 낼 의무는 없습니다. 처음 나온 무늬에서 가장 높은 카드가 이기며, 트럼프가 나오면 트럼프가 이깁니다.",
         "서열: 에이스, 3, 킹, 기사, 잭, 7, 6, 5, 4, 2. 점수: 에이스 11, 3은 10, 킹 4, 기사 3, 잭 2.",
-        "트릭이 끝나면 이긴 사람부터 한 장씩 뽑습니다. 120점 중 60점을 넘기면 승리합니다."
+        "트릭이 끝나면 이긴 사람부터 한 장씩 뽑습니다. 120점 중 60점을 넘기면 승리합니다.",
+        "옵션에서 더 긴 경기를 고를 수 있습니다. 먼저 두 판 또는 세 판을 이긴 쪽이 승리합니다."
       ],
       "goal": "점수가 높은 카드가 든 트릭을 따서 120점 중 60점을 넘기는 것이 목표입니다.",
       "tips": [
@@ -219,5 +228,10 @@
         "trump": "spade"
       }
     ]
-  }
+  },
+  "matchWins": [
+    1,
+    2,
+    3
+  ]
 }

@@ -1,0 +1,187 @@
+{
+  "id": "sette-e-mezzo",
+  "version": 1,
+  "deck": "italian",
+  "engine": "banking",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 2,
+    "teamsAt": []
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "rules": {
+    "limit": 7.5,
+    "values": {
+      "8": 0.5,
+      "9": 0.5,
+      "10": 0.5
+    },
+    "wild": "10-denari",
+    "bankStands": 5,
+    "chips": 10,
+    "rounds": 10
+  },
+  "i18n": {
+    "en": {
+      "name": "Sette e mezzo",
+      "tagline": "Beat the bank: get as close as you can to seven and a half without going over.",
+      "rules": [
+        "Italian deck of 40 cards. Cards from Ace to 7 are worth their number; Knave, Knight and King are worth half a point. The King of coins is the wild card: it takes any whole value from 1 to 7.",
+        "Everyone, the bank included, receives one card face down and stakes one chip. In turn each player may ask for more cards, dealt face up, or stand.",
+        "If your total goes over seven and a half you are bust and lose your chip at once.",
+        "When all the players have finished, the bank turns its card over and draws: it stands on five or more. You win if the bank goes bust or if your total is higher; the bank wins ties.",
+        "Seven and a half made with just two cards pays double. After ten hands, the player with the most chips wins."
+      ],
+      "goal": "Get closer to seven and a half than the bank without going over, and finish with more chips than the other players.",
+      "tips": [
+        "With five or more it is usually wise to stand.",
+        "A court card is worth only half a point: asking for a card on six is risky, on four it is not.",
+        "The bank wins ties: an equal total is not enough."
+      ]
+    },
+    "it": {
+      "name": "Sette e mezzo",
+      "tagline": "Batti il banco: avvicinati il più possibile a sette e mezzo senza sballare.",
+      "rules": [
+        "Mazzo italiano da 40 carte. Le carte dall’Asso al 7 valgono il loro numero; Fante, Cavallo e Re valgono mezzo punto. Il Re di denari è la matta: prende qualsiasi valore intero da 1 a 7.",
+        "Tutti, banco compreso, ricevono una carta coperta e puntano un gettone. A turno ogni giocatore può chiedere altre carte, date scoperte, oppure stare.",
+        "Se il tuo totale supera sette e mezzo hai sballato e perdi subito il gettone.",
+        "Quando tutti i giocatori hanno finito, il banco scopre la sua carta e pesca: si ferma a cinque o più. Vinci se il banco sballa o se il tuo totale è più alto; a parità vince il banco.",
+        "Il sette e mezzo fatto con due sole carte paga doppio. Dopo dieci mani vince chi ha più gettoni."
+      ],
+      "goal": "Avvicinarsi a sette e mezzo più del banco senza superarlo, e finire con più gettoni degli altri giocatori.",
+      "tips": [
+        "Con cinque o più di solito conviene stare.",
+        "Una figura vale solo mezzo punto: chiedere carta con sei è rischioso, con quattro no.",
+        "A parità vince il banco: un totale uguale non basta."
+      ]
+    },
+    "es": {
+      "name": "Siete y media",
+      "tagline": "Gana a la banca: acércate todo lo posible a siete y media sin pasarte.",
+      "rules": [
+        "Baraja italiana de 40 cartas. Las cartas del As al 7 valen su número; Sota, Caballo y Rey valen medio punto. El Rey de oros es el comodín: toma cualquier valor entero del 1 al 7.",
+        "Todos, incluida la banca, reciben una carta tapada y apuestan una ficha. Por turnos cada jugador puede pedir más cartas, dadas boca arriba, o plantarse.",
+        "Si tu total supera siete y media te has pasado y pierdes la ficha al momento.",
+        "Cuando todos los jugadores han terminado, la banca descubre su carta y roba: se planta con cinco o más. Ganas si la banca se pasa o si tu total es mayor; en caso de empate gana la banca.",
+        "El siete y media con solo dos cartas paga doble. Después de diez manos gana quien tiene más fichas."
+      ],
+      "goal": "Acercarte a siete y media más que la banca sin pasarte, y terminar con más fichas que los demás jugadores.",
+      "tips": [
+        "Con cinco o más suele convenir plantarse.",
+        "Una figura vale solo medio punto: pedir carta con seis es arriesgado, con cuatro no.",
+        "En caso de empate gana la banca: un total igual no basta."
+      ]
+    },
+    "fr": {
+      "name": "Sette e mezzo",
+      "tagline": "Battez la banque : approchez le plus possible de sept et demi sans dépasser.",
+      "rules": [
+        "Jeu italien de 40 cartes. Les cartes de l’As au 7 valent leur nombre ; Valet, Cavalier et Roi valent un demi-point. Le Roi de deniers est la carte passe-partout : il prend n’importe quelle valeur entière de 1 à 7.",
+        "Chacun, banque comprise, reçoit une carte cachée et mise un jeton. À tour de rôle, chaque joueur peut demander d’autres cartes, données visibles, ou rester.",
+        "Si votre total dépasse sept et demi, vous sautez et perdez aussitôt votre jeton.",
+        "Quand tous les joueurs ont fini, la banque retourne sa carte et tire : elle s’arrête à cinq ou plus. Vous gagnez si la banque saute ou si votre total est plus élevé ; en cas d’égalité la banque gagne.",
+        "Sept et demi avec seulement deux cartes paie double. Après dix donnes, le joueur qui a le plus de jetons gagne."
+      ],
+      "goal": "Approcher de sept et demi plus que la banque sans dépasser, et finir avec plus de jetons que les autres joueurs.",
+      "tips": [
+        "Avec cinq ou plus, il est généralement sage de rester.",
+        "Une figure ne vaut qu’un demi-point : demander une carte à six est risqué, à quatre non.",
+        "La banque gagne les égalités : un total égal ne suffit pas."
+      ]
+    },
+    "de": {
+      "name": "Sette e mezzo",
+      "tagline": "Schlage die Bank: Komm so nah wie möglich an siebeneinhalb, ohne darüber zu gehen.",
+      "rules": [
+        "Italienisches Blatt mit 40 Karten. Karten von Ass bis 7 zählen ihren Zahlenwert; Bube, Reiter und König zählen einen halben Punkt. Der Münz-König ist die wilde Karte: Er nimmt jeden ganzen Wert von 1 bis 7 an.",
+        "Alle, auch die Bank, erhalten eine verdeckte Karte und setzen einen Chip. Reihum darf jeder Spieler weitere, offen gegebene Karten verlangen oder stehen bleiben.",
+        "Übersteigt deine Summe siebeneinhalb, hast du dich überkauft und verlierst sofort deinen Chip.",
+        "Wenn alle Spieler fertig sind, deckt die Bank ihre Karte auf und zieht: Sie bleibt bei fünf oder mehr stehen. Du gewinnst, wenn sich die Bank überkauft oder deine Summe höher ist; bei Gleichstand gewinnt die Bank.",
+        "Siebeneinhalb mit nur zwei Karten zahlt doppelt. Nach zehn Runden gewinnt, wer die meisten Chips hat."
+      ],
+      "goal": "Komm näher an siebeneinhalb als die Bank, ohne darüber zu gehen, und beende das Spiel mit mehr Chips als die anderen Spieler.",
+      "tips": [
+        "Mit fünf oder mehr ist Stehenbleiben meist klug.",
+        "Eine Bildkarte zählt nur einen halben Punkt: Bei sechs eine Karte zu nehmen ist riskant, bei vier nicht.",
+        "Bei Gleichstand gewinnt die Bank: Eine gleiche Summe reicht nicht."
+      ]
+    },
+    "pt": {
+      "name": "Sete e meio",
+      "tagline": "Vença a banca: aproxime-se o mais possível de sete e meio sem passar.",
+      "rules": [
+        "Baralho italiano de 40 cartas. As cartas do Ás ao 7 valem o seu número; Valete, Cavalo e Rei valem meio ponto. O Rei de ouros é o curinga: assume qualquer valor inteiro de 1 a 7.",
+        "Todos, incluindo a banca, recebem uma carta coberta e apostam uma ficha. À vez, cada jogador pode pedir mais cartas, dadas viradas para cima, ou ficar.",
+        "Se o seu total passar de sete e meio rebentou e perde logo a ficha.",
+        "Quando todos os jogadores terminam, a banca vira a sua carta e compra: fica com cinco ou mais. Ganha se a banca rebentar ou se o seu total for maior; em caso de empate ganha a banca.",
+        "Sete e meio só com duas cartas paga a dobrar. Depois de dez mãos ganha quem tiver mais fichas."
+      ],
+      "goal": "Aproximar-se de sete e meio mais do que a banca sem passar, e acabar com mais fichas do que os outros jogadores.",
+      "tips": [
+        "Com cinco ou mais, normalmente convém ficar.",
+        "Uma figura vale só meio ponto: pedir carta com seis é arriscado, com quatro não.",
+        "A banca ganha os empates: um total igual não chega."
+      ]
+    },
+    "zh": {
+      "name": "七点半",
+      "tagline": "战胜庄家：尽量接近七点半，但不要超过。",
+      "rules": [
+        "使用 40 张意大利牌。A 到 7 按牌面点数计，侍从、骑士和国王各算半点。钱币国王是万能牌：可以当作 1 到 7 的任意整数。",
+        "所有人（包括庄家）各发一张背面朝上的牌，并下注一枚筹码。玩家依次可以继续要牌（正面朝上发出），或者停牌。",
+        "如果总点数超过七点半就爆牌，立刻输掉筹码。",
+        "所有玩家结束后，庄家翻开自己的牌并补牌：到五点或以上就停。庄家爆牌或你的点数更高时你赢；点数相同庄家赢。",
+        "只用两张牌凑成七点半可赢双倍。十局之后筹码最多的玩家获胜。"
+      ],
+      "goal": "比庄家更接近七点半且不超过，并在结束时拥有比其他玩家更多的筹码。",
+      "tips": [
+        "五点或以上时，通常停牌更明智。",
+        "人头牌只算半点：六点时要牌很冒险，四点时则不然。",
+        "平局庄家赢：点数相同是不够的。"
+      ]
+    },
+    "ja": {
+      "name": "セッテ・エ・メッツォ",
+      "tagline": "親に勝とう。7.5を超えないように、できるだけ近づけます。",
+      "rules": [
+        "40枚のイタリアンデッキを使います。エースから7は数字どおり、ジャック・ナイト・キングは0.5点です。コインのキングはワイルドで、1から7の好きな整数になります。",
+        "親を含む全員が伏せたカードを1枚受け取り、チップを1枚賭けます。順番に、表向きで配られるカードをさらにもらうか、ステイするかを選びます。",
+        "合計が7.5を超えるとバストとなり、すぐにチップを失います。",
+        "全員が終わると親がカードを表にして引きます。親は5以上でステイします。親がバストするか、自分の合計のほうが大きければ勝ち。同点は親の勝ちです。",
+        "2枚だけで7.5を作ると2倍の配当です。10ハンド終了時にチップが最も多い人の勝ちです。"
+      ],
+      "goal": "7.5を超えずに親より近づけ、最終的に他のプレイヤーより多くのチップを持つことを目指します。",
+      "tips": [
+        "5以上ならステイするのが無難です。",
+        "絵札は0.5点しかありません。6でもう1枚引くのは危険ですが、4なら安全です。",
+        "同点は親の勝ちです。同じ合計では足りません。"
+      ]
+    },
+    "ko": {
+      "name": "세테 에 메초",
+      "tagline": "뱅커를 이기세요. 7.5를 넘지 않으면서 최대한 가깝게 만듭니다.",
+      "rules": [
+        "40장 이탈리아 덱을 씁니다. 에이스부터 7까지는 숫자대로, 잭·기사·킹은 0.5점입니다. 동전 킹은 와일드 카드로 1부터 7까지 원하는 정수가 됩니다.",
+        "뱅커를 포함한 모두가 뒷면 카드 한 장을 받고 칩 한 개를 겁니다. 차례대로 앞면으로 주는 카드를 더 받거나 스탠드합니다.",
+        "합계가 7.5를 넘으면 버스트가 되어 즉시 칩을 잃습니다.",
+        "모든 플레이어가 끝나면 뱅커가 카드를 공개하고 뽑습니다. 뱅커는 5 이상이면 멈춥니다. 뱅커가 버스트하거나 내 합계가 더 높으면 이깁니다. 동점이면 뱅커가 이깁니다.",
+        "카드 두 장만으로 7.5를 만들면 두 배를 받습니다. 열 판이 끝났을 때 칩이 가장 많은 사람이 이깁니다."
+      ],
+      "goal": "7.5를 넘지 않으면서 뱅커보다 가깝게 만들고, 다른 플레이어보다 많은 칩으로 끝내는 것이 목표입니다.",
+      "tips": [
+        "5 이상이면 보통 스탠드하는 편이 좋습니다.",
+        "그림 카드는 0.5점뿐입니다. 6에서 카드를 받는 것은 위험하지만 4에서는 그렇지 않습니다.",
+        "동점이면 뱅커가 이깁니다. 같은 합계로는 부족합니다."
+      ]
+    }
+  }
+}

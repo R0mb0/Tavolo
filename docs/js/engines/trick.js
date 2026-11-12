@@ -13,6 +13,7 @@ export function createTrickGame(def, opts) {
   const suits = DECKS[def.deck].suits;
   const hasTrump = R.trump !== 'none';
   const target = (def.win && def.win.target) || 0;     // 0 = single deal, otherwise match points to reach
+  const games = !target && opts.wins > 1 ? opts.wins : 0;   // or: a match won by the first side to win this many deals
   // Some games count in fractions (Tressette: thirds). Scores are kept in whole units and divided for display.
   const div = R.scoreDivisor || 1;
   const fmt = u => {
@@ -95,6 +96,15 @@ export function createTrickGame(def, opts) {
     const bonus = R.lastTrickPoints || 0;
     const cardUnits = score.slice();
     score[lastTeam] += bonus;
+    if (games) {
+      const top = Math.max(...score), w = score.filter(v => v === top).length === 1 ? score.indexOf(top) : -1;
+      const roundPts = score.map((_, t) => (t === w ? 1 : 0));
+      roundPts.forEach((v, t) => { totals[t] += v; });
+      g.summary = { round: g.round, rows: [{ key: 'tricks', vals: score.map(fmt), winner: w }], roundPts, totals: totals.slice() };
+      score.fill(0);
+      g.phase = Math.max(...totals) >= games ? 'over' : 'roundEnd';
+      return;
+    }
     if (!target) { g.phase = 'over'; return; }
     const roundPts = score.map((s, t) => Math.floor(s / div) + decl[t]);
     const rows = [{ key: 'tricks', vals: cardUnits.map(fmt), winner: -1 }];
@@ -113,14 +123,14 @@ export function createTrickGame(def, opts) {
     showScore: true, showPile: false,
     players: P.map((p, i) => {
       const t = teamOf(i);
-      return { hand: p.hand, handCount: p.hand.length, score: fmt(target ? (totals[t] + decl[t]) * div + score[t] : score[t]) };
+      return { hand: p.hand, handCount: p.hand.length, sweeps: games ? totals[t] : 0, score: fmt(target ? (totals[t] + decl[t]) * div + score[t] : score[t]) };
     }),
     center: g.trick.map(t => ({ card: t.card, p: t.p, hl: g.pending && t.p === g.winner })),
     deckCount: deck.length, trumpCard: deck.length && hasTrump ? trumpCard : null, trumpSuit: trump, staged: null
   });
 
   g.result = () => {
-    const scores = target ? totals.slice() : score.map(s => Math.floor(s / div));
+    const scores = target || games ? totals.slice() : score.map(s => Math.floor(s / div));
     const me = teamOf(0), mine = scores[me], other = Math.max(...scores.filter((_, t) => t !== me));
     return { outcome: mine > other ? 'win' : mine < other ? 'lose' : 'tie', score: mine, scores };
   };

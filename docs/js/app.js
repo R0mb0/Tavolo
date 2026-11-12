@@ -6,6 +6,7 @@ import { startTable } from './table.js';
 import { startSolitaire } from './solitaire.js';
 import { startRummy } from './rummy.js';
 import { startMachiavelli } from './machiavelli.js';
+import { startBanking } from './banking.js';
 import { dialog, esc } from './ui.js';
 import { manualHTML } from './manual.js';
 
@@ -111,7 +112,8 @@ function optsFor(def) {
   const o = settings.last[def.id] || {};
   return {
     players: def.players.options.includes(o.players) ? o.players : def.players.default,
-    difficulty: def.difficulty.includes(o.difficulty) ? o.difficulty : 'medium'
+    difficulty: def.difficulty.includes(o.difficulty) ? o.difficulty : 'medium',
+    wins: def.matchWins ? (def.matchWins.includes(o.wins) ? o.wins : def.matchWins[0]) : 1
   };
 }
 
@@ -125,7 +127,8 @@ function screenSetup(id) {
     `</div><small>${t('setup.playersHint', { n: o.players - 1 })}${teams ? ' · ' + t('setup.teams') : ''}</small></div>`) +
     `<div class="field"><span>${t('setup.difficulty')}</span><div class="seg">` +
     def.difficulty.map(k => `<button type="button" data-diff="${k}" aria-pressed="${k === o.difficulty}">${t('diff.' + k)}</button>`).join('') +
-    `</div>${lvl ? `<small>${t('sol.draw', { n: lvl.draw })} · ${t('sol.passes', { n: lvl.passes < 0 ? '∞' : lvl.passes })}</small>` : ''}</div><a class="btn primary big" href="#/play/${id}">${t('setup.start')}</a></div>` +
+    `</div></div>` + (def.matchWins ? `<div class="field"><span>${t('setup.wins')}</span><div class="seg">` +
+    def.matchWins.map(k => `<button type="button" data-wins="${k}" aria-pressed="${k === o.wins}">${k}</button>`).join('') + '</div></div>' : '') + `<div>${lvl ? `<small>${t('sol.draw', { n: lvl.draw })} · ${t('sol.passes', { n: lvl.passes < 0 ? '∞' : lvl.passes })}</small>` : ''}</div><a class="btn primary big" href="#/play/${id}">${t('setup.start')}</a></div>` +
     `<details class="rules" open><summary>${t('setup.rules')}</summary><ul>${gt(def, 'rules').map(r => `<li>${esc(r)}</li>`).join('')}</ul>` +
     `<a class="btn" href="#/help/${id}">${t('setup.manual')}</a></details></section>`;
 }
@@ -164,7 +167,7 @@ function render() {
   if (a === 'play' && defs[b]) {
     const def = defs[b];
     app.innerHTML = '';
-    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, machiavelli: startMachiavelli }[def.engine] || startTable)(app, def, optsFor(def), () => go('game/' + b));
+    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, machiavelli: startMachiavelli, banking: startBanking }[def.engine] || startTable)(app, def, optsFor(def), () => go('game/' + b));
   } else {
     app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'help' ? screenHelp(b) : a === 'stats' ? screenStats() : screenHome();
     window.scrollTo(0, 0);
@@ -181,11 +184,12 @@ function back() {
 }
 
 app.addEventListener('click', async e => {
-  const p = e.target.closest('[data-players],[data-diff]');
+  const p = e.target.closest('[data-players],[data-diff],[data-wins]');
   if (p) {
     const id = route()[1], o = optsFor(defs[id]);
     if (p.dataset.players) o.players = +p.dataset.players;
     if (p.dataset.diff) o.difficulty = p.dataset.diff;
+    if (p.dataset.wins) o.wins = +p.dataset.wins;
     settings.last[id] = o; saveSettings(); render();
     return;
   }

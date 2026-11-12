@@ -19,6 +19,7 @@ export function startTable(root, def, opts, onExit) {
     i === 0 ? t('play.you') : t('play.bot', { n: i }) + (g.teams && i === 2 ? ` (${t('play.partner')})` : ''));
   const teamNames = () => {
     const N = names();
+    if (g.teamList) return g.teamList().map(m => m.map(i => N[i]).join(' + '));
     return g.teams ? [`${N[0]} + ${N[2]}`, `${N[1]} + ${N[3]}`] : N;
   };
   const label = c => {
@@ -36,6 +37,10 @@ export function startTable(root, def, opts, onExit) {
     if (e.type === 'steal') return t('play.steals', { name: N[e.p], target: teamNames()[e.target] });
     if (e.type === 'burn') return t('play.burn', { name: N[e.p] });
     if (e.type === 'pickup') return t('play.pickup', { name: N[e.p] });
+    if (e.type === 'pass') return t('play.passes', { name: N[e.p] });
+    if (e.type === 'bid') return t('play.bid', { name: N[e.p], rank: [1, 8, 9, 10].includes(e.rank) ? t('rank.' + e.rank) : e.rank });
+    if (e.type === 'call') return t('play.calls', { name: N[e.p], card: label(e.card) });
+    if (e.type === 'partner') return t('play.partnerIs', { name: N[e.p] });
     return null;
   }
 
@@ -98,6 +103,13 @@ export function startTable(root, def, opts, onExit) {
             : o.steal != null ? `<span>${t('play.stealFrom', { name: teamNames()[o.steal] })}</span>`
             : o.take.map(id => cardHTML(byId[id], { label: label(byId[id]) })).join('')) + '</button>').join('') +
         `<button type="button" class="btn" data-opt="x">${t('common.cancel')}</button></div></div>`;
+    }
+
+    if (!chooser && myTurn && v.ask) {                   // a question from the engine (auction, choice of suit)
+      overlay = `<div class="chooser"><div class="chooser-box"><h3>${t(v.ask.title)}</h3><div class="asks">` +
+        v.ask.options.map(o => `<button type="button" class="opt" data-choice="${o.id}">` +
+          (o.card ? cardHTML(o.card, { label: label(o.card) }) : o.suit ? `${suitIcon(o.suit)}<span>${t('suit.' + o.suit)}</span>` : `<span>${t(o.text)}</span>`) + '</button>').join('') +
+        '</div></div></div>';
     }
 
     const status = msg ? msg() : myTurn ? t('play.yourTurn') : playing ? t('play.turnOf', { name: N[g.current] }) : '';
@@ -163,6 +175,8 @@ export function startTable(root, def, opts, onExit) {
       hintId = h.id || (h.opt && h.opt.pickup ? 'pickup' : null);
       render(); return;
     }
+    const ch = e.target.closest('[data-choice]');
+    if (ch) { const res = pick; pick = null; res({ id: null, opt: { choice: ch.dataset.choice } }); return; }
     const mv = e.target.closest('[data-move]');
     if (mv) { const res = pick; pick = null; res({ id: null, opt: { [mv.dataset.move]: true } }); return; }
     const card = e.target.closest('.me button.card');

@@ -1,0 +1,217 @@
+{
+  "id": "briscola-chiamata",
+  "version": 1,
+  "deck": "italian",
+  "engine": "called",
+  "players": {
+    "options": [
+      5
+    ],
+    "default": 5,
+    "teamsAt": []
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 8
+  },
+  "rules": {
+    "rankOrder": [
+      1,
+      3,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      2
+    ],
+    "cardPoints": {
+      "1": 11,
+      "3": 10,
+      "8": 2,
+      "9": 3,
+      "10": 4
+    },
+    "total": 120
+  },
+  "manual": {
+    "examples": [
+      {
+        "trick": [
+          "10-coppe",
+          "1-coppe"
+        ],
+        "win": "1-coppe"
+      },
+      {
+        "trick": [
+          "1-coppe",
+          "2-spade"
+        ],
+        "win": "2-spade",
+        "trump": "spade"
+      }
+    ]
+  },
+  "i18n": {
+    "en": {
+      "name": "Briscola Chiamata",
+      "tagline": "Briscola for five with an auction and a secret partner: two against three.",
+      "rules": [
+        "Five players, eight cards each: the whole deck is dealt. Card order and points are those of Briscola (120 points in all).",
+        "Play starts with an auction: in turn each player calls a card value lower than the previous call (Ace, Three, King, Knight, Knave, 7 … 2) or passes. The last player left is the caller.",
+        "The caller chooses the trump suit. Whoever holds the called card of that suit is the caller’s secret partner: this is revealed only when the card is played.",
+        "Play is as in Briscola: one card each, no obligation to follow suit; the highest card of the suit led wins the trick unless a trump is played.",
+        "The caller and the partner win with at least 61 points; the other three win with 60 or more."
+      ],
+      "goal": "As caller or partner, take at least 61 of the 120 points; as one of the other three, stop them.",
+      "tips": [
+        "Call a card of your strongest suit that you do not hold: whoever has it will help you.",
+        "If you hold the called card, help the caller without giving yourself away too soon.",
+        "Watch who gives points to whom: it reveals the hidden partner."
+      ]
+    },
+    "it": {
+      "name": "Briscola chiamata",
+      "tagline": "La briscola in cinque con l’asta e il socio segreto: due contro tre.",
+      "rules": [
+        "Cinque giocatori, otto carte a testa: si distribuisce tutto il mazzo. Ordine e punti delle carte sono quelli della Briscola (120 punti in tutto).",
+        "Si comincia con l’asta: a turno ogni giocatore chiama un valore di carta più basso della chiamata precedente (Asso, Tre, Re, Cavallo, Fante, 7 … 2) oppure passa. L’ultimo rimasto è il chiamante.",
+        "Il chiamante sceglie il seme di briscola. Chi ha in mano la carta chiamata di quel seme è il suo socio segreto: lo si scopre solo quando la carta viene giocata.",
+        "Si gioca come a Briscola: una carta a testa, senza obbligo di rispondere al seme; vince la presa la carta più alta del seme d’uscita, a meno che non venga giocata una briscola.",
+        "Il chiamante e il socio vincono con almeno 61 punti; gli altri tre vincono con 60 o più."
+      ],
+      "goal": "Da chiamante o da socio, fare almeno 61 dei 120 punti; da uno degli altri tre, impedirlo.",
+      "tips": [
+        "Chiama una carta del tuo seme più forte che non hai in mano: chi ce l’ha ti aiuterà.",
+        "Se hai la carta chiamata, aiuta il chiamante senza scoprirti troppo presto.",
+        "Osserva chi dà punti a chi: rivela il socio nascosto."
+      ]
+    },
+    "es": {
+      "name": "Briscola chiamata",
+      "tagline": "La briscola para cinco con subasta y compañero secreto: dos contra tres.",
+      "rules": [
+        "Cinco jugadores, ocho cartas cada uno: se reparte toda la baraja. El orden y los puntos de las cartas son los de la Briscola (120 puntos en total).",
+        "Se empieza con una subasta: por turnos cada jugador canta un valor de carta más bajo que el anterior (As, Tres, Rey, Caballo, Sota, 7 … 2) o pasa. El último que queda es el cantante.",
+        "El cantante elige el palo de triunfo. Quien tiene la carta cantada de ese palo es su compañero secreto: solo se descubre cuando se juega la carta.",
+        "Se juega como en la Briscola: una carta cada uno, sin obligación de seguir el palo; gana la baza la carta más alta del palo de salida, salvo que se juegue un triunfo.",
+        "El cantante y su compañero ganan con al menos 61 puntos; los otros tres ganan con 60 o más."
+      ],
+      "goal": "Como cantante o compañero, hacer al menos 61 de los 120 puntos; como uno de los otros tres, impedirlo.",
+      "tips": [
+        "Canta una carta de tu palo más fuerte que no tengas: quien la tenga te ayudará.",
+        "Si tienes la carta cantada, ayuda al cantante sin descubrirte demasiado pronto.",
+        "Fíjate en quién da puntos a quién: revela al compañero oculto."
+      ]
+    },
+    "fr": {
+      "name": "Briscola chiamata",
+      "tagline": "La briscola à cinq avec enchères et partenaire secret : deux contre trois.",
+      "rules": [
+        "Cinq joueurs, huit cartes chacun : tout le jeu est distribué. L’ordre et les points des cartes sont ceux de la Briscola (120 points en tout).",
+        "On commence par des enchères : à tour de rôle, chaque joueur annonce une valeur de carte plus basse que l’annonce précédente (As, Trois, Roi, Cavalier, Valet, 7 … 2) ou passe. Le dernier en lice est l’appelant.",
+        "L’appelant choisit l’atout. Celui qui détient la carte appelée dans cette couleur est son partenaire secret : on ne le découvre que lorsque la carte est jouée.",
+        "On joue comme à la Briscola : une carte chacun, sans obligation de fournir ; la plus forte carte de la couleur demandée remporte le pli, sauf si un atout est joué.",
+        "L’appelant et son partenaire gagnent avec au moins 61 points ; les trois autres gagnent avec 60 ou plus."
+      ],
+      "goal": "En tant qu’appelant ou partenaire, faire au moins 61 des 120 points ; en tant que l’un des trois autres, les en empêcher.",
+      "tips": [
+        "Appelez une carte de votre couleur la plus forte que vous n’avez pas : celui qui l’a vous aidera.",
+        "Si vous avez la carte appelée, aidez l’appelant sans vous dévoiler trop tôt.",
+        "Observez qui donne des points à qui : cela révèle le partenaire caché."
+      ]
+    },
+    "de": {
+      "name": "Briscola chiamata",
+      "tagline": "Briscola zu fünft mit Reizen und geheimem Partner: zwei gegen drei.",
+      "rules": [
+        "Fünf Spieler, je acht Karten: Das ganze Blatt wird verteilt. Rangfolge und Punkte sind die der Briscola (insgesamt 120 Punkte).",
+        "Zuerst wird gereizt: Reihum ruft jeder Spieler einen Kartenwert, der niedriger ist als der vorige (Ass, Drei, König, Reiter, Bube, 7 … 2), oder passt. Wer übrig bleibt, ist der Rufer.",
+        "Der Rufer wählt die Trumpffarbe. Wer die gerufene Karte dieser Farbe hält, ist sein geheimer Partner: Das zeigt sich erst, wenn die Karte gespielt wird.",
+        "Gespielt wird wie bei Briscola: jeder eine Karte, kein Farbzwang; die höchste Karte der angespielten Farbe gewinnt den Stich, außer es wird Trumpf gespielt.",
+        "Rufer und Partner gewinnen mit mindestens 61 Punkten; die anderen drei gewinnen mit 60 oder mehr."
+      ],
+      "goal": "Als Rufer oder Partner mindestens 61 der 120 Punkte holen; als einer der drei anderen das verhindern.",
+      "tips": [
+        "Rufe eine Karte deiner stärksten Farbe, die du nicht hältst: Wer sie hat, wird dir helfen.",
+        "Hältst du die gerufene Karte, hilf dem Rufer, ohne dich zu früh zu verraten.",
+        "Achte darauf, wer wem Punkte gibt: Das verrät den verborgenen Partner."
+      ]
+    },
+    "pt": {
+      "name": "Briscola chiamata",
+      "tagline": "A briscola para cinco com leilão e parceiro secreto: dois contra três.",
+      "rules": [
+        "Cinco jogadores, oito cartas cada: distribui-se o baralho todo. A ordem e os pontos das cartas são os da Briscola (120 pontos no total).",
+        "Começa-se com um leilão: à vez, cada jogador chama um valor de carta mais baixo do que a chamada anterior (Ás, Três, Rei, Cavalo, Valete, 7 … 2) ou passa. O último que fica é o chamador.",
+        "O chamador escolhe o naipe de trunfo. Quem tiver a carta chamada desse naipe é o seu parceiro secreto: só se descobre quando a carta é jogada.",
+        "Joga-se como na Briscola: uma carta cada, sem obrigação de seguir o naipe; ganha a vaza a carta mais alta do naipe de saída, a menos que se jogue um trunfo.",
+        "O chamador e o parceiro ganham com pelo menos 61 pontos; os outros três ganham com 60 ou mais."
+      ],
+      "goal": "Como chamador ou parceiro, fazer pelo menos 61 dos 120 pontos; como um dos outros três, impedi-lo.",
+      "tips": [
+        "Chame uma carta do seu naipe mais forte que não tenha: quem a tiver vai ajudá-lo.",
+        "Se tiver a carta chamada, ajude o chamador sem se revelar cedo demais.",
+        "Repare em quem dá pontos a quem: isso revela o parceiro escondido."
+      ]
+    },
+    "zh": {
+      "name": "Briscola chiamata",
+      "tagline": "五人 Briscola：先叫牌，再找出秘密同伴，二对三。",
+      "rules": [
+        "五名玩家，每人八张牌：整副牌全部发完。牌的大小和分值与 Briscola 相同（共 120 分）。",
+        "先进行叫牌：玩家依次叫出比上一次更小的牌点（A、3、国王、骑士、侍从、7……2），或者不叫。最后剩下的玩家成为叫牌者。",
+        "叫牌者选择王牌花色。持有该花色被叫那张牌的玩家是叫牌者的秘密同伴：直到这张牌被打出才会揭晓。",
+        "出牌规则与 Briscola 相同：每人出一张，不必跟花色；领出花色中最大的牌赢得这一墩，除非有人出王牌。",
+        "叫牌者和同伴至少拿到 61 分即获胜；另外三人拿到 60 分或以上即获胜。"
+      ],
+      "goal": "作为叫牌者或同伴，在 120 分中至少拿到 61 分；作为另外三人之一，则要阻止他们。",
+      "tips": [
+        "叫你最强花色里自己没有的那张牌：持有它的人会帮你。",
+        "如果你拿着被叫的牌，要帮助叫牌者，但不要过早暴露自己。",
+        "留意谁在给谁送分：这会暴露隐藏的同伴。"
+      ]
+    },
+    "ja": {
+      "name": "ブリスコラ・キアマータ",
+      "tagline": "5人で遊ぶブリスコラ。オークションと秘密のパートナーで2対3の勝負。",
+      "rules": [
+        "5人で、各自8枚ずつ。すべてのカードを配ります。カードの強さと点数はブリスコラと同じです（合計120点）。",
+        "最初にオークションを行います。順番に、前のコールより弱いカードの数（エース、3、キング、ナイト、ジャック、7…2）をコールするか、パスします。最後に残った人がコーラーです。",
+        "コーラーが切り札のスートを選びます。そのスートの指名カードを持つ人がコーラーの秘密のパートナーで、そのカードが出されるまで明かされません。",
+        "プレイはブリスコラと同じです。1枚ずつ出し、スートを合わせる義務はありません。最初に出されたスートで最も強いカードが勝ち、切り札が出ればそちらが勝ちます。",
+        "コーラーとパートナーは61点以上で勝ち、残りの3人は60点以上で勝ちです。"
+      ],
+      "goal": "コーラーまたはパートナーなら120点中61点以上を取ること。残りの3人ならそれを阻止することが目的です。",
+      "tips": [
+        "自分の一番強いスートで、持っていないカードを指名しましょう。持っている人が助けてくれます。",
+        "指名カードを持っているなら、早々に正体を明かさずにコーラーを助けましょう。",
+        "誰が誰に点数を渡しているかを観察しましょう。隠れたパートナーが分かります。"
+      ]
+    },
+    "ko": {
+      "name": "브리스콜라 키아마타",
+      "tagline": "5인용 브리스콜라. 경매와 비밀 파트너로 2 대 3 대결.",
+      "rules": [
+        "다섯 명이 각자 8장씩, 덱 전체를 나눕니다. 카드 서열과 점수는 브리스콜라와 같습니다(총 120점).",
+        "먼저 경매를 합니다. 차례대로 앞선 콜보다 낮은 카드 숫자(에이스, 3, 킹, 기사, 잭, 7 … 2)를 부르거나 패스합니다. 마지막까지 남은 사람이 콜러입니다.",
+        "콜러가 트럼프 무늬를 고릅니다. 그 무늬의 부른 카드를 가진 사람이 콜러의 비밀 파트너이며, 그 카드가 나올 때에야 밝혀집니다.",
+        "진행은 브리스콜라와 같습니다. 한 장씩 내며 무늬를 따를 의무는 없습니다. 처음 나온 무늬에서 가장 높은 카드가 트릭을 가져가고, 트럼프가 나오면 트럼프가 이깁니다.",
+        "콜러와 파트너는 61점 이상이면 이기고, 나머지 세 명은 60점 이상이면 이깁니다."
+      ],
+      "goal": "콜러나 파트너라면 120점 중 61점 이상을 얻고, 나머지 세 명이라면 그것을 막는 것이 목표입니다.",
+      "tips": [
+        "가장 강한 무늬에서 내가 갖지 않은 카드를 부르세요. 그 카드를 가진 사람이 도와줄 것입니다.",
+        "부른 카드를 갖고 있다면 너무 일찍 정체를 드러내지 말고 콜러를 도우세요.",
+        "누가 누구에게 점수를 주는지 보세요. 숨은 파트너가 드러납니다."
+      ]
+    }
+  }
+}

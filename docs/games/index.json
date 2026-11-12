@@ -2,8 +2,8 @@
   "decks": [
     {
       "id": "italian",
-      "games": ["briscola", "tressette", "scopa", "scopa-assi", "scopone", "rubamazzo", "solitario"],
-      "planned": ["Sette e mezzo", "Briscola chiamata"]
+      "games": ["briscola", "briscola-chiamata", "tressette", "scopa", "scopa-assi", "scopone", "rubamazzo", "sette-e-mezzo", "solitario"],
+      "planned": []
     },
     {
       "id": "french",

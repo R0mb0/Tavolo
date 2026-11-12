@@ -259,6 +259,23 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 @keyframes nudge { to { transform: translateY(-.6em); } }
 .fly { position: fixed; z-index: 50; pointer-events: none; }
 
+/* ---------- auction questions, banking table ---------- */
+.asks { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+.asks .opt { flex: 0 1 auto; min-width: 4.2rem; flex-direction: column; --cw: 2.8rem; }
+.asks .opt > .si { width: 2.2rem; height: 2.2rem; }
+.table.bank { grid-template-rows: minmax(0, 1fr) auto auto auto; }
+.bank .felt { flex-direction: column; align-items: stretch; gap: .6rem; --cw: clamp(2rem, 9.5vw, 3.6rem); }
+.bank-top { display: flex; justify-content: center; }
+.bank-opps { display: grid; gap: .5rem; grid-template-columns: repeat(auto-fit, minmax(min(8rem, 100%), 1fr)); }
+.bseat { background: rgb(0 0 0 / .2); border-color: transparent; color: var(--felt-ink); flex-wrap: wrap; overflow: visible; }
+.bseat .badge { background: rgb(255 255 255 / .16); }
+.bcards, .bhand { display: flex; flex-wrap: wrap; gap: .25rem; }
+.bhand { --cw: clamp(3.4rem, 17vw, 5.4rem); gap: .4rem; }
+.badge.big { font-size: 1.15rem; padding: .1rem .7rem; }
+.badge.lost { color: var(--danger); font-weight: 700; }
+.bseat .badge.lost { color: #ffb4ab; }
+.rum-bar.center { justify-content: center; }
+
 /* ---------- rummy ---------- */
 .s-joker { color: #7b3fa0; }
 .card .court small { font-size: .5em; font-weight: 800; letter-spacing: .05em; }
