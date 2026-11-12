@@ -2,12 +2,14 @@
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 
-export function createLog() {
-  const items = [];
+/** `initial`: lines saved with an interrupted game; `onChange`: called with the lines whenever they change. */
+export function createLog(initial, onChange = () => {}) {
+  const items = Array.isArray(initial) ? initial.filter(x => typeof x === 'string').slice(-400) : [];
   return {
-    add(html) { items.push(html); if (items.length > 400) items.shift(); },
-    head(html) { items.push(`<b class="log-head">${html}</b>`); },
-    clear() { items.length = 0; },
+    restored: items.length > 0,
+    add(html) { items.push(html); if (items.length > 400) items.shift(); onChange(items); },
+    head(html) { items.push(`<b class="log-head">${html}</b>`); onChange(items); },
+    clear() { items.length = 0; onChange(items); },
     button: () => `<button type="button" class="icon hint" data-log title="${t('play.log')}" aria-label="${t('play.log')}"><svg><use href="#i-log"/></svg></button>`,
     show: () => dialog({
       title: t('play.log'),

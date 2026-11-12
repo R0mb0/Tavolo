@@ -1,6 +1,6 @@
 // Table for rummy games (Scala 40, Burraco): deck and discard pile, combinations on the table, a large hand with selection.
 import { cardHTML } from './cards.js';
-import { newGame as createGame, clearSession } from './session.js';
+import { newGame as createGame, clearSession, setExtra } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
@@ -13,7 +13,7 @@ const SUITS = ['spades', 'hearts', 'clubs', 'diamonds', 'joker'];
 export function startRummy(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, g, msg = null, hint = null, bySuit = true;
-  const sel = new Set(), log = createLog();
+  const sel = new Set(), log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items }));
   let seenRound = 0;
   const you = (key, vars) => log.add(t(key, { name: t('play.you'), ...vars }));
 
@@ -171,6 +171,7 @@ export function startRummy(root, def, opts, onExit, resume) {
   }, { signal: ctl.signal });
 
   g = createGame(def, opts, resume);
+  if (log.restored) seenRound = g.round;
   run();
 
   return {

@@ -246,7 +246,7 @@
  "sm.eHit": "{name} nimmt eine Karte",
  "sm.eStand": "{name} bleibt stehen",
  "sm.eBust": "{name} überkauft sich",
- "man.c.log": "Die Listen-Schaltfläche öffnet das Spielprotokoll mit allem, was bisher geschehen ist (es beginnt nach einem Neuladen von vorn).",
+ "man.c.log": "Die Listen-Schaltfläche öffnet das Spielprotokoll mit allem, was bisher geschehen ist.",
  "man.d.swap": "Vor dem ersten Zug kannst du Handkarten mit deinen offenen Karten tauschen: tippe je eine an, dann „Spiel beginnen“.",
  "setup.learn": "Schritt-für-Schritt-Tutorial",
  "learn.title": "Tutorial",
@@ -351,5 +351,6 @@
  "play.mmSeven": "{name} spielt eine 7: {n} Karten zu ziehen",
  "play.mmSkip": "{name} setzt aus",
  "play.mmWish": "{name} wünscht sich {suit}",
- "man.u.pile": "In der Mitte liegt der Stapel: du musst Farbe oder Wert der obersten Karte bedienen. Wurde eine Farbe gewünscht, erscheint ihr Symbol neben dem Talon. Die Schaltfläche „Karte ziehen“ ist unter dem Tisch."
+ "man.u.pile": "In der Mitte liegt der Stapel: du musst Farbe oder Wert der obersten Karte bedienen. Wurde eine Farbe gewünscht, erscheint ihr Symbol neben dem Talon. Die Schaltfläche „Karte ziehen“ ist unter dem Tisch.",
+ "play.sing": "Paar angesagt: {list}"
 }

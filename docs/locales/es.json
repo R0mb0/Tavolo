@@ -246,7 +246,7 @@
  "sm.eHit": "{name} pide carta",
  "sm.eStand": "{name} se planta",
  "sm.eBust": "{name} se pasa",
- "man.c.log": "El botón de la lista abre el registro de la partida, con todo lo ocurrido hasta ahora (empieza de nuevo tras recargar).",
+ "man.c.log": "El botón de la lista abre el registro de la partida, con todo lo ocurrido hasta ahora.",
  "man.d.swap": "Antes del primer turno puedes cambiar cartas entre la mano y las descubiertas: toca una de cada, luego pulsa «Empezar a jugar».",
  "setup.learn": "Tutorial paso a paso",
  "learn.title": "Tutorial",
@@ -351,5 +351,6 @@
  "play.mmSeven": "{name} juega un 7: {n} cartas a robar",
  "play.mmSkip": "{name} pierde el turno",
  "play.mmWish": "{name} pide {suit}",
- "man.u.pile": "En el centro está la pila: debes seguir el palo o el valor de la carta de encima. Cuando se ha pedido un palo, su símbolo aparece junto al mazo. El botón «Robar una carta» está debajo de la mesa."
+ "man.u.pile": "En el centro está la pila: debes seguir el palo o el valor de la carta de encima. Cuando se ha pedido un palo, su símbolo aparece junto al mazo. El botón «Robar una carta» está debajo de la mesa.",
+ "play.sing": "Cante: {list}"
 }

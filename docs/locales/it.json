@@ -246,7 +246,7 @@
  "sm.eHit": "{name} chiede carta",
  "sm.eStand": "{name} sta",
  "sm.eBust": "{name} sballa",
- "man.c.log": "Il pulsante con l’elenco apre il registro della partita, con tutto quello che è successo finora (riparte da capo dopo un ricaricamento).",
+ "man.c.log": "Il pulsante con l’elenco apre il registro della partita, con tutto quello che è successo finora.",
  "man.d.swap": "Prima del primo turno puoi scambiare le carte in mano con quelle scoperte: toccane una per parte, poi premi «Inizia a giocare».",
  "setup.learn": "Tutorial passo passo",
  "learn.title": "Tutorial",
@@ -351,5 +351,6 @@
  "play.mmSeven": "{name} gioca un 7: {n} carte da pescare",
  "play.mmSkip": "{name} salta il turno",
  "play.mmWish": "{name} chiede {suit}",
- "man.u.pile": "Al centro c’è la pila: devi seguire il seme o il valore della carta in cima. Quando è stato chiesto un seme, il suo simbolo compare accanto al mazzo. Il pulsante «Pesca una carta» è sotto il tavolo."
+ "man.u.pile": "Al centro c’è la pila: devi seguire il seme o il valore della carta in cima. Quando è stato chiesto un seme, il suo simbolo compare accanto al mazzo. Il pulsante «Pesca una carta» è sotto il tavolo.",
+ "play.sing": "Coppia cantata: {list}"
 }

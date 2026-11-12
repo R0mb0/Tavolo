@@ -1,6 +1,6 @@
 // Table for Machiavelli: every card on the table can be picked up and placed in another combination.
 import { cardHTML } from './cards.js';
-import { newGame as createGame, clearSession } from './session.js';
+import { newGame as createGame, clearSession, setExtra } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
@@ -14,7 +14,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, g, msg = null, hint = null, bySuit = true, drag = null, dragEnd = 0;
   const sel = new Set();
-  const log = createLog(), you = (key, vars) => log.add(t(key, { name: t('play.you'), ...vars }));
+  const log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items })), you = (key, vars) => log.add(t(key, { name: t('play.you'), ...vars }));
 
   const names = () => Array.from({ length: opts.players }, (_, i) => (i === 0 ? t('play.you') : t('play.bot', { n: i })));
   const label = c => `${[1, 11, 12, 13].includes(c.r) ? t('frank.' + c.r) : c.r} · ${t('suit.' + c.s)}`;

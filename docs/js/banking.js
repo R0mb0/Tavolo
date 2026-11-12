@@ -1,6 +1,6 @@
 // Table for banking games (Sette e mezzo): the bank at the top, each player's cards face up, hit or stand.
 import { cardHTML } from './cards.js';
-import { newGame as createGame, clearSession } from './session.js';
+import { newGame as createGame, clearSession, setExtra } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
@@ -13,7 +13,7 @@ const frac = v => (v == null ? '?' : (Math.floor(v) || (v % 1 ? '' : 0)) + (v % 
 export function startBanking(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, g, hint = null;
-  const log = createLog();
+  const log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items }));
 
   const names = () => Array.from({ length: opts.players }, (_, i) => (i === 0 ? t('play.you') : t('play.bot', { n: i })));
   const label = c => `${[1, 8, 9, 10].includes(c.r) ? t('rank.' + c.r) : c.r} · ${t('suit.' + c.s)}`;
@@ -105,7 +105,8 @@ export function startBanking(root, def, opts, onExit, resume) {
   }, { signal: ctl.signal });
 
   g = createGame(def, opts, resume);
-  note(); run();
+  if (log.restored) seenRound = g.round; else note();
+  run();
 
   return {
     rerender: render,

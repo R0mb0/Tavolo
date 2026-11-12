@@ -27,6 +27,14 @@ export function loadSession() {
     return s && s.v === VERSION && Array.isArray(s.log) ? s : null;
   } catch { return null; }
 }
+let current = null;                                       // the session being played, as it is stored
+const persist = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* storage full or unavailable */ } };
+/** Keeps something next to the saved game that cannot be rebuilt by replaying it (the game log, the last trick). */
+export function setExtra(patch) {
+  if (!current) return;
+  current.extra = { ...(current.extra || {}), ...patch };
+  persist(current);
+}
 export function clearSession() { try { localStorage.removeItem(KEY); } catch { /* storage unavailable */ } }
 
 function build(def, opts, session) {
@@ -37,7 +45,8 @@ function build(def, opts, session) {
     while (rng.count() < at) rng();
     g[name](...args);
   }
-  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(session)); } catch { /* storage full or unavailable */ } };
+  const save = () => persist(session);
+  current = session;
   let depth = 0;
   for (const name of ACTIONS) {
     const fn = g[name];

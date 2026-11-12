@@ -1,0 +1,228 @@
+{
+  "id": "tute",
+  "version": 1,
+  "deck": "spanish",
+  "engine": "trick",
+  "players": {
+    "options": [
+      2,
+      4
+    ],
+    "default": 2,
+    "teamsAt": [
+      4
+    ]
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 8,
+    "handSizeFor": {
+      "4": 10
+    }
+  },
+  "rules": {
+    "trump": "lastCard",
+    "followSuit": true,
+    "mustBeat": true,
+    "freeWhileDeck": true,
+    "drawAfterTrick": true,
+    "lastTrickPoints": 10,
+    "marriage": {
+      "ranks": [
+        10,
+        9
+      ],
+      "pts": 20,
+      "trumpPts": 40
+    },
+    "rankOrder": [
+      1,
+      3,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      2
+    ],
+    "cardPoints": {
+      "1": 11,
+      "3": 10,
+      "8": 2,
+      "9": 3,
+      "10": 4
+    }
+  },
+  "win": {
+    "type": "mostPoints",
+    "total": 130
+  },
+  "manual": {
+    "examples": [
+      {
+        "trick": [
+          "7-copas",
+          "10-copas"
+        ],
+        "win": "10-copas"
+      },
+      {
+        "trick": [
+          "3-oros",
+          "2-espadas"
+        ],
+        "win": "2-espadas",
+        "trump": "espadas"
+      }
+    ]
+  },
+  "matchWins": [
+    1,
+    2,
+    3
+  ],
+  "passPlay": true,
+  "i18n": {
+    "en": {
+      "name": "Tute",
+      "tagline": "Spain’s great trick game: follow suit, beat the trick and sing your pairs.",
+      "rules": [
+        "With two players everyone gets eight cards and draws after each trick; with four you play in pairs with ten cards each and no deck. The last card of the deck shows the trump suit.",
+        "You must follow the suit led and, if you can, play a higher card. Without that suit you must play a trump if you have one that wins. With two players these duties begin only when the deck is finished; a partner who is winning the trick frees you from beating it.",
+        "From strongest to weakest: As, Three, Rey, Caballo, Sota, then 7 down to 2. As 11 points, Three 10, Rey 4, Caballo 3, Sota 2; the last trick is worth 10 more.",
+        "When you win a trick and hold the Rey and the Caballo of one suit, the pair is sung for you: 20 points, 40 in the trump suit, one pair per trick. Whoever has more points at the end wins the deal."
+      ],
+      "goal": "Score more points than your opponents: cards, sung pairs and the last trick.",
+      "tips": [
+        "Keep Rey and Caballo of the same suit together until you win a trick: the pair is worth more than the two cards.",
+        "Save a strong trump for the end: the last trick is worth ten points."
+      ]
+    },
+    "it": {
+      "name": "Tute",
+      "tagline": "Il grande gioco di prese spagnolo: rispondi al seme, supera la presa e canta le coppie.",
+      "rules": [
+        "In due ognuno riceve otto carte e pesca dopo ogni presa; in quattro si gioca a coppie con dieci carte a testa e senza mazzo. L’ultima carta del mazzo indica il seme di briscola.",
+        "Devi rispondere al seme d’uscita e, se puoi, giocare una carta più alta. Senza quel seme devi giocare una briscola, se ne hai una che vince. In due questi obblighi valgono solo quando il mazzo è finito; se sta vincendo il tuo compagno non sei obbligato a superare.",
+        "Dalla più forte alla più debole: As, Tre, Rey, Caballo, Sota, poi dal 7 al 2. As 11 punti, Tre 10, Rey 4, Caballo 3, Sota 2; l’ultima presa ne vale altri 10.",
+        "Quando vinci una presa e hai in mano Rey e Caballo dello stesso seme, la coppia viene cantata per te: 20 punti, 40 se è di briscola, una coppia per presa. Vince la mano chi alla fine ha più punti."
+      ],
+      "goal": "Fai più punti degli avversari: carte, coppie cantate e ultima presa.",
+      "tips": [
+        "Tieni insieme Rey e Caballo dello stesso seme finché non vinci una presa: la coppia vale più delle due carte.",
+        "Conserva una briscola forte per il finale: l’ultima presa vale dieci punti."
+      ]
+    },
+    "es": {
+      "name": "Tute",
+      "tagline": "El gran juego de bazas español: asiste, mata la baza y canta las veinte.",
+      "rules": [
+        "Con dos jugadores cada uno recibe ocho cartas y roba tras cada baza; con cuatro se juega por parejas con diez cartas cada uno y sin mazo. La última carta del mazo marca el triunfo.",
+        "Debes asistir al palo de salida y, si puedes, jugar una carta más alta. Sin ese palo debes fallar con triunfo si tienes uno que gane. Con dos jugadores estas obligaciones empiezan cuando se acaba el mazo; si va ganando tu compañero no estás obligado a matar.",
+        "De más fuerte a más débil: As, Tres, Rey, Caballo, Sota, y luego del 7 al 2. As 11 puntos, Tres 10, Rey 4, Caballo 3, Sota 2; la última baza vale 10 más.",
+        "Cuando ganas una baza y tienes el Rey y el Caballo de un mismo palo, se canta por ti: 20 puntos, 40 si es del triunfo, un cante por baza. Gana la mano quien al final tiene más puntos."
+      ],
+      "goal": "Haz más puntos que tus rivales: cartas, cantes y las diez de últimas.",
+      "tips": [
+        "Guarda juntos el Rey y el Caballo del mismo palo hasta ganar una baza: el cante vale más que las dos cartas.",
+        "Guarda un triunfo fuerte para el final: la última baza vale diez puntos."
+      ]
+    },
+    "fr": {
+      "name": "Tute",
+      "tagline": "Le grand jeu de plis espagnol : fournissez, montez et chantez vos paires.",
+      "rules": [
+        "À deux, chacun reçoit huit cartes et pioche après chaque pli ; à quatre, on joue par équipes avec dix cartes chacun et sans talon. La dernière carte du talon indique l’atout.",
+        "Vous devez fournir à la couleur demandée et, si possible, monter. Sans cette couleur, vous devez couper si vous avez un atout qui gagne. À deux, ces obligations ne commencent que lorsque le talon est épuisé ; si votre partenaire est maître, vous n’êtes pas obligé de monter.",
+        "De la plus forte à la plus faible : As, Trois, Rey, Caballo, Sota, puis du 7 au 2. As 11 points, Trois 10, Rey 4, Caballo 3, Sota 2 ; le dernier pli en vaut 10 de plus.",
+        "Quand vous gagnez un pli et tenez le Rey et le Caballo d’une même couleur, la paire est chantée pour vous : 20 points, 40 à l’atout, une paire par pli. Celui qui a le plus de points à la fin gagne la manche."
+      ],
+      "goal": "Marquez plus de points que vos adversaires : cartes, paires chantées et dernier pli.",
+      "tips": [
+        "Gardez ensemble le Rey et le Caballo d’une même couleur jusqu’à gagner un pli : la paire vaut plus que les deux cartes.",
+        "Gardez un atout fort pour la fin : le dernier pli vaut dix points."
+      ]
+    },
+    "de": {
+      "name": "Tute",
+      "tagline": "Spaniens großes Stichspiel: Farbe bedienen, überstechen und Paare ansagen.",
+      "rules": [
+        "Zu zweit erhält jeder acht Karten und zieht nach jedem Stich; zu viert spielt man in Paaren mit je zehn Karten und ohne Stapel. Die letzte Karte des Stapels zeigt die Trumpffarbe.",
+        "Du musst die angespielte Farbe bedienen und, wenn möglich, höher spielen. Ohne diese Farbe musst du trumpfen, wenn du einen Trumpf hast, der gewinnt. Zu zweit gelten diese Pflichten erst, wenn der Stapel aufgebraucht ist; führt dein Partner den Stich, musst du nicht überstechen.",
+        "Von stark nach schwach: As, Drei, Rey, Caballo, Sota, dann 7 bis 2. As 11 Punkte, Drei 10, Rey 4, Caballo 3, Sota 2; der letzte Stich bringt 10 weitere.",
+        "Gewinnst du einen Stich und hältst Rey und Caballo einer Farbe, wird das Paar für dich angesagt: 20 Punkte, 40 in Trumpf, ein Paar pro Stich. Wer am Ende mehr Punkte hat, gewinnt die Runde."
+      ],
+      "goal": "Mache mehr Punkte als die Gegner: Karten, angesagte Paare und der letzte Stich.",
+      "tips": [
+        "Halte Rey und Caballo einer Farbe zusammen, bis du einen Stich gewinnst: das Paar ist mehr wert als die beiden Karten.",
+        "Hebe einen starken Trumpf für das Ende auf: der letzte Stich bringt zehn Punkte."
+      ]
+    },
+    "pt": {
+      "name": "Tute",
+      "tagline": "O grande jogo de vazas espanhol: assista, mate a vaza e cante os pares.",
+      "rules": [
+        "A dois, cada um recebe oito cartas e compra depois de cada vaza; a quatro joga-se em pares com dez cartas cada e sem baralho. A última carta do baralho indica o trunfo.",
+        "Tem de assistir ao naipe de saída e, se puder, jogar uma carta mais alta. Sem esse naipe tem de cortar com trunfo, se tiver um que ganhe. A dois, estas obrigações só começam quando o baralho acaba; se o seu parceiro estiver a ganhar, não é obrigado a matar.",
+        "Da mais forte à mais fraca: As, Três, Rey, Caballo, Sota, depois do 7 ao 2. As 11 pontos, Três 10, Rey 4, Caballo 3, Sota 2; a última vaza vale mais 10.",
+        "Quando ganha uma vaza e tem o Rey e o Caballo do mesmo naipe, o par é cantado por si: 20 pontos, 40 se for de trunfo, um par por vaza. Ganha a mão quem tiver mais pontos no fim."
+      ],
+      "goal": "Faça mais pontos que os adversários: cartas, pares cantados e a última vaza.",
+      "tips": [
+        "Guarde juntos o Rey e o Caballo do mesmo naipe até ganhar uma vaza: o par vale mais do que as duas cartas.",
+        "Guarde um trunfo forte para o fim: a última vaza vale dez pontos."
+      ]
+    },
+    "zh": {
+      "name": "Tute",
+      "tagline": "西班牙的经典吃墩游戏：跟花色、压牌、唱对子。",
+      "rules": [
+        "两人游戏时每人八张牌，每墩之后摸牌；四人游戏时两两组队，每人十张牌，没有牌堆。牌堆的最后一张牌决定王牌花色。",
+        "必须跟首出花色，并且能压过就要压过。没有该花色时，如果有能赢的王牌就必须出王牌。两人游戏时，这些义务在牌堆用完后才开始；同伴正在赢这一墩时，你不必压牌。",
+        "从大到小：As、3、Rey、Caballo、Sota，然后从7到2。As 11分，3 10分，Rey 4分，Caballo 3分，Sota 2分；最后一墩另加10分。",
+        "赢得一墩时，如果手中有同一花色的 Rey 和 Caballo，系统会替你唱出这一对：20分，王牌花色为40分，每墩只能唱一对。最后得分多的一方赢得本局。"
+      ],
+      "goal": "得分超过对手：牌点、唱出的对子和最后一墩。",
+      "tips": [
+        "把同花色的 Rey 和 Caballo 留在一起，直到赢得一墩：这一对比两张牌本身更值钱。",
+        "留一张大王牌到最后：最后一墩值十分。"
+      ]
+    },
+    "ja": {
+      "name": "Tute",
+      "tagline": "スペインの代表的なトリックテイキング：スートに従い、上回り、ペアを宣言。",
+      "rules": [
+        "2人のときは8枚ずつ配り、トリックごとに山札から引きます。4人のときはペア戦で10枚ずつ配り、山札はありません。山札の最後のカードが切り札のスートを示します。",
+        "最初に出たスートに従い、可能ならより強いカードを出さなければなりません。そのスートがなければ、勝てる切り札があれば出さなければなりません。2人のときは山札がなくなってからこの義務が始まります。パートナーが勝っているときは上回る必要はありません。",
+        "強い順に：As、3、Rey、Caballo、Sota、その後7から2。As 11点、3 10点、Rey 4点、Caballo 3点、Sota 2点。最後のトリックはさらに10点です。",
+        "トリックを取ったとき、同じスートの Rey と Caballo を持っていれば、そのペアが自動的に宣言されます。20点、切り札のスートなら40点、1トリックにつき1ペアです。最後に得点の多いほうがその回の勝ちです。"
+      ],
+      "goal": "相手より多く得点します：カードの点、宣言したペア、最後のトリック。",
+      "tips": [
+        "同じスートの Rey と Caballo は、トリックを取るまで一緒に持っておきましょう。ペアは2枚のカードより価値があります。",
+        "強い切り札を最後まで残しましょう。最後のトリックは10点です。"
+      ]
+    },
+    "ko": {
+      "name": "Tute",
+      "tagline": "스페인의 대표 트릭 게임: 무늬를 따르고, 이기고, 페어를 선언하세요.",
+      "rules": [
+        "2인일 때는 여덟 장씩 받고 트릭마다 덱에서 뽑습니다. 4인일 때는 짝을 이뤄 열 장씩 받고 덱이 없습니다. 덱의 마지막 카드가 으뜸 무늬를 정합니다.",
+        "처음 나온 무늬를 따라야 하며, 가능하면 더 높은 카드를 내야 합니다. 그 무늬가 없으면 이길 수 있는 으뜸 카드가 있을 때 반드시 내야 합니다. 2인일 때는 덱이 떨어진 뒤부터 이 의무가 적용됩니다. 파트너가 이기고 있으면 더 높은 카드를 낼 필요가 없습니다.",
+        "강한 순서: As, 3, Rey, Caballo, Sota, 그다음 7부터 2까지. As 11점, 3 10점, Rey 4점, Caballo 3점, Sota 2점이며, 마지막 트릭은 10점이 더해집니다.",
+        "트릭을 이겼을 때 같은 무늬의 Rey와 Caballo를 들고 있으면 그 페어가 자동으로 선언됩니다. 20점, 으뜸 무늬면 40점이며 트릭당 한 페어입니다. 끝났을 때 점수가 더 많은 쪽이 그 판을 이깁니다."
+      ],
+      "goal": "상대보다 더 많은 점수를 따세요: 카드 점수, 선언한 페어, 마지막 트릭.",
+      "tips": [
+        "같은 무늬의 Rey와 Caballo는 트릭을 이길 때까지 함께 들고 있으세요. 페어가 두 장의 카드보다 더 가치 있습니다.",
+        "강한 으뜸 카드를 끝까지 남겨 두세요. 마지막 트릭은 10점입니다."
+      ]
+    }
+  }
+}

@@ -1,6 +1,6 @@
 // The shared game table: renders any engine's view and drives the turn loop (human + bots).
 import { cardHTML, cardLabel } from './cards.js';
-import { newGame as createGame, clearSession } from './session.js';
+import { newGame as createGame, clearSession, setExtra } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings, calm } from './store.js';
@@ -14,7 +14,8 @@ export function startTable(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, g, msg = null, pick = null, chooser = null;
   let freshSeat = null, flyTo = null, hintId = null, last = null, seenRound = 0;
-  const log = createLog();
+  const saved = (resume && resume.extra) || {};            // what was kept next to an interrupted game
+  const log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items }));
   // Two people on one device: the second one sits in seat 1. `me` is the seat the table is drawn for,
   // `ready` says that this person has taken the device (their cards stay face down until then).
   const humans = opts.humans === 2 ? 2 : 1, isHuman = i => i < humans;
@@ -254,8 +255,11 @@ export function startTable(root, def, opts, onExit, resume) {
   }
 
   function newGame() {
+    const back = !!resume;
     g = createGame(def, opts, resume); resume = null;
-    msg = null; pick = null; chooser = null; freshSeat = null; flyTo = null; hintId = null; last = null; seenRound = 0; log.clear();
+    msg = null; pick = null; chooser = null; freshSeat = null; flyTo = null; hintId = null;
+    if (back) { last = saved.last || null; seenRound = log.restored ? g.round || 0 : 0; }   // the log and the last trick come back with the game
+    else { last = null; seenRound = 0; log.clear(); }
     me = 0; ready = humans === 1;
   }
 
@@ -274,7 +278,7 @@ export function startTable(root, def, opts, onExit, resume) {
       render();
       if (g.announce) {                      // e.g. Tressette declarations at the start of a deal
         const a = g.announce; g.announce = null;
-        msg = () => t('play.declare', { list: a.list.map(x => `${names()[x.p]} +${x.pts}`).join(' · ') });
+        msg = () => t(a.type === 'sing' ? 'play.sing' : 'play.declare', { list: a.list.map(x => `${names()[x.p]} +${x.pts}`).join(' · ') });
         log.add(msg()); render(); await sleep(2600);
         if (!alive || g !== mine) return;
         msg = null; continue;
@@ -297,6 +301,7 @@ export function startTable(root, def, opts, onExit, resume) {
           const vw = g.view();                             // remember what was just taken, for the review button
           if (g.kind === 'trick') last = { by: flyTo, cards: vw.center.map(x => ({ card: x.card, p: x.p })) };
           else if (st) last = { by: flyTo, cards: [{ card: st.card, p: st.p }, ...vw.center.filter(x => x.hl).map(x => ({ card: x.card, p: null }))] };
+          setExtra({ last });
         }
         g.advance(); msg = null; continue;
       }

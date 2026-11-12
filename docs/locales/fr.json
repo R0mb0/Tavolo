@@ -246,7 +246,7 @@
  "sm.eHit": "{name} demande une carte",
  "sm.eStand": "{name} reste",
  "sm.eBust": "{name} dépasse",
- "man.c.log": "Le bouton liste ouvre le journal de la partie, avec tout ce qui s’est passé jusqu’ici (il repart de zéro après un rechargement).",
+ "man.c.log": "Le bouton liste ouvre le journal de la partie, avec tout ce qui s’est passé jusqu’ici.",
  "man.d.swap": "Avant le premier tour, vous pouvez échanger des cartes entre la main et les cartes visibles : touchez-en une de chaque, puis « Commencer ».",
  "setup.learn": "Tutoriel pas à pas",
  "learn.title": "Tutoriel",
@@ -351,5 +351,6 @@
  "play.mmSeven": "{name} joue un 7 : {n} cartes à piocher",
  "play.mmSkip": "{name} passe son tour",
  "play.mmWish": "{name} demande {suit}",
- "man.u.pile": "Au centre se trouve la pile : vous devez suivre la couleur ou la valeur de la carte du dessus. Quand une couleur a été demandée, son symbole apparaît à côté du talon. Le bouton « Piocher une carte » est sous la table."
+ "man.u.pile": "Au centre se trouve la pile : vous devez suivre la couleur ou la valeur de la carte du dessus. Quand une couleur a été demandée, son symbole apparaît à côté du talon. Le bouton « Piocher une carte » est sous la table.",
+ "play.sing": "Paire chantée : {list}"
 }

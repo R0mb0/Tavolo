@@ -246,7 +246,7 @@
  "sm.eHit": "{name} pede carta",
  "sm.eStand": "{name} fica",
  "sm.eBust": "{name} estoura",
- "man.c.log": "O botão da lista abre o registo da partida, com tudo o que aconteceu até agora (recomeça depois de recarregar).",
+ "man.c.log": "O botão da lista abre o registo da partida, com tudo o que aconteceu até agora.",
  "man.d.swap": "Antes da primeira vez pode trocar cartas entre a mão e as cartas viradas: toque numa de cada, depois «Começar a jogar».",
  "setup.learn": "Tutorial passo a passo",
  "learn.title": "Tutorial",
@@ -351,5 +351,6 @@
  "play.mmSeven": "{name} joga um 7: {n} cartas a comprar",
  "play.mmSkip": "{name} perde a vez",
  "play.mmWish": "{name} pede {suit}",
- "man.u.pile": "No centro está a pilha: tem de seguir o naipe ou o valor da carta de cima. Quando foi pedido um naipe, o seu símbolo aparece junto ao baralho. O botão «Comprar uma carta» está por baixo da mesa."
+ "man.u.pile": "No centro está a pilha: tem de seguir o naipe ou o valor da carta de cima. Quando foi pedido um naipe, o seu símbolo aparece junto ao baralho. O botão «Comprar uma carta» está por baixo da mesa.",
+ "play.sing": "Par cantado: {list}"
 }

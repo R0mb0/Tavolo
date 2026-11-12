@@ -246,7 +246,7 @@
  "sm.eHit": "{name} asks for a card",
  "sm.eStand": "{name} stands",
  "sm.eBust": "{name} goes bust",
- "man.c.log": "The list button opens the game log, with everything that has happened so far (it starts again after a reload).",
+ "man.c.log": "The list button opens the game log, with everything that has happened so far.",
  "man.d.swap": "Before the first turn you can swap cards between your hand and your face-up cards: tap one of each, then press “Start the game”.",
  "setup.learn": "Step-by-step tutorial",
  "learn.title": "Tutorial",
@@ -351,5 +351,6 @@
  "play.mmSeven": "{name} plays a 7: {n} cards to draw",
  "play.mmSkip": "{name} skips a turn",
  "play.mmWish": "{name} asks for {suit}",
- "man.u.pile": "In the middle is the pile: you must match the suit or the rank of its top card. When a suit has been asked for, its symbol appears next to the deck. The \"Draw a card\" button is under the table."
+ "man.u.pile": "In the middle is the pile: you must match the suit or the rank of its top card. When a suit has been asked for, its symbol appears next to the deck. The \"Draw a card\" button is under the table.",
+ "play.sing": "Pair sung: {list}"
 }

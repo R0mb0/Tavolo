@@ -22,7 +22,7 @@ export function createTrickGame(def, opts) {
     return (whole || !frac ? whole : '') + frac;
   };
 
-  let deck, trumpCard, trump, score, decl, first = Math.floor(rng() * n);
+  let deck, trumpCard, trump, score, decl, sung, first = Math.floor(rng() * n);
   const P = Array.from({ length: n }, () => ({ hand: [] }));
   const totals = Array(nTeams).fill(0);
 
@@ -36,9 +36,10 @@ export function createTrickGame(def, opts) {
     deck = shuffle(buildDeck(def.deck, (def.setup.removeForPlayers || {})[n] || []), rng);
     trumpCard = hasTrump ? deck[0] : null;            // bottom of the deck, drawn last
     trump = hasTrump ? trumpCard.s : null;
-    score = Array(nTeams).fill(0); decl = Array(nTeams).fill(0);
+    score = Array(nTeams).fill(0); decl = Array(nTeams).fill(0); sung = new Set();
     P.forEach(p => { p.hand = []; });
-    for (let k = 0; k < def.setup.handSize; k++)
+    const size = (def.setup.handSizeFor || {})[n] || def.setup.handSize;
+    for (let k = 0; k < size; k++)
       for (let i = 0; i < n; i++) P[(first + i) % n].hand.push(deck.pop());
     Object.assign(g, { phase: 'play', pending: false, current: first, trick: [], winner: null, lastEvent: null, summary: null, announce: null });
     g.round++;
@@ -62,9 +63,19 @@ export function createTrickGame(def, opts) {
 
   g.legal = (i = g.current) => {
     const hand = P[i].hand;
-    if (R.followSuit && g.trick.length) {
+    if (R.followSuit && g.trick.length && !(R.freeWhileDeck && deck.length)) {
       const same = hand.filter(c => c.s === g.trick[0].card.s);
-      if (same.length) return same;
+      if (!R.mustBeat) { if (same.length) return same; return hand.slice(); }
+      // Tute: follow suit and beat the trick if you can; without the suit, trump it if you can.
+      const best = leaderOf(g.trick), mate = teams && teamOf(best.p) === teamOf(i);
+      if (same.length) {
+        const higher = mate || best.card.s !== same[0].s ? [] : same.filter(c => str(c) > str(best.card));
+        return higher.length ? higher : same;
+      }
+      if (mate) return hand.slice();
+      const trumps = hand.filter(c => c.s === trump);
+      const over = best.card.s === trump ? trumps.filter(c => str(c) > str(best.card)) : trumps;
+      return over.length ? over : hand.slice();
     }
     return hand.slice();
   };
@@ -89,6 +100,12 @@ export function createTrickGame(def, opts) {
     g.trick = []; g.pending = false; g.winner = null;
     if (deck.length) for (let i = 0; i < n; i++) P[(w + i) % n].hand.push(deck.pop());
     g.current = w;
+    if (R.marriage) {                                    // the winner of a trick sings a pair (e.g. King and Knight of one suit)
+      const M = R.marriage, h = P[w].hand;
+      const open = suits.filter(s => !sung.has(s) && M.ranks.every(r => h.some(c => c.s === s && c.r === r)));
+      const s = open.includes(trump) ? trump : open[0];
+      if (s) { const v = s === trump ? M.trumpPts : M.pts; sung.add(s); score[teamOf(w)] += v; g.announce = { type: 'sing', list: [{ p: w, pts: v }] }; }
+    }
     if (P.every(p => !p.hand.length)) endRound(teamOf(w));
   };
 
