@@ -4,6 +4,8 @@ import { settings, saveSettings, getStats, resetStats } from './store.js';
 import { cardHTML } from './cards.js';
 import { startTable } from './table.js';
 import { startSolitaire } from './solitaire.js';
+import { startRummy } from './rummy.js';
+import { startMachiavelli } from './machiavelli.js';
 import { dialog, esc } from './ui.js';
 import { manualHTML } from './manual.js';
 
@@ -162,7 +164,7 @@ function render() {
   if (a === 'play' && defs[b]) {
     const def = defs[b];
     app.innerHTML = '';
-    active = (def.engine === 'patience' ? startSolitaire : startTable)(app, def, optsFor(def), () => go('game/' + b));
+    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, machiavelli: startMachiavelli }[def.engine] || startTable)(app, def, optsFor(def), () => go('game/' + b));
   } else {
     app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'help' ? screenHelp(b) : a === 'stats' ? screenStats() : screenHome();
     window.scrollTo(0, 0);

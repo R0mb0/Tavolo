@@ -259,6 +259,39 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 @keyframes nudge { to { transform: translateY(-.6em); } }
 .fly { position: fixed; z-index: 50; pointer-events: none; }
 
+/* ---------- rummy ---------- */
+.s-joker { color: #7b3fa0; }
+.card .court small { font-size: .5em; font-weight: 800; letter-spacing: .05em; }
+.table.rum { grid-template-rows: auto minmax(0, 1fr) auto auto auto; }
+.rum .felt { align-items: flex-start; --cw: clamp(2.6rem, 12vw, 4rem); }
+.rum .side { position: sticky; top: 0; }
+@media (max-width: 40rem) { .rum .side { flex-direction: row; align-items: flex-start; gap: .4rem; } .rum .felt { --cw: clamp(2.2rem, 10.5vw, 3rem); padding: .5rem; } .rum .status { font-size: .92rem; } }
+.pile-btn { display: flex; flex-direction: column; align-items: center; gap: .2rem; padding: 0; border: 0; background: none; color: inherit; border-radius: .5rem; }
+.pile-btn:not(:disabled):hover .card, .pile-btn.hinted .card { box-shadow: 0 0 0 .2em var(--gold); }
+.pile-btn .stack { display: block; }
+.melds { flex: 1; display: flex; flex-wrap: wrap; align-content: flex-start; gap: .5rem .7rem; min-width: 0; --cw: clamp(1.9rem, 8.2vw, 3rem); }
+.meld { display: flex; padding: .2rem; border: 2px solid transparent; border-radius: .6rem; background: rgb(0 0 0 / .14); }
+.meld .card + .card { margin-left: calc(var(--cw) * -.45); }
+.meld.burraco { background: color-mix(in srgb, var(--gold) 35%, transparent); }
+.mgroup { flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .7rem; padding-bottom: .5rem; border-bottom: 1px dashed rgb(255 255 255 / .25); }
+.mgroup:last-child { border-bottom: 0; }
+.mlabel { flex: 1 1 100%; font-size: .75rem; font-weight: 700; opacity: .85; }
+.mgrp { align-items: center; }
+.mgrp.bad { border-color: var(--danger); border-style: dashed; background: color-mix(in srgb, var(--danger) 22%, transparent); }
+.mgrp button.card:not(:disabled):hover { transform: none; }
+.mgrp .card.sel { transform: translateY(-.45em); outline: .22em solid var(--gold); outline-offset: .06em; z-index: 2; }
+.plus { flex: none; width: 1.9rem; height: 1.9rem; margin-left: .3rem; border-radius: 50%; border: 2px solid rgb(255 255 255 / .6); background: rgb(0 0 0 / .25); color: #fff; font-size: 1.2rem; font-weight: 700; line-height: 1; padding: 0; }
+.plus:disabled { opacity: .25; }
+.plus:not(:disabled):hover { border-color: var(--gold); color: var(--gold); }
+.meld.prov { border-style: dashed; border-color: rgb(255 255 255 / .55); }
+.meld:not(:disabled):hover, .meld:not(:disabled):focus-visible, .meld.hinted { border-color: var(--gold); }
+.rum-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.rum-bar .btn { min-height: 2.5rem; padding: .3rem .8rem; }
+.hand .card.sel { transform: translateY(-.7em); outline: .22em solid var(--gold); outline-offset: .06em; }
+.rum .hand button.card:not(:disabled):hover { transform: none; }
+.rum .hand button.card.sel:not(:disabled):hover { transform: translateY(-.7em); }
+.rum .me { padding: .7rem .3rem .3rem; }
+
 /* ---------- patience ---------- */
 .sol {
   flex: 1; min-height: 0; overflow: auto; width: min(64rem, 100%); margin: 0 auto; display: flex; flex-direction: column; gap: .8rem;

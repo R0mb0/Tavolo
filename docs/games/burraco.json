@@ -1,0 +1,221 @@
+{
+  "id": "burraco",
+  "version": 1,
+  "deck": "french",
+  "engine": "burraco",
+  "players": {
+    "options": [
+      2,
+      4
+    ],
+    "default": 4,
+    "teamsAt": [
+      4
+    ]
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 11
+  },
+  "rules": {
+    "decks": 2,
+    "jokers": 4,
+    "potSize": 11,
+    "cleanBonus": 200,
+    "dirtyBonus": 100,
+    "closeBonus": 100,
+    "potPenalty": 100,
+    "target": 1005
+  },
+  "manual": {
+    "examples": [
+      {
+        "trick": [
+          "9-hearts",
+          "9-spades",
+          "9-hearts",
+          "9-clubs"
+        ]
+      },
+      {
+        "trick": [
+          "5-diamonds",
+          "6-diamonds",
+          "7-diamonds",
+          "8-diamonds",
+          "9-diamonds",
+          "10-diamonds",
+          "11-diamonds"
+        ]
+      }
+    ]
+  },
+  "i18n": {
+    "en": {
+      "name": "Burraco",
+      "tagline": "Team rummy with two pots: build long combinations, make a burraco and go out first.",
+      "rules": [
+        "Two decks with four jokers. Four players form two teams (partners sit opposite each other); with two players each plays alone. Everyone gets 11 cards and two pots of 11 cards are set aside.",
+        "On your turn draw one card from the deck or take the whole discard pile, lay down combinations if you want, and finish by discarding one card.",
+        "Combinations are sets (three or more cards of the same value) and runs (three or more consecutive cards of the same suit). Jokers and 2s are wild, one per combination. You can add cards only to your own team’s combinations.",
+        "The first player of each team to run out of cards takes a pot: straight away if every card was laid down, at the next turn if the last card was discarded.",
+        "A combination of seven or more cards is a burraco: 200 points without a wild card, 100 with one. To go out, a team must have taken its pot and made at least one burraco; going out is worth 100 points.",
+        "Score: cards on the table count for you, cards left in hand against you (joker 30, 2 20, Ace 15, King to 8 10, 7 to 3 5); a team that never took its pot loses 100. The deal also ends when the deck runs out. The first team to 1005 points wins."
+      ],
+      "goal": "Score more points than the other side by laying down long combinations — above all burracos — and going out first.",
+      "tips": [
+        "Aim for clean burracos: do not put a wild card in a combination that can reach seven cards on its own.",
+        "Take the discard pile when it is big: many cards mean many combinations.",
+        "Get to the pot quickly: eleven fresh cards are a big advantage."
+      ]
+    },
+    "it": {
+      "name": "Burraco",
+      "tagline": "Il ramino a coppie con i pozzetti: costruisci combinazioni lunghe, fai burraco e chiudi per primo.",
+      "rules": [
+        "Due mazzi con quattro jolly. In quattro si gioca a coppie (i compagni siedono di fronte); in due ognuno gioca per sé. Ogni giocatore riceve 11 carte e si mettono da parte due pozzetti da 11 carte.",
+        "Al tuo turno peschi una carta dal mazzo oppure raccogli tutti gli scarti, cali le combinazioni che vuoi e chiudi il turno scartando una carta.",
+        "Le combinazioni sono i gruppi (tre o più carte dello stesso valore) e le scale (tre o più carte consecutive dello stesso seme). Jolly e 2 (pinelle) sono matte, una per combinazione. Puoi attaccare carte solo alle combinazioni della tua squadra.",
+        "Il primo giocatore di ogni squadra che resta senza carte prende un pozzetto: subito se ha calato tutte le carte, al turno successivo se ha scartato l’ultima.",
+        "Una combinazione di sette o più carte è un burraco: 200 punti se non contiene matte, 100 se ne contiene una. Per chiudere una squadra deve aver preso il pozzetto e fatto almeno un burraco; la chiusura vale 100 punti.",
+        "Punteggio: le carte calate valgono a favore, quelle rimaste in mano contro (jolly 30, 2 20, Asso 15, dal Re all’8 10, dal 7 al 3 5); la squadra che non ha preso il pozzetto perde 100. La mano finisce anche quando termina il mazzo. Vince la prima squadra che arriva a 1005 punti."
+      ],
+      "goal": "Fare più punti degli avversari calando combinazioni lunghe, soprattutto burrachi, e chiudendo per primi.",
+      "tips": [
+        "Punta ai burrachi puliti: non mettere una matta in una combinazione che può arrivare a sette carte da sola.",
+        "Raccogli gli scarti quando sono tanti: molte carte vogliono dire molte combinazioni.",
+        "Arriva presto al pozzetto: undici carte nuove sono un grande vantaggio."
+      ]
+    },
+    "es": {
+      "name": "Burraco",
+      "tagline": "El rummy por parejas con dos pozos: forma combinaciones largas, haz un burraco y cierra primero.",
+      "rules": [
+        "Dos barajas con cuatro comodines. Con cuatro jugadores se forman dos parejas (los compañeros se sientan enfrente); con dos, cada uno juega solo. Cada jugador recibe 11 cartas y se apartan dos pozos de 11 cartas.",
+        "En tu turno robas una carta del mazo o recoges todo el descarte, bajas las combinaciones que quieras y terminas descartando una carta.",
+        "Las combinaciones son grupos (tres o más cartas del mismo valor) y escaleras (tres o más cartas consecutivas del mismo palo). Los comodines y los 2 son comodines, uno por combinación. Solo puedes añadir cartas a las combinaciones de tu equipo.",
+        "El primer jugador de cada equipo que se queda sin cartas toma un pozo: enseguida si bajó todas sus cartas, en el turno siguiente si descartó la última.",
+        "Una combinación de siete o más cartas es un burraco: 200 puntos sin comodín, 100 con uno. Para cerrar, un equipo debe haber tomado su pozo y tener al menos un burraco; cerrar vale 100 puntos.",
+        "Puntuación: las cartas bajadas suman, las que quedan en la mano restan (comodín 30, 2 20, As 15, del Rey al 8 10, del 7 al 3 5); el equipo que no tomó su pozo pierde 100. La mano también termina cuando se acaba el mazo. Gana el primer equipo que llega a 1005 puntos."
+      ],
+      "goal": "Sumar más puntos que el rival bajando combinaciones largas, sobre todo burracos, y cerrando primero.",
+      "tips": [
+        "Busca burracos limpios: no pongas un comodín en una combinación que puede llegar sola a siete cartas.",
+        "Recoge el descarte cuando sea grande: muchas cartas son muchas combinaciones.",
+        "Llega pronto al pozo: once cartas nuevas son una gran ventaja."
+      ]
+    },
+    "fr": {
+      "name": "Burraco",
+      "tagline": "Le rami par équipes avec deux pots : formez de longues combinaisons, faites un burraco et terminez en premier.",
+      "rules": [
+        "Deux jeux avec quatre jokers. À quatre, on forme deux équipes (les partenaires sont face à face) ; à deux, chacun joue pour soi. Chaque joueur reçoit 11 cartes et deux pots de 11 cartes sont mis de côté.",
+        "À votre tour, piochez une carte ou ramassez toute la défausse, posez les combinaisons que vous voulez et terminez en défaussant une carte.",
+        "Les combinaisons sont les groupes (trois cartes ou plus de même valeur) et les suites (trois cartes consécutives ou plus de la même couleur). Les jokers et les 2 sont des cartes passe-partout, une par combinaison. Vous ne pouvez ajouter des cartes qu’aux combinaisons de votre équipe.",
+        "Le premier joueur de chaque équipe à ne plus avoir de cartes prend un pot : tout de suite s’il a tout posé, au tour suivant s’il a défaussé sa dernière carte.",
+        "Une combinaison de sept cartes ou plus est un burraco : 200 points sans carte passe-partout, 100 avec. Pour terminer, une équipe doit avoir pris son pot et fait au moins un burraco ; terminer rapporte 100 points.",
+        "Score : les cartes posées comptent pour vous, celles restées en main contre vous (joker 30, 2 20, As 15, du Roi au 8 10, du 7 au 3 5) ; l’équipe qui n’a pas pris son pot perd 100. La donne s’arrête aussi quand la pioche est épuisée. La première équipe à 1005 points gagne."
+      ],
+      "goal": "Marquer plus de points que l’adversaire en posant de longues combinaisons — surtout des burracos — et en terminant en premier.",
+      "tips": [
+        "Visez les burracos propres : ne mettez pas de carte passe-partout dans une combinaison qui peut atteindre sept cartes seule.",
+        "Ramassez la défausse quand elle est grosse : beaucoup de cartes, c’est beaucoup de combinaisons.",
+        "Atteignez vite le pot : onze cartes neuves sont un gros avantage."
+      ]
+    },
+    "de": {
+      "name": "Burraco",
+      "tagline": "Team-Rommé mit zwei Pozzetti: Baue lange Kombinationen, mache einen Burraco und mach zuerst aus.",
+      "rules": [
+        "Zwei Blätter mit vier Jokern. Zu viert spielt man in zwei Teams (Partner sitzen sich gegenüber); zu zweit spielt jeder für sich. Jeder erhält 11 Karten, zwei Pozzetti mit je 11 Karten werden beiseitegelegt.",
+        "In deinem Zug ziehst du eine Karte vom Stapel oder nimmst die ganze Ablage, legst Kombinationen aus, wenn du willst, und wirfst zum Schluss eine Karte ab.",
+        "Kombinationen sind Sätze (drei oder mehr Karten gleichen Werts) und Folgen (drei oder mehr aufeinanderfolgende Karten derselben Farbe). Joker und Zweien sind wild, je eine pro Kombination. Anlegen darfst du nur an Kombinationen deines Teams.",
+        "Der erste Spieler jedes Teams, der keine Karten mehr hat, nimmt einen Pozzetto: sofort, wenn er alles ausgelegt hat, im nächsten Zug, wenn er die letzte Karte abgeworfen hat.",
+        "Eine Kombination aus sieben oder mehr Karten ist ein Burraco: 200 Punkte ohne wilde Karte, 100 mit. Zum Ausmachen muss ein Team seinen Pozzetto genommen und mindestens einen Burraco haben; Ausmachen bringt 100 Punkte.",
+        "Wertung: Ausgelegte Karten zählen für dich, Handkarten gegen dich (Joker 30, 2 20, Ass 15, König bis 8 10, 7 bis 3 5); ein Team ohne Pozzetto verliert 100. Das Spiel endet auch, wenn der Stapel leer ist. Das erste Team mit 1005 Punkten gewinnt."
+      ],
+      "goal": "Sammle mehr Punkte als die Gegner, indem du lange Kombinationen auslegst – vor allem Burracos – und zuerst ausmachst.",
+      "tips": [
+        "Ziele auf saubere Burracos: Lege keine wilde Karte in eine Kombination, die allein sieben Karten erreichen kann.",
+        "Nimm die Ablage, wenn sie groß ist: Viele Karten bedeuten viele Kombinationen.",
+        "Komm schnell an den Pozzetto: Elf frische Karten sind ein großer Vorteil."
+      ]
+    },
+    "pt": {
+      "name": "Burraco",
+      "tagline": "O rummy em duplas com dois potes: faça combinações longas, um burraco e feche primeiro.",
+      "rules": [
+        "Dois baralhos com quatro jokers. Com quatro jogadores formam-se duas duplas (os parceiros sentam-se frente a frente); com dois, cada um joga por si. Cada jogador recebe 11 cartas e separam-se dois potes de 11 cartas.",
+        "Na sua vez compra uma carta do baralho ou apanha todo o descarte, baixa as combinações que quiser e termina descartando uma carta.",
+        "As combinações são grupos (três ou mais cartas do mesmo valor) e sequências (três ou mais cartas seguidas do mesmo naipe). Jokers e 2 são curingas, um por combinação. Só pode juntar cartas às combinações da sua equipa.",
+        "O primeiro jogador de cada equipa a ficar sem cartas apanha um pote: logo, se baixou todas as cartas; na vez seguinte, se descartou a última.",
+        "Uma combinação de sete ou mais cartas é um burraco: 200 pontos sem curinga, 100 com um. Para fechar, a equipa tem de ter apanhado o pote e feito pelo menos um burraco; fechar vale 100 pontos.",
+        "Pontuação: as cartas baixadas contam a favor, as que ficam na mão contra (joker 30, 2 20, Ás 15, do Rei ao 8 10, do 7 ao 3 5); a equipa que não apanhou o pote perde 100. A mão também termina quando o baralho acaba. Ganha a primeira equipa a chegar a 1005 pontos."
+      ],
+      "goal": "Fazer mais pontos do que o adversário baixando combinações longas, sobretudo burracos, e fechando primeiro.",
+      "tips": [
+        "Procure burracos limpos: não ponha um curinga numa combinação que pode chegar sozinha a sete cartas.",
+        "Apanhe o descarte quando for grande: muitas cartas são muitas combinações.",
+        "Chegue depressa ao pote: onze cartas novas são uma grande vantagem."
+      ]
+    },
+    "zh": {
+      "name": "Burraco",
+      "tagline": "带两堆底牌的团队拉米：组成长牌组，凑出 burraco，率先出完。",
+      "rules": [
+        "两副牌加四张王牌。四人时分成两队（队友相对而坐）；两人时各自为战。每人发 11 张牌，另留出两堆各 11 张的底牌。",
+        "轮到你时，从牌堆摸一张牌或收走整个弃牌堆，可以打出牌组，最后弃一张牌。",
+        "牌组分为同点牌组（三张或更多点数相同的牌）和顺子（三张或更多同花色的连续牌）。王牌和 2 是万能牌，每个牌组限用一张。只能把牌接到自己队伍的牌组上。",
+        "每队第一个出完手牌的玩家拿一堆底牌：如果手牌全部打出就立刻拿；如果是弃掉最后一张，则下一回合拿。",
+        "七张或更多牌的牌组称为 burraco：不含万能牌 200 分，含万能牌 100 分。要出完，队伍必须已拿底牌并至少有一个 burraco；出完得 100 分。",
+        "计分：桌上的牌加分，手里的牌扣分（王牌 30，2 20，A 15，K 到 8 10，7 到 3 5）；没拿底牌的队伍扣 100 分。牌堆摸完时本局也结束。先达到 1005 分的队伍获胜。"
+      ],
+      "goal": "打出长牌组（尤其是 burraco）并率先出完，得分超过对方。",
+      "tips": [
+        "争取做干净的 burraco：能自己凑到七张的牌组不要放万能牌。",
+        "弃牌堆很大时就收走：牌多，牌组就多。",
+        "尽快拿到底牌：十一张新牌是很大的优势。"
+      ]
+    },
+    "ja": {
+      "name": "ブラーコ",
+      "tagline": "2つのポットを使うチーム戦ラミー。長い組み合わせでブラーコを作り、先にあがります。",
+      "rules": [
+        "2組のトランプにジョーカー4枚。4人のときは2チーム（味方は向かい）、2人のときは個人戦です。各自11枚ずつ配り、11枚のポットを2つ脇に置きます。",
+        "自分の番では、山札から1枚引くか捨て札をすべて取り、好きなだけ組み合わせを出し、最後に1枚捨てます。",
+        "組み合わせには、セット（同じ数の3枚以上）とラン（同じスートで連続する3枚以上）があります。ジョーカーと2はワイルドで、1つの組み合わせに1枚まで。付け足せるのは自分のチームの組み合わせだけです。",
+        "各チームで最初に手札がなくなったプレイヤーがポットを取ります。すべて出し切ったときはすぐに、最後の1枚を捨てたときは次の番に使えます。",
+        "7枚以上の組み合わせはブラーコです。ワイルドなしで200点、ありで100点。あがるには、チームがポットを取り、ブラーコを1つ以上作っている必要があります。あがりは100点です。",
+        "得点：出したカードは加点、手札に残ったカードは減点（ジョーカー30、2は20、エース15、キング〜8は10、7〜3は5）。ポットを取らなかったチームは100点減点。山札がなくなってもディール終了です。先に1005点に達したチームの勝ちです。"
+      ],
+      "goal": "長い組み合わせ、特にブラーコを作って先にあがり、相手より多く得点します。",
+      "tips": [
+        "クリーンなブラーコを狙いましょう。自力で7枚に届く組み合わせにはワイルドを入れないこと。",
+        "捨て札が多いときは取りましょう。カードが多いほど組み合わせも増えます。",
+        "早くポットを取りましょう。新しい11枚は大きな強みです。"
+      ]
+    },
+    "ko": {
+      "name": "부라코",
+      "tagline": "두 개의 팟이 있는 팀 러미. 긴 조합으로 부라코를 만들고 먼저 끝내세요.",
+      "rules": [
+        "카드 두 벌에 조커 네 장. 4인은 두 팀(파트너는 맞은편), 2인은 개인전입니다. 각자 11장씩 받고 11장짜리 팟 두 개를 따로 둡니다.",
+        "내 차례에는 덱에서 한 장을 뽑거나 버린 카드 더미를 전부 가져오고, 원하는 만큼 조합을 내려놓은 뒤 한 장을 버립니다.",
+        "조합에는 세트(같은 숫자 3장 이상)와 런(같은 무늬의 연속된 3장 이상)이 있습니다. 조커와 2는 와일드이며 조합 하나에 한 장만 쓸 수 있습니다. 카드는 자기 팀의 조합에만 붙일 수 있습니다.",
+        "각 팀에서 처음으로 손패를 모두 없앤 플레이어가 팟을 가져갑니다. 전부 내려놓았다면 즉시, 마지막 카드를 버렸다면 다음 차례에 사용합니다.",
+        "7장 이상의 조합은 부라코입니다. 와일드가 없으면 200점, 있으면 100점. 끝내려면 팀이 팟을 가져갔고 부라코가 하나 이상 있어야 하며, 끝내면 100점입니다.",
+        "점수: 내려놓은 카드는 가산, 손에 남은 카드는 감점(조커 30, 2는 20, 에이스 15, 킹~8은 10, 7~3은 5). 팟을 가져가지 못한 팀은 100점 감점. 덱이 떨어져도 판이 끝납니다. 먼저 1005점에 도달한 팀이 이깁니다."
+      ],
+      "goal": "긴 조합, 특히 부라코를 만들고 먼저 끝내서 상대보다 많은 점수를 얻습니다.",
+      "tips": [
+        "깨끗한 부라코를 노리세요. 스스로 7장이 될 수 있는 조합에는 와일드를 넣지 마세요.",
+        "버린 카드 더미가 클 때 가져오세요. 카드가 많으면 조합도 많아집니다.",
+        "팟에 빨리 도달하세요. 새 카드 11장은 큰 이점입니다."
+      ]
+    }
+  }
+}

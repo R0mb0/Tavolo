@@ -21,6 +21,8 @@ export function manualHTML(def) {
     tb = ['man.t.hand', 'man.t.opps', 'man.t.turn', 'man.t.deck'];
     if (kind === 'trick') { if (R.trump !== 'none') tb.push('man.t.trump'); tb.push('man.t.center.trick'); }
     else if (kind === 'shedding') tb.push('man.d.pile', 'man.d.table');
+    else if (kind === 'machiavelli') tb = ['man.t.opps', 'man.t.turn', 'man.m.table', 'man.m.buttons', 'man.m.draw'];
+    else if (kind === 'rummy' || kind === 'burraco') tb = ['man.t.opps', 'man.t.turn', 'man.r.piles', 'man.r.melds', 'man.r.hand'];
     else tb.push('man.t.center.fishing', 'man.t.pile');
   }
   out += sec(t('man.table'), list(tb.map(k => t(k))));

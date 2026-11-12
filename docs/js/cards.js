@@ -41,7 +41,10 @@ export function cardHTML(card, opts = {}) {
     ? `<button type="button" class="card back${cls}"${opts.disabled ? ' disabled' : ''} aria-label="?"${opts.attrs || ''}></button>`
     : `<${tag} class="card back${cls}" aria-hidden="true"></${tag}>`;
   let idx, mid;
-  if (card.deck === 'french') {
+  if (card.r === 0) {                                   // joker
+    idx = '★';
+    mid = '<div class="court"><span>★</span><small>JOLLY</small></div>';
+  } else if (card.deck === 'french') {
     const r = FR_RANK[card.r] || card.r;
     idx = `${r}<b>${FR_SUIT[card.s]}</b>`;
     mid = `<div class="court"><span>${FR_SUIT[card.s]}</span></div>`;
