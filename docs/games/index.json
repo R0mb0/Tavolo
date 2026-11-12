@@ -1,0 +1,14 @@
+{
+  "decks": [
+    {
+      "id": "italian",
+      "games": ["briscola", "scopa", "rubamazzo"],
+      "planned": ["Solitario"]
+    },
+    {
+      "id": "french",
+      "games": [],
+      "planned": ["Scala 40", "Burraco", "Quadrato", "Danish", "Klondike"]
+    }
+  ]
+}

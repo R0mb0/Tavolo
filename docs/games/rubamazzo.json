@@ -1,0 +1,109 @@
+{
+  "id": "rubamazzo",
+  "version": 1,
+  "deck": "italian",
+  "engine": "fishing",
+  "players": { "options": [2, 3, 4], "default": 2, "teamsAt": [] },
+  "difficulty": ["easy", "medium", "hard"],
+  "setup": { "handSize": 3, "tableCards": 4 },
+  "rules": {
+    "captureSums": false,
+    "singleFirst": true,
+    "sweeps": false,
+    "steal": true,
+    "lastCaptureTakesTable": true
+  },
+  "scoring": { "type": "mostCards" },
+  "i18n": {
+    "en": {
+      "name": "Rubamazzo",
+      "tagline": "Steal the pile! A quick, family-friendly capture game.",
+      "rules": [
+        "Play a card to capture a table card of the same value. Captured cards go face up on your pile.",
+        "If your card matches the top card of an opponent's pile, you can steal their whole pile.",
+        "If your card captures nothing it stays on the table.",
+        "When all the cards have been played, whoever has the most cards wins."
+      ]
+    },
+    "it": {
+      "name": "Rubamazzo",
+      "tagline": "Ruba il mazzetto! Un gioco di prese veloce e per tutta la famiglia.",
+      "rules": [
+        "Gioca una carta per prendere dal tavolo una carta dello stesso valore. Le carte prese vanno scoperte sul tuo mazzetto.",
+        "Se la tua carta è uguale a quella in cima al mazzetto di un avversario, puoi rubargli tutto il mazzetto.",
+        "Se la tua carta non prende nulla resta sul tavolo.",
+        "Quando tutte le carte sono state giocate, vince chi ha più carte."
+      ]
+    },
+    "es": {
+      "name": "Rubamazzo",
+      "tagline": "¡Roba el montón! Un juego de capturas rápido y familiar.",
+      "rules": [
+        "Juega una carta para capturar de la mesa otra del mismo valor. Las cartas capturadas van boca arriba en tu montón.",
+        "Si tu carta coincide con la de arriba del montón de un rival, puedes robarle todo el montón.",
+        "Si tu carta no captura nada, se queda en la mesa.",
+        "Cuando se han jugado todas las cartas, gana quien tiene más."
+      ]
+    },
+    "fr": {
+      "name": "Rubamazzo",
+      "tagline": "Volez le paquet ! Un jeu de ramassage rapide et familial.",
+      "rules": [
+        "Jouez une carte pour ramasser une carte de même valeur sur la table. Les cartes gagnées vont face visible sur votre paquet.",
+        "Si votre carte est identique à celle du dessus du paquet d'un adversaire, vous pouvez lui voler tout son paquet.",
+        "Si votre carte ne ramasse rien, elle reste sur la table.",
+        "Quand toutes les cartes ont été jouées, celui qui en a le plus gagne."
+      ]
+    },
+    "de": {
+      "name": "Rubamazzo",
+      "tagline": "Klau den Stapel! Ein schnelles Fangspiel für die ganze Familie.",
+      "rules": [
+        "Spiele eine Karte, um eine Tischkarte mit gleichem Wert zu fangen. Gefangene Karten kommen offen auf deinen Stapel.",
+        "Passt deine Karte zur obersten Karte eines gegnerischen Stapels, darfst du den ganzen Stapel stehlen.",
+        "Fängt deine Karte nichts, bleibt sie auf dem Tisch.",
+        "Sind alle Karten gespielt, gewinnt, wer die meisten Karten hat."
+      ]
+    },
+    "pt": {
+      "name": "Rubamazzo",
+      "tagline": "Roube o monte! Um jogo de capturas rápido e para toda a família.",
+      "rules": [
+        "Jogue uma carta para capturar da mesa outra de mesmo valor. As cartas capturadas ficam viradas para cima no seu monte.",
+        "Se a sua carta for igual à do topo do monte de um adversário, pode roubar o monte inteiro.",
+        "Se a sua carta não captura nada, fica na mesa.",
+        "Quando todas as cartas forem jogadas, ganha quem tiver mais cartas."
+      ]
+    },
+    "zh": {
+      "name": "Rubamazzo",
+      "tagline": "抢走对手的牌堆！轻松快速的家庭收牌游戏。",
+      "rules": [
+        "打出一张牌，收走桌上点数相同的一张牌。收到的牌正面朝上放在自己的牌堆上。",
+        "如果你的牌与对手牌堆顶的牌点数相同，可以抢走对方整个牌堆。",
+        "如果什么都收不到，这张牌留在桌上。",
+        "所有牌打完后，牌最多的玩家获胜。"
+      ]
+    },
+    "ja": {
+      "name": "ルバマッツォ",
+      "tagline": "山を奪え！家族で楽しめるスピーディーな取り合いゲーム。",
+      "rules": [
+        "カードを1枚出して、場にある同じ数のカードを取ります。取ったカードは自分の山に表向きで重ねます。",
+        "出したカードが相手の山の一番上と同じ数なら、その山を丸ごと奪えます。",
+        "何も取れなければ、そのカードは場に残ります。",
+        "すべてのカードを出し終えたとき、枚数が最も多い人の勝ちです。"
+      ]
+    },
+    "ko": {
+      "name": "루바마초",
+      "tagline": "더미를 빼앗아라! 온 가족이 즐기는 빠른 카드 따먹기 게임.",
+      "rules": [
+        "카드 한 장을 내서 바닥의 같은 숫자 카드를 가져옵니다. 가져온 카드는 내 더미 위에 앞면이 보이게 쌓습니다.",
+        "낸 카드가 상대 더미 맨 위 카드와 숫자가 같으면 그 더미를 통째로 빼앗을 수 있습니다.",
+        "아무것도 가져오지 못하면 그 카드는 바닥에 남습니다.",
+        "모든 카드를 다 내면 카드가 가장 많은 사람이 이깁니다."
+      ]
+    }
+  }
+}
