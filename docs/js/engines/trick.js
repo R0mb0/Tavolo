@@ -12,8 +12,16 @@ export function createTrickGame(def, opts) {
   const nTeams = teams ? 2 : n;
 
   const deck = shuffle(buildDeck(def.deck, (def.setup.removeForPlayers || {})[n] || []), rng);
-  const trumpCard = deck[0];            // bottom of the deck, drawn last
-  const trump = trumpCard.s;
+  const hasTrump = R.trump !== 'none';
+  const trumpCard = hasTrump ? deck[0] : null;   // bottom of the deck, drawn last
+  const trump = hasTrump ? trumpCard.s : null;
+  // Some games count in fractions (Tressette: thirds). Scores are kept in whole units and divided for display.
+  const div = R.scoreDivisor || 1;
+  const fmt = u => {
+    if (div === 1) return String(u);
+    const whole = Math.floor(u / div), frac = ['', '⅓', '⅔'][u % div] || '';
+    return (whole || !frac ? whole : '') + frac;
+  };
   const P = Array.from({ length: n }, () => ({ hand: [] }));
   const score = Array(nTeams).fill(0);
 
@@ -45,7 +53,7 @@ export function createTrickGame(def, opts) {
     if (g.trick.length === n) {
       g.winner = leaderOf(g.trick).p;
       g.pending = true;
-      g.lastEvent = { type: 'takes', p: g.winner, pts: trickPts(g.trick) };
+      g.lastEvent = { type: 'takes', p: g.winner, pts: fmt(trickPts(g.trick)) };
     } else {
       g.current = (g.current + 1) % n;
       g.lastEvent = null;
@@ -58,20 +66,20 @@ export function createTrickGame(def, opts) {
     g.trick = []; g.pending = false; g.winner = null;
     if (deck.length) for (let i = 0; i < n; i++) P[(w + i) % n].hand.push(deck.pop());
     g.current = w;
-    if (P.every(p => !p.hand.length)) g.phase = 'over';
+    if (P.every(p => !p.hand.length)) { score[teamOf(w)] += R.lastTrickPoints || 0; g.phase = 'over'; }
   };
 
   g.view = () => ({
     showScore: true, showPile: false,
-    players: P.map((p, i) => ({ hand: p.hand, handCount: p.hand.length, score: score[teamOf(i)] })),
+    players: P.map((p, i) => ({ hand: p.hand, handCount: p.hand.length, score: fmt(score[teamOf(i)]) })),
     center: g.trick.map(t => ({ card: t.card, p: t.p, hl: g.pending && t.p === g.winner })),
-    deckCount: deck.length, trumpCard: deck.length ? trumpCard : null, trumpSuit: trump, staged: null
+    deckCount: deck.length, trumpCard: deck.length && hasTrump ? trumpCard : null, trumpSuit: trump, staged: null
   });
 
   g.result = () => {
-    const me = teamOf(0), mine = score[me];
-    const other = Math.max(...score.filter((_, t) => t !== me));
-    return { outcome: mine > other ? 'win' : mine < other ? 'lose' : 'tie', score: mine, scores: score.slice() };
+    const scores = score.map(s => Math.floor(s / div)), me = teamOf(0), mine = scores[me];
+    const other = Math.max(...scores.filter((_, t) => t !== me));
+    return { outcome: mine > other ? 'win' : mine < other ? 'lose' : 'tie', score: mine, scores };
   };
 
   // ---------- bots ----------

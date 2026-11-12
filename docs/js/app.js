@@ -3,6 +3,7 @@ import { setLang, t, gt, LANGS } from './i18n.js';
 import { settings, saveSettings, getStats, resetStats } from './store.js';
 import { cardHTML } from './cards.js';
 import { startTable } from './table.js';
+import { startSolitaire } from './solitaire.js';
 import { dialog, esc } from './ui.js';
 import { manualHTML } from './manual.js';
 
@@ -74,6 +75,7 @@ function openSettings() {
 // ---------- screens ----------
 const route = () => location.hash.replace(/^#\/?/, '').split('/');
 const go = h => { location.hash = '#/' + h; };
+const solo = def => def.players.options.length === 1 && def.players.options[0] === 1;
 const range = o => (o.length > 1 ? `${o[0]}–${o[o.length - 1]}` : `${o[0]}`);
 const SAMPLE = {
   italian: [{ r: 1, s: 'denari' }, { r: 10, s: 'coppe' }, { r: 7, s: 'spade' }, { r: 3, s: 'bastoni' }],
@@ -96,7 +98,7 @@ function screenDeck(id) {
     d.games.map(gid => {
       const def = defs[gid], s = st[gid];
       return `<a class="tile game" href="#/game/${gid}"><h2>${esc(gt(def, 'name'))}</h2><p>${esc(gt(def, 'tagline'))}</p>` +
-        `<div class="tile-meta"><span class="pill">${t('games.players', { n: range(def.players.options) })}</span>` +
+        `<div class="tile-meta"><span class="pill">${solo(def) ? t('games.solo') : t('games.players', { n: range(def.players.options) })}</span>` +
         (s ? `<span class="pill ghost">${t('games.record', { won: s.won, played: s.played })}</span>` : '') + '</div></a>';
     }).join('') +
     d.planned.map(n => `<div class="tile game soon"><h2>${esc(n)}</h2><span class="pill ghost">${t('games.soon')}</span></div>`).join('') +
@@ -114,14 +116,14 @@ function optsFor(def) {
 function screenSetup(id) {
   const def = defs[id];
   if (!def) return screenHome();
-  const o = optsFor(def), teams = (def.players.teamsAt || []).includes(o.players);
+  const o = optsFor(def), teams = (def.players.teamsAt || []).includes(o.players), lvl = def.levels && def.levels[o.difficulty];
   return `<section class="screen narrow"><h1>${esc(gt(def, 'name'))}</h1><p class="lead">${esc(gt(def, 'tagline'))}</p>` +
-    `<div class="panel"><div class="field"><span>${t('setup.players')}</span><div class="seg">` +
+    `<div class="panel">` + (solo(def) ? '' : `<div class="field"><span>${t('setup.players')}</span><div class="seg">` +
     def.players.options.map(n => `<button type="button" data-players="${n}" aria-pressed="${n === o.players}">${n}</button>`).join('') +
-    `</div><small>${t('setup.playersHint', { n: o.players - 1 })}${teams ? ' · ' + t('setup.teams') : ''}</small></div>` +
+    `</div><small>${t('setup.playersHint', { n: o.players - 1 })}${teams ? ' · ' + t('setup.teams') : ''}</small></div>`) +
     `<div class="field"><span>${t('setup.difficulty')}</span><div class="seg">` +
     def.difficulty.map(k => `<button type="button" data-diff="${k}" aria-pressed="${k === o.difficulty}">${t('diff.' + k)}</button>`).join('') +
-    `</div></div><a class="btn primary big" href="#/play/${id}">${t('setup.start')}</a></div>` +
+    `</div>${lvl ? `<small>${t('sol.draw', { n: lvl.draw })} · ${t('sol.passes', { n: lvl.passes < 0 ? '∞' : lvl.passes })}</small>` : ''}</div><a class="btn primary big" href="#/play/${id}">${t('setup.start')}</a></div>` +
     `<details class="rules" open><summary>${t('setup.rules')}</summary><ul>${gt(def, 'rules').map(r => `<li>${esc(r)}</li>`).join('')}</ul>` +
     `<a class="btn" href="#/help/${id}">${t('setup.manual')}</a></details></section>`;
 }
@@ -160,7 +162,7 @@ function render() {
   if (a === 'play' && defs[b]) {
     const def = defs[b];
     app.innerHTML = '';
-    active = startTable(app, def, optsFor(def), () => go('game/' + b));
+    active = (def.engine === 'patience' ? startSolitaire : startTable)(app, def, optsFor(def), () => go('game/' + b));
   } else {
     app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'help' ? screenHelp(b) : a === 'stats' ? screenStats() : screenHome();
     window.scrollTo(0, 0);

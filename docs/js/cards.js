@@ -27,11 +27,12 @@ export function shuffle(a, rng = Math.random) {
 const COURT = { 8: '♟︎', 9: '♞︎', 10: '♚︎' };
 const FR_RANK = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
 const FR_SUIT = { spades: '♠︎', hearts: '♥︎', diamonds: '♦︎', clubs: '♣︎' };
+export const suitHTML = (deck, s) => (deck === 'french' ? `<span class="s-${s}">${FR_SUIT[s]}</span>` : `<svg class="si s-${s}" aria-hidden="true"><use href="#s-${s}"/></svg>`);
 const icon = s => `<svg class="si" aria-hidden="true"><use href="#s-${s}"/></svg>`;
 
 /**
  * Returns the HTML of a card. `card` null/undefined renders a face-down card.
- * opts: { tag: 'div'|'button', cls: extra classes, label: accessible name, disabled: bool }
+ * opts: { tag: 'div'|'button', cls: extra classes, label: accessible name, disabled: bool, attrs: extra attributes }
  */
 export function cardHTML(card, opts = {}) {
   const tag = opts.tag || 'div';
@@ -51,6 +52,6 @@ export function cardHTML(card, opts = {}) {
   const attrs = tag === 'button'
     ? ` type="button"${opts.disabled ? ' disabled' : ''} aria-label="${opts.label || ''}"`
     : ` role="img" aria-label="${opts.label || ''}"`;
-  return `<${tag} class="card face s-${card.s}${cls}" data-id="${card.id}"${attrs}>` +
+  return `<${tag} class="card face s-${card.s}${cls}" data-id="${card.id}"${attrs}${opts.attrs || ''}>` +
     `<span class="idx">${idx}</span>${mid}<span class="idx br">${idx}</span></${tag}>`;
 }

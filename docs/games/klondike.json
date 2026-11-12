@@ -1,0 +1,182 @@
+{
+  "id": "klondike",
+  "version": 1,
+  "deck": "french",
+  "engine": "patience",
+  "players": {
+    "options": [
+      1
+    ],
+    "default": 1,
+    "teamsAt": []
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "levels": {
+    "easy": {
+      "draw": 1,
+      "passes": -1
+    },
+    "medium": {
+      "draw": 3,
+      "passes": -1
+    },
+    "hard": {
+      "draw": 3,
+      "passes": 3
+    }
+  },
+  "rules": {
+    "columns": 7,
+    "build": "altColor"
+  },
+  "i18n": {
+    "en": {
+      "name": "Klondike",
+      "tagline": "The classic patience: sort the whole deck onto four foundations, from Ace to King.",
+      "rules": [
+        "Seven columns are dealt, each with only its last card face up; the rest of the deck is the stock.",
+        "On the columns, build downwards in alternating colours (red on black, black on red). You can move a single card or a whole face-up sequence.",
+        "Only a King can be placed on an empty column. When a face-down card is uncovered, it is turned over.",
+        "Turn cards from the stock when you have no other move. You win when all four suits are complete on the foundations."
+      ],
+      "goal": "Move all the cards onto the four foundations, one per suit, in order from the Ace to the King.",
+      "tips": [
+        "Uncover the face-down cards first: prefer the moves that turn a new card over.",
+        "Do not empty a column unless you have a King ready to move there.",
+        "Aces and Twos can go to the foundations straight away."
+      ]
+    },
+    "it": {
+      "name": "Klondike",
+      "tagline": "Il solitario per eccellenza: ordina tutto il mazzo sulle quattro basi, dall’Asso al Re.",
+      "rules": [
+        "Si distribuiscono sette colonne, ciascuna con solo l’ultima carta scoperta; il resto del mazzo resta da parte.",
+        "Sulle colonne si scende alternando i colori (rosso su nero, nero su rosso). Puoi spostare una carta o un’intera sequenza scoperta.",
+        "Su una colonna vuota si può mettere solo un Re. Quando una carta coperta resta libera viene girata.",
+        "Scopri carte dal mazzo quando non hai altre mosse. Vinci quando tutti e quattro i semi sono completi sulle basi."
+      ],
+      "goal": "Porta tutte le carte sulle quattro basi, una per seme, in ordine dall’Asso al Re.",
+      "tips": [
+        "Pensa prima alle carte coperte: preferisci le mosse che ne fanno girare una nuova.",
+        "Non svuotare una colonna se non hai un Re pronto da metterci.",
+        "Assi e Due possono andare subito sulle basi."
+      ]
+    },
+    "es": {
+      "name": "Klondike",
+      "tagline": "El solitario clásico: ordena toda la baraja en las cuatro bases, del As al Rey.",
+      "rules": [
+        "Se reparten siete columnas, cada una con solo la última carta descubierta; el resto de la baraja es el mazo.",
+        "En las columnas se baja alternando colores (rojo sobre negro, negro sobre rojo). Puedes mover una carta o toda una secuencia descubierta.",
+        "En una columna vacía solo se puede poner un Rey. Cuando una carta tapada queda libre, se gira.",
+        "Descubre cartas del mazo cuando no tengas otro movimiento. Ganas cuando los cuatro palos están completos en las bases."
+      ],
+      "goal": "Lleva todas las cartas a las cuatro bases, una por palo, en orden del As al Rey.",
+      "tips": [
+        "Piensa primero en las cartas tapadas: prefiere los movimientos que descubren una nueva.",
+        "No vacíes una columna si no tienes un Rey listo para ponerlo allí.",
+        "Los Ases y los Doses pueden ir enseguida a las bases."
+      ]
+    },
+    "fr": {
+      "name": "Klondike",
+      "tagline": "La réussite classique : rangez tout le jeu sur les quatre fondations, de l’As au Roi.",
+      "rules": [
+        "Sept colonnes sont distribuées, avec seulement la dernière carte visible ; le reste du jeu forme le talon.",
+        "Sur les colonnes, on descend en alternant les couleurs (rouge sur noir, noir sur rouge). Vous pouvez déplacer une carte ou toute une suite visible.",
+        "Seul un Roi peut être posé sur une colonne vide. Une carte cachée est retournée dès qu’elle est libérée.",
+        "Retournez des cartes du talon quand vous n’avez plus de coup. Vous gagnez quand les quatre couleurs sont complètes sur les fondations."
+      ],
+      "goal": "Amenez toutes les cartes sur les quatre fondations, une par couleur, dans l’ordre de l’As au Roi.",
+      "tips": [
+        "Pensez d’abord aux cartes cachées : préférez les coups qui en retournent une nouvelle.",
+        "Ne videz pas une colonne si vous n’avez pas un Roi prêt à y aller.",
+        "Les As et les Deux peuvent aller tout de suite sur les fondations."
+      ]
+    },
+    "de": {
+      "name": "Klondike",
+      "tagline": "Die klassische Patience: Ordne das ganze Blatt auf vier Ablagestapel, vom Ass bis zum König.",
+      "rules": [
+        "Sieben Spalten werden ausgelegt, jeweils nur die letzte Karte offen; der Rest bildet den Talon.",
+        "In den Spalten wird abwärts in wechselnden Farben gebaut (Rot auf Schwarz, Schwarz auf Rot). Du kannst eine Karte oder eine ganze offene Folge bewegen.",
+        "Auf eine leere Spalte darf nur ein König. Wird eine verdeckte Karte frei, wird sie umgedreht.",
+        "Decke Karten vom Talon auf, wenn kein anderer Zug möglich ist. Du gewinnst, wenn alle vier Farben auf den Ablagestapeln vollständig sind."
+      ],
+      "goal": "Bringe alle Karten auf die vier Ablagestapel, einen pro Farbe, in der Reihenfolge vom Ass bis zum König.",
+      "tips": [
+        "Denke zuerst an die verdeckten Karten: Bevorzuge Züge, die eine neue Karte aufdecken.",
+        "Räume keine Spalte leer, wenn du keinen König dafür bereit hast.",
+        "Asse und Zweien können sofort auf die Ablagestapel."
+      ]
+    },
+    "pt": {
+      "name": "Klondike",
+      "tagline": "A paciência clássica: ordene todo o baralho nas quatro bases, do Ás ao Rei.",
+      "rules": [
+        "São distribuídas sete colunas, cada uma só com a última carta virada; o resto do baralho é o monte.",
+        "Nas colunas desce-se alternando as cores (vermelho sobre preto, preto sobre vermelho). Pode mover uma carta ou toda uma sequência virada.",
+        "Numa coluna vazia só se pode pôr um Rei. Quando uma carta coberta fica livre, é virada.",
+        "Vire cartas do monte quando não tiver outra jogada. Ganha quando os quatro naipes estiverem completos nas bases."
+      ],
+      "goal": "Leve todas as cartas para as quatro bases, uma por naipe, por ordem do Ás ao Rei.",
+      "tips": [
+        "Pense primeiro nas cartas cobertas: prefira as jogadas que viram uma carta nova.",
+        "Não esvazie uma coluna se não tiver um Rei pronto para lá pôr.",
+        "Ases e Dois podem ir logo para as bases."
+      ]
+    },
+    "zh": {
+      "name": "Klondike 接龙",
+      "tagline": "经典接龙：把整副牌按 A 到 K 的顺序整理到四个基础牌堆上。",
+      "rules": [
+        "发出七列牌，每列只有最后一张正面朝上；其余的牌作为牌堆。",
+        "牌列中按红黑交替、点数递减的顺序叠放。可以移动单张牌，也可以移动一整串正面朝上的牌。",
+        "空列只能放国王（K）。背面朝上的牌露出后会翻开。",
+        "无牌可动时从牌堆翻牌。四种花色全部叠满基础牌堆即获胜。"
+      ],
+      "goal": "把所有牌按从 A 到国王的顺序移到四个基础牌堆上，每种花色一堆。",
+      "tips": [
+        "优先翻开背面朝上的牌：尽量选择能翻出新牌的移动。",
+        "手边没有国王可放时，不要清空一列。",
+        "A 和 2 可以马上放到基础牌堆上。"
+      ]
+    },
+    "ja": {
+      "name": "クロンダイク",
+      "tagline": "定番のソリティア。すべてのカードをエースからキングまで4つの組札に並べます。",
+      "rules": [
+        "7つの列が配られ、各列の最後の1枚だけが表向きです。残りは山札になります。",
+        "列では赤と黒を交互に、数字が1つずつ小さくなるように重ねます。1枚でも、表向きの並びごとでも動かせます。",
+        "空いた列にはキングだけを置けます。裏向きのカードは上が空くとめくられます。",
+        "動かせるカードがないときは山札をめくります。4つのスートがすべて組札にそろえば勝ちです。"
+      ],
+      "goal": "すべてのカードを、スートごとにエースからキングの順で4つの組札に移します。",
+      "tips": [
+        "まず裏向きのカードを開けましょう。新しいカードがめくれる手を優先します。",
+        "置けるキングがないときは、列を空にしないようにしましょう。",
+        "エースと2はすぐ組札に置けます。"
+      ]
+    },
+    "ko": {
+      "name": "클론다이크",
+      "tagline": "고전 솔리테어. 모든 카드를 에이스부터 킹까지 네 개의 기초 더미에 정리합니다.",
+      "rules": [
+        "일곱 열이 놓이고 각 열의 마지막 카드만 앞면입니다. 나머지는 덱이 됩니다.",
+        "열에서는 빨강과 검정을 번갈아 숫자가 하나씩 작아지게 쌓습니다. 한 장 또는 앞면 묶음 전체를 옮길 수 있습니다.",
+        "빈 열에는 킹만 놓을 수 있습니다. 뒷면 카드는 드러나면 뒤집힙니다.",
+        "옮길 카드가 없으면 덱에서 카드를 뒤집습니다. 네 무늬가 모두 기초 더미에 완성되면 승리합니다."
+      ],
+      "goal": "모든 카드를 무늬별로 에이스부터 킹까지 순서대로 네 개의 기초 더미에 옮깁니다.",
+      "tips": [
+        "뒷면 카드를 먼저 여세요. 새 카드가 뒤집히는 수를 우선합니다.",
+        "놓을 킹이 준비되지 않았다면 열을 비우지 마세요.",
+        "에이스와 2는 바로 기초 더미에 올릴 수 있습니다."
+      ]
+    }
+  }
+}

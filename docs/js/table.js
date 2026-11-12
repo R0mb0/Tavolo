@@ -119,7 +119,7 @@ export function startTable(root, def, opts, onExit) {
     if (dst) prev.forEach((o, id) => {
       if (now.has(id)) return;
       const gh = document.createElement('div');
-      gh.className = 'ghost';
+      gh.className = 'fly';
       gh.style.cssText = `left:${o.r.left}px;top:${o.r.top}px;--cw:${o.r.width}px`;
       gh.innerHTML = o.html;
       document.body.appendChild(gh);

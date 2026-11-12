@@ -37,6 +37,9 @@ export function createFishingGame(def, opts) {
   /** Capture options for a card in hand. Empty array = the card is simply laid on the table. */
   g.options = (id, i = g.current) => {
     const c = P[i].hand.find(x => x.id === id), me = teamOf(i), out = [];
+    // Scopa d'assi: an Ace takes the whole table (not a sweep), unless an Ace is already lying there.
+    if (R.aceTakesAll && c.r === 1 && table.length && !table.some(x => x.r === 1))
+      return [{ take: table.map(x => x.id), steal: null, noSweep: true }];
     if (R.steal) T.forEach((tm, k) => {
       if (k !== me && tm.pile.length && tm.pile[tm.pile.length - 1].r === c.r) out.push({ take: [], steal: k });
     });
@@ -60,7 +63,7 @@ export function createFishingGame(def, opts) {
     const c = h.splice(h.findIndex(x => x.id === id), 1)[0];
     see(c);
     const lastPlay = !deck.length && P.every(x => !x.hand.length);
-    const sweep = !!R.sweeps && opt.take.length > 0 && opt.take.length === table.length && !lastPlay;
+    const sweep = !!R.sweeps && opt.take.length > 0 && opt.take.length === table.length && !lastPlay && !opt.noSweep;
     g.staged = { p, card: c, take: opt.take, steal: opt.steal, sweep };
     g.pending = true;
     g.lastEvent = opt.steal != null ? { type: 'steal', p, target: opt.steal }
@@ -165,7 +168,7 @@ export function createFishingGame(def, opts) {
           if (x.id === S.settebello) v += 12; else if (x.r === 7) v += 3; else if (x.r === 6) v += 1.5; else if (x.r === 1) v += 0.8;
         }
         const left = tsum - tk.reduce((a, x) => a + x.r, 0);
-        if (tk.length === table.length) v += 15;
+        if (tk.length === table.length) v += m.opt.noSweep ? 0 : 15;
         else if (left <= 10) v -= smart ? 2 * unseen(left) : 1;
         return v;
       }

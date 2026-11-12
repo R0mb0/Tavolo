@@ -2,13 +2,13 @@
   "decks": [
     {
       "id": "italian",
-      "games": ["briscola", "scopa", "scopone", "rubamazzo"],
-      "planned": ["Solitario"]
+      "games": ["briscola", "tressette", "scopa", "scopa-assi", "scopone", "rubamazzo", "solitario"],
+      "planned": ["Sette e mezzo", "Briscola chiamata"]
     },
     {
       "id": "french",
-      "games": [],
-      "planned": ["Scala 40", "Burraco", "Quadrato", "Danish", "Klondike"]
+      "games": ["klondike"],
+      "planned": ["Danish", "Scala 40", "Burraco", "Machiavelli"]
     }
   ]
 }
