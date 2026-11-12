@@ -223,5 +223,6 @@
     1005,
     2005
   ],
-  "matchLabel": "setup.target"
+  "matchLabel": "setup.target",
+  "passPlay": true
 }

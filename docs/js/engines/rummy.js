@@ -167,7 +167,8 @@ export function createRummyGame(def, opts) {
     g.summary = { round: g.round, winner, rows: [{ key: 'penalty', vals: pen, winner }], roundPts: pen, totals };
     // whoever reaches the target is out of the game; the last player left wins
     P.forEach(p => { if (p.total >= R.target) p.out = true; });
-    g.phase = P[0].out || P.filter(p => !p.out).length < 2 ? 'over' : 'roundEnd';
+    // the game goes on while a person is still in it and there is somebody to play against
+    g.phase = P.slice(0, opts.humans === 2 ? 2 : 1).every(p => p.out) || P.filter(p => !p.out).length < 2 ? 'over' : 'roundEnd';
   }
 
   g.nextRound = () => { first = (first + 1) % n; startRound(); };
@@ -180,8 +181,8 @@ export function createRummyGame(def, opts) {
 
   g.result = () => {
     const scores = P.map(p => p.total), mine = scores[0], other = Math.min(...scores.slice(1));
-    if (P.some(p => !p.out)) return { outcome: P[0].out ? 'lose' : 'win', score: 0, scores };
-    return { outcome: mine < other ? 'win' : mine > other ? 'lose' : 'tie', score: 0, scores };   // everybody went over together
+    if (P.some(p => !p.out)) return { outcome: P[0].out ? 'lose' : 'win', score: 0, scores, lowWins: true };
+    return { outcome: mine < other ? 'win' : mine > other ? 'lose' : 'tie', score: 0, scores, lowWins: true };   // everybody went over together
   };
 
   // ---------- finding combinations (bots and hints) ----------
