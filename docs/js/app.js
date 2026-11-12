@@ -218,7 +218,10 @@ $('#btn-install').addEventListener('click', async () => {
 });
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; chrome(); });
 addEventListener('appinstalled', () => { installEvt = null; chrome(); });
-addEventListener('hashchange', render);
+addEventListener('hashchange', () => {
+  document.querySelectorAll('dialog.dlg').forEach(d => d.close());   // a dialog must not survive a change of screen
+  render();
+});
 
 // ---------- boot ----------
 (async () => {

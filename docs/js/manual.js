@@ -20,6 +20,7 @@ export function manualHTML(def) {
   else {
     tb = ['man.t.hand', 'man.t.opps', 'man.t.turn', 'man.t.deck'];
     if (kind === 'trick') { if (R.trump !== 'none') tb.push('man.t.trump'); tb.push('man.t.center.trick'); }
+    else if (kind === 'shedding') tb.push('man.d.pile', 'man.d.table');
     else tb.push('man.t.center.fishing', 'man.t.pile');
   }
   out += sec(t('man.table'), list(tb.map(k => t(k))));

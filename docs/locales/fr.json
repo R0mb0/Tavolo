@@ -138,5 +138,17 @@
  "man.s.found": "En haut à droite se trouvent les quatre fondations, une par couleur : on y monte à partir de l’As.",
  "man.s.cols": "En dessous se trouvent les colonnes. Seules les cartes visibles bougent ; une carte cachée est retournée dès qu’elle est libérée.",
  "man.s.tap": "Touchez une carte et elle se place seule au meilleur endroit autorisé ; toucher une carte au milieu d’une colonne déplace toute la suite.",
- "man.c.undo": "« Annuler » revient d’un coup en arrière ; « Nouvelle donne » recommence avec un nouveau mélange."
+ "man.c.undo": "« Annuler » revient d’un coup en arrière ; « Nouvelle donne » recommence avec un nouveau mélange.",
+ "play.burn": "{name} : pile brûlée !",
+ "play.pickup": "{name} : ramasse la pile",
+ "play.pickupBtn": "Ramasser la pile",
+ "play.howMany": "Combien de cartes jouez-vous ?",
+ "play.tableCards": "Cartes sur la table",
+ "play.declare": "Annonces : {list}",
+ "score.tricks": "Points des cartes",
+ "score.last": "Dernier pli",
+ "score.declare": "Annonces",
+ "end.cardsLeft": "Cartes restantes :",
+ "man.d.pile": "La pile au centre montre les dernières cartes jouées : vous devez jouer une carte de valeur égale ou supérieure à celle du dessus.",
+ "man.d.table": "À côté de votre main se trouvent vos cartes sur la table, trois visibles et trois cachées : vous ne les jouez que lorsque la main et la pioche sont épuisées."
 }

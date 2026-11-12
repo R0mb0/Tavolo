@@ -7,8 +7,8 @@
     },
     {
       "id": "french",
-      "games": ["klondike"],
-      "planned": ["Danish", "Scala 40", "Burraco", "Machiavelli"]
+      "games": ["klondike", "danish"],
+      "planned": ["Scala 40", "Burraco", "Machiavelli"]
     }
   ]
 }

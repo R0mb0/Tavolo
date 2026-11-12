@@ -138,5 +138,17 @@
  "man.s.found": "Arriba a la derecha están las cuatro bases, una por palo: cada una se construye hacia arriba desde el As.",
  "man.s.cols": "Debajo están las columnas. Solo se mueven las cartas descubiertas; una carta tapada se gira en cuanto queda libre.",
  "man.s.tap": "Toca una carta y se mueve sola al mejor lugar permitido; si tocas una carta en medio de una columna, se mueve toda la secuencia.",
- "man.c.undo": "«Deshacer» vuelve atrás un movimiento; «Nueva partida» empieza de nuevo con otra mezcla."
+ "man.c.undo": "«Deshacer» vuelve atrás un movimiento; «Nueva partida» empieza de nuevo con otra mezcla.",
+ "play.burn": "{name}: ¡montón quemado!",
+ "play.pickup": "{name}: recoge el montón",
+ "play.pickupBtn": "Recoger el montón",
+ "play.howMany": "¿Cuántas cartas juegas?",
+ "play.tableCards": "Cartas de mesa",
+ "play.declare": "Acuses: {list}",
+ "score.tricks": "Puntos de cartas",
+ "score.last": "Última baza",
+ "score.declare": "Acuses",
+ "end.cardsLeft": "Cartas restantes:",
+ "man.d.pile": "El montón del centro muestra las últimas cartas jugadas: debes jugar una carta de valor igual o superior a la de arriba.",
+ "man.d.table": "Junto a tu mano están tus cartas de mesa, tres descubiertas y tres tapadas: solo las juegas cuando se acaban la mano y el mazo."
 }

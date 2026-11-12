@@ -137,6 +137,18 @@
  "man.s.stock": "In alto a sinistra c’è il mazzo: toccalo per scoprire nuove carte. Si può giocare solo l’ultima carta scoperta.",
  "man.s.found": "In alto a destra ci sono le quattro basi, una per seme: su ciascuna si sale a partire dall’Asso.",
  "man.s.cols": "Sotto ci sono le colonne. Si muovono solo le carte scoperte; una carta coperta viene girata appena resta libera.",
- "man.s.tap": "Tocca una carta e si sposta da sola nel posto migliore consentito; toccando una carta a metà colonna si sposta tutta la sequenza sotto di lei.",
- "man.c.undo": "«Annulla mossa» torna indietro di una mossa; «Nuova partita» ricomincia con un nuovo mescolamento."
+ "man.s.tap": "Tocca una carta e si sposta da sola nel posto migliore consentito, oppure trascinala dove vuoi; una carta a metà colonna porta con sé tutta la sequenza sotto di lei.",
+ "man.c.undo": "«Annulla mossa» torna indietro di una mossa; «Nuova partita» ricomincia con un nuovo mescolamento.",
+ "play.burn": "{name}: mazzo bruciato!",
+ "play.pickup": "{name}: raccoglie il mazzo",
+ "play.pickupBtn": "Raccogli il mazzo",
+ "play.howMany": "Quante carte giochi?",
+ "play.tableCards": "Carte sul tavolo",
+ "play.declare": "Accuse: {list}",
+ "score.tricks": "Punti delle carte",
+ "score.last": "Ultima presa",
+ "score.declare": "Accuse",
+ "end.cardsLeft": "Carte rimaste:",
+ "man.d.pile": "Il mazzo al centro mostra le ultime carte giocate: devi giocare una carta di valore uguale o superiore a quella in cima.",
+ "man.d.table": "Accanto alla tua mano ci sono le tue carte sul tavolo, tre scoperte e tre coperte: le giochi solo quando la mano e il mazzo sono finiti."
 }

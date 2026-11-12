@@ -81,6 +81,30 @@ export function createPatienceGame(def, opts) {
     return true;
   };
 
+  /** Drag and drop: move the card (or run) at `loc` to a chosen place. dest = { to: 'found' } | { to: 'col', c }. */
+  g.moveTo = (loc, dest) => {
+    let cards, remove;
+    if (loc.from === 'waste') {
+      if (!S.waste.length) return false;
+      cards = [S.waste[S.waste.length - 1]]; remove = () => S.waste.pop();
+    } else {
+      const col = S.cols[loc.c];
+      if (!col || !col[loc.i] || !col[loc.i].up) return false;
+      cards = col.slice(loc.i).map(x => x.card); remove = () => col.splice(loc.i);
+    }
+    const first = cards[0];
+    if (dest.to === 'found') {
+      if (cards.length !== 1 || !fitsFound(first)) return false;
+      save(); remove(); S.found[first.s].push(first);
+    } else {
+      const col = S.cols[dest.c];
+      if (!col || (loc.from === 'col' && dest.c === loc.c) || !fitsCol(first, col)) return false;
+      save(); remove(); col.push(...cards.map(card => ({ card, up: true })));
+    }
+    after();
+    return true;
+  };
+
   g.undo = () => {
     if (!history.length) return false;
     S = JSON.parse(history.pop()); g.phase = 'play';

@@ -138,5 +138,17 @@
  "man.s.found": "Em cima à direita ficam as quatro bases, uma por naipe: cada uma sobe a partir do Ás.",
  "man.s.cols": "Em baixo ficam as colunas. Só as cartas viradas para cima se movem; uma carta coberta é virada assim que fica livre.",
  "man.s.tap": "Toque numa carta e ela vai sozinha para o melhor lugar permitido; ao tocar numa carta a meio de uma coluna, move-se toda a sequência.",
- "man.c.undo": "«Desfazer» volta uma jogada atrás; «Nova partida» recomeça com um novo baralhamento."
+ "man.c.undo": "«Desfazer» volta uma jogada atrás; «Nova partida» recomeça com um novo baralhamento.",
+ "play.burn": "{name}: monte queimado!",
+ "play.pickup": "{name}: apanha o monte",
+ "play.pickupBtn": "Apanhar o monte",
+ "play.howMany": "Quantas cartas joga?",
+ "play.tableCards": "Cartas da mesa",
+ "play.declare": "Acusações: {list}",
+ "score.tricks": "Pontos das cartas",
+ "score.last": "Última vaza",
+ "score.declare": "Acusações",
+ "end.cardsLeft": "Cartas restantes:",
+ "man.d.pile": "O monte do centro mostra as últimas cartas jogadas: deve jogar uma carta de valor igual ou superior à do topo.",
+ "man.d.table": "Ao lado da sua mão ficam as suas cartas da mesa, três viradas e três cobertas: só as joga quando a mão e o baralho acabarem."
 }

@@ -138,5 +138,17 @@
  "man.s.found": "Oben rechts sind die vier Ablagestapel, einer pro Farbe: Jeder wird vom Ass aufwärts gebaut.",
  "man.s.cols": "Darunter liegen die Spalten. Nur offene Karten können bewegt werden; eine verdeckte Karte wird umgedreht, sobald sie frei liegt.",
  "man.s.tap": "Tippe eine Karte an und sie wandert von selbst an den besten erlaubten Platz; tippst du eine Karte mitten in einer Spalte an, zieht die ganze Folge mit.",
- "man.c.undo": "„Rückgängig“ nimmt den letzten Zug zurück; „Neu geben“ beginnt mit frisch gemischten Karten."
+ "man.c.undo": "„Rückgängig“ nimmt den letzten Zug zurück; „Neu geben“ beginnt mit frisch gemischten Karten.",
+ "play.burn": "{name}: Stapel verbrannt!",
+ "play.pickup": "{name}: nimmt den Stapel auf",
+ "play.pickupBtn": "Stapel aufnehmen",
+ "play.howMany": "Wie viele Karten spielst du?",
+ "play.tableCards": "Tischkarten",
+ "play.declare": "Ansagen: {list}",
+ "score.tricks": "Kartenpunkte",
+ "score.last": "Letzter Stich",
+ "score.declare": "Ansagen",
+ "end.cardsLeft": "Übrige Karten:",
+ "man.d.pile": "Der Stapel in der Mitte zeigt die zuletzt gespielten Karten: Du musst eine gleich hohe oder höhere Karte als die oberste spielen.",
+ "man.d.table": "Neben deiner Hand liegen deine Tischkarten, drei offen und drei verdeckt: Du spielst sie erst, wenn Hand und Stapel leer sind."
 }

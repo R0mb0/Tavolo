@@ -137,6 +137,18 @@
  "man.s.stock": "Top left is the stock: tap it to turn over new cards. Only the last card turned can be played.",
  "man.s.found": "Top right are the four foundations, one per suit: build each one upwards starting from the Ace.",
  "man.s.cols": "Below are the columns. Only face-up cards can move; a face-down card is turned over as soon as it is uncovered.",
- "man.s.tap": "Tap a card and it moves by itself to the best legal place; tapping a card in the middle of a column moves the whole sequence below it.",
- "man.c.undo": "Undo takes back your last move; New deal starts again with a fresh shuffle."
+ "man.s.tap": "Tap a card and it moves by itself to the best legal place, or drag it where you want; a card in the middle of a column takes the whole sequence below it along.",
+ "man.c.undo": "Undo takes back your last move; New deal starts again with a fresh shuffle.",
+ "play.burn": "{name}: pile burned!",
+ "play.pickup": "{name}: picks up the pile",
+ "play.pickupBtn": "Pick up the pile",
+ "play.howMany": "How many cards do you play?",
+ "play.tableCards": "Table cards",
+ "play.declare": "Declarations: {list}",
+ "score.tricks": "Card points",
+ "score.last": "Last trick",
+ "score.declare": "Declarations",
+ "end.cardsLeft": "Cards left:",
+ "man.d.pile": "The pile in the middle shows the last cards played: you must play a card of the same value or higher than the one on top.",
+ "man.d.table": "Next to your hand are your table cards, three face up and three face down: you play them only when your hand and the deck are empty."
 }

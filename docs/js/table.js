@@ -7,7 +7,6 @@ import { record, settings } from './store.js';
 import { sfx } from './sfx.js';
 
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
-const NAMED_RANKS = [1, 8, 9, 10];
 const MOVING = '.center [data-id], .staged [data-id], .hand [data-id]';
 const still = matchMedia('(prefers-reduced-motion: reduce)');
 
@@ -22,7 +21,10 @@ export function startTable(root, def, opts, onExit) {
     const N = names();
     return g.teams ? [`${N[0]} + ${N[2]}`, `${N[1]} + ${N[3]}`] : N;
   };
-  const label = c => `${NAMED_RANKS.includes(c.r) ? t('rank.' + c.r) : c.r} · ${t('suit.' + c.s)}`;
+  const label = c => {
+    const fr = c.deck === 'french';
+    return `${(fr ? [1, 11, 12, 13] : [1, 8, 9, 10]).includes(c.r) ? t((fr ? 'frank.' : 'rank.') + c.r) : c.r} · ${t('suit.' + c.s)}`;
+  };
   const suitIcon = s => `<svg class="si s-${s}" aria-hidden="true"><use href="#s-${s}"/></svg>`;
 
   function eventText() {
@@ -32,6 +34,8 @@ export function startTable(root, def, opts, onExit) {
     if (e.type === 'sweep') return t('play.sweep', { name: N[e.p] });
     if (e.type === 'capture') return t('play.captures', { name: N[e.p], n: e.n });
     if (e.type === 'steal') return t('play.steals', { name: N[e.p], target: teamNames()[e.target] });
+    if (e.type === 'burn') return t('play.burn', { name: N[e.p] });
+    if (e.type === 'pickup') return t('play.pickup', { name: N[e.p] });
     return null;
   }
 
@@ -43,23 +47,29 @@ export function startTable(root, def, opts, onExit) {
     const v = g.view(), N = names(), st = v.staged;
     const playing = g.phase === 'play' && !g.pending;
     const myTurn = playing && g.current === 0;
+    const legal = myTurn && g.legal ? new Set(g.legal().map(c => c.id)) : null;
+    const usable = id => myTurn && (!legal || legal.has(id));
     const badges = p =>
       (v.showPile ? `<span class="badge" title="${t('play.pile')}"><svg class="ic" aria-hidden="true"><use href="#i-pile"/></svg>${p.pile}</span>` : '') +
       (v.showScore ? `<span class="badge strong">${p.score} ${t('play.pts')}</span>` : '') +
       (p.sweeps ? `<span class="badge gold" title="${t('score.sweeps')}">✦ ${p.sweeps}</span>` : '');
     const top = p => (p.pileTop ? `<div class="piletop">${cardHTML(p.pileTop, { label: label(p.pileTop) })}</div>` : '');
+    // Danish: a player's table cards (face up on face down)
+    const tcards = p => (p.up ? `<div class="tcards" title="${t('play.tableCards')}">${p.up.map(c => cardHTML(c, { label: label(c) })).join('')}${p.down ? `<span class="downs"><i class="mini"></i>${p.down}</span>` : ''}</div>` : '');
 
     let opps = '';
     for (let i = 1; i < g.n; i++) {
       const p = v.players[i];
       const cls = (playing && g.current === i ? ' active' : '') + (st && st.steal != null && st.steal === g.teamOf(i) ? ' robbed' : '');
       opps += `<div class="opp${cls}" data-seat="${i}"><div class="opp-main"><div class="opp-name"><span class="avatar">${i}</span>${N[i]}</div>` +
-        `<div class="opp-hand">${'<i class="mini"></i>'.repeat(p.handCount)}</div><div class="badges">${badges(p)}</div></div>${top(p)}</div>`;
+        `<div class="opp-hand">${p.handCount > 12 ? `<i class="mini"></i><span class="badge">× ${p.handCount}</span>` : '<i class="mini"></i>'.repeat(p.handCount)}</div>` +
+        `<div class="badges">${badges(p)}</div>${tcards(p)}</div>${top(p)}</div>`;
     }
 
     const center = v.center.map(x =>
       `<div class="slot${x.hl ? ' hl' : ''}">${cardHTML(x.card, { label: label(x.card) })}` +
-      (x.p != null ? `<span class="owner">${N[x.p]}</span>` : '') + '</div>').join('');
+      (x.p != null ? `<span class="owner">${N[x.p]}</span>` : '') + '</div>').join('') +
+      (v.pileCount > v.center.length ? `<span class="badge more">+${v.pileCount - v.center.length}</span>` : '');
     const staged = st ? `<div class="slot staged${st.sweep ? ' sweep' : ''}">${cardHTML(st.card, { label: label(st.card) })}<span class="owner">${N[st.p]}</span></div>` : '';
 
     const side = `<div class="side">` +
@@ -69,26 +79,35 @@ export function startTable(root, def, opts, onExit) {
       '</div>';
 
     const me = v.players[0];
-    const hand = me.hand.map(c => cardHTML(c, { tag: 'button', label: label(c), disabled: !myTurn, cls: c.id === hintId ? 'hinted' : '' })).join('');
+    const btn = (c, on) => cardHTML(c, { tag: 'button', label: label(c), disabled: !on, cls: c.id === hintId ? 'hinted' : '' });
+    const hand = me.hand.map(c => btn(c, usable(c.id))).join('');
+    const myTable = me.up ? `<div class="tcards mine" title="${t('play.tableCards')}">` +
+      me.up.map(c => btn(c, v.source === 'up' && usable(c.id))).join('') +
+      Array.from({ length: me.down }, (_, k) => cardHTML(null, {
+        tag: 'button', disabled: !(v.source === 'down' && myTurn), cls: hintId === 'down-' + k ? 'hinted' : '', attrs: ` data-id="down-${k}"`
+      })).join('') + '</div>' : '';
     const hintBtn = `<button type="button" class="icon hint" data-hint title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>`;
+    const actions = (v.actions || []).map(a => `<button type="button" class="btn primary${hintId === a ? ' hinted' : ''}" data-move="${a}">${t('play.' + a + 'Btn')}</button>`).join('');
 
     let overlay = '';
     if (chooser) {
       const byId = Object.fromEntries(v.center.map(x => [x.card.id, x.card]));
-      overlay = `<div class="chooser"><div class="chooser-box"><h3>${t('play.choose')}</h3>` +
+      overlay = `<div class="chooser"><div class="chooser-box"><h3>${t(g.kind === 'shedding' ? 'play.howMany' : 'play.choose')}</h3>` +
         chooser.opts.map((o, k) => `<button type="button" class="opt" data-opt="${k}">` +
-          (o.steal != null ? `<span>${t('play.stealFrom', { name: teamNames()[o.steal] })}</span>`
+          (o.cards ? o.cards.map(c => cardHTML(c, { label: label(c) })).join('')
+            : o.steal != null ? `<span>${t('play.stealFrom', { name: teamNames()[o.steal] })}</span>`
             : o.take.map(id => cardHTML(byId[id], { label: label(byId[id]) })).join('')) + '</button>').join('') +
         `<button type="button" class="btn" data-opt="x">${t('common.cancel')}</button></div></div>`;
     }
 
     const status = msg ? msg() : myTurn ? t('play.yourTurn') : playing ? t('play.turnOf', { name: N[g.current] }) : '';
+    const size = me.hand.length > 10 ? ' many huge' : me.hand.length > 5 ? ' many' : '';
     root.innerHTML =
       `<div class="table"><div class="opps n${g.n - 1}">${opps}</div>` +
       `<div class="felt">${side}<div class="mid"><div class="center">${center}</div>${staged}</div></div>` +
-      `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
-      `<div class="me${myTurn ? ' active' : ''}" data-seat="0"><div class="me-info"><div class="badges">${badges(me)}</div>${top(me)}${hintBtn}</div>` +
-      `<div class="hand${me.hand.length > 5 ? ' many' : ''}">${hand}</div></div>${overlay}</div>`;
+      `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${actions || status}</div>` +
+      `<div class="me${myTurn ? ' active' : ''}" data-seat="0"><div class="me-info"><div class="badges">${badges(me)}</div>${top(me)}${myTable}${hintBtn}</div>` +
+      `<div class="hand${size}">${hand}</div></div>${overlay}</div>`;
     animate(prev);
   }
 
@@ -138,16 +157,20 @@ export function startTable(root, def, opts, onExit) {
       res({ id: c.id, opt: c.opts[+o.dataset.opt] });
       return;
     }
-    if (e.target.closest('[data-hint]') && pick && !chooser) { hintId = g.hint().id; render(); return; }
-    const card = e.target.closest('.hand .card');
-    if (card && pick && !card.disabled && !chooser) {
-      const id = card.dataset.id;
-      if (g.kind === 'fishing') {
-        const os = g.options(id);
-        if (os.length > 1) { chooser = { id, opts: os }; render(); return; }
-        const res = pick; pick = null;
-        res({ id, opt: os[0] });
-      } else { const res = pick; pick = null; res({ id }); }
+    if (!pick || chooser) return;
+    if (e.target.closest('[data-hint]')) {
+      const h = g.hint();
+      hintId = h.id || (h.opt && h.opt.pickup ? 'pickup' : null);
+      render(); return;
+    }
+    const mv = e.target.closest('[data-move]');
+    if (mv) { const res = pick; pick = null; res({ id: null, opt: { [mv.dataset.move]: true } }); return; }
+    const card = e.target.closest('.me button.card');
+    if (card && !card.disabled) {
+      const id = card.dataset.id, os = g.options ? g.options(id) : [];
+      if (os.length > 1) { chooser = { id, opts: os }; render(); return; }
+      const res = pick; pick = null;
+      res({ id, opt: os[0] });
     }
   }, { signal: ctl.signal });
 
@@ -168,7 +191,8 @@ export function startTable(root, def, opts, onExit) {
     const r = g.result(), TN = teamNames();
     record(def.id, r);
     sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
-    const body = '<ul class="final">' + r.scores.map((sc, k) =>
+    const note = g.kind === 'shedding' ? `<p>${t('end.cardsLeft')}</p>` : '';
+    const body = note + '<ul class="final">' + r.scores.map((sc, k) =>
       `<li class="${k === g.teamOf(0) ? 'mine' : ''}"><span>${TN[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({
       title: t('end.' + r.outcome), body,
@@ -187,6 +211,13 @@ export function startTable(root, def, opts, onExit) {
     const mine = g;
     while (alive && g === mine) {
       render();
+      if (g.announce) {                      // e.g. Tressette declarations at the start of a deal
+        const a = g.announce; g.announce = null;
+        msg = () => t('play.declare', { list: a.list.map(x => `${names()[x.p]} +${x.pts}`).join(' · ') });
+        render(); await sleep(2600);
+        if (!alive || g !== mine) return;
+        msg = null; continue;
+      }
       if ((g.phase === 'roundEnd' || g.phase === 'over') && g.summary && !g.summary.shown) { await showSummary(); continue; }
       if (g.phase === 'over') { finish(); return; }
       if (g.phase === 'roundEnd') { g.nextRound(); msg = null; continue; }
@@ -194,7 +225,7 @@ export function startTable(root, def, opts, onExit) {
         await sleep(g.lastEvent ? 1300 : 800);
         if (!alive || g !== mine) return;
         const st = g.staged;
-        flyTo = g.kind === 'trick' ? g.winner : st && (st.take.length || st.steal != null) ? st.p : null;
+        flyTo = g.flyTarget ? g.flyTarget() : g.kind === 'trick' ? g.winner : st && (st.take.length || st.steal != null) ? st.p : null;
         if (flyTo != null) sfx('take');
         g.advance(); msg = null; continue;
       }
@@ -204,7 +235,7 @@ export function startTable(root, def, opts, onExit) {
       if (!alive || g !== mine) return;
       freshSeat = g.current; hintId = null;
       g.play(mv.id, mv.opt);
-      sfx(g.lastEvent && g.lastEvent.type === 'sweep' ? 'sweep' : 'card');
+      sfx(g.lastEvent && (g.lastEvent.type === 'sweep' || g.lastEvent.type === 'burn') ? 'sweep' : 'card');
       const txt = eventText;
       msg = g.lastEvent ? () => txt() : null;
     }

@@ -1,4 +1,5 @@
-// Table for patience games: stock, waste, foundations and columns. Tap a card and it moves to the best legal place.
+// Table for patience games: stock, waste, foundations and columns.
+// Tap a card and it moves to the best legal place, or drag it where you want.
 import { cardHTML, suitHTML } from './cards.js';
 import { ENGINES } from './engines/index.js';
 import { t } from './i18n.js';
@@ -12,7 +13,7 @@ const still = matchMedia('(prefers-reduced-motion: reduce)');
 
 export function startSolitaire(root, def, opts, onExit) {
   const ctl = new AbortController();
-  let alive = true, busy = false, hint = null, nope = null;
+  let alive = true, busy = false, hint = null, nope = null, drag = null, dragEnd = 0, noFlip = false;
   const g = ENGINES[def.engine](def, opts);
 
   const label = c => `${(c.deck === 'french' ? [1, 11, 12, 13] : NAMED_RANKS).includes(c.r) ? t((c.deck === 'french' ? 'frank.' : 'rank.') + c.r) : c.r} · ${t('suit.' + c.s)}`;
@@ -21,7 +22,7 @@ export function startSolitaire(root, def, opts, onExit) {
   function render() {
     if (!alive) return;
     const prev = new Map();
-    if (!still.matches) root.querySelectorAll('.sol [data-id]').forEach(el => prev.set(el.dataset.id, el.getBoundingClientRect()));
+    if (!still.matches && !noFlip) root.querySelectorAll('.sol [data-id]').forEach(el => prev.set(el.dataset.id, el.getBoundingClientRect()));
     const v = g.view();
     const up = (c, loc) => cardHTML(c, {
       tag: 'button', label: label(c),
@@ -33,7 +34,7 @@ export function startSolitaire(root, def, opts, onExit) {
       (v.stock ? `${cardHTML(null)}<span class="count">${v.stock}</span>` : `<span class="glyph">${v.canDraw ? '↻' : '✕'}</span>`) + '</button>';
     const waste = `<div class="waste">${v.waste.map((c, k) => (k === v.waste.length - 1 ? up(c, { from: 'waste' }) : cardHTML(c, { label: label(c) }))).join('')}</div>`;
     const found = v.found.map(f => (f.top ? cardHTML(f.top, { label: label(f.top) }) : `<div class="pile empty">${suitHTML(def.deck, f.suit)}</div>`)).join('');
-    const cols = v.cols.map((col, c) => `<div class="col">` +
+    const cols = v.cols.map((col, c) => `<div class="col" data-col="${c}">` +
       (col.length ? col.map((x, i) => (x.up ? up(x.card, { from: 'col', c, i }) : cardHTML(null))).join('') : '<div class="pile empty"></div>') + '</div>').join('');
 
     const passes = v.passesLeft == null ? '' : `<span class="badge">↻ ${v.passesLeft}</span>`;
@@ -45,7 +46,7 @@ export function startSolitaire(root, def, opts, onExit) {
       `<button type="button" class="btn" data-do="new">${t('sol.new')}</button></div></div>`;
     nope = null;
 
-    if (still.matches) return;
+    if (still.matches || noFlip) { noFlip = false; return; }
     const from = root.querySelector('.stock')?.getBoundingClientRect();
     root.querySelectorAll('.sol [data-id]').forEach(el => {
       const r = el.getBoundingClientRect(), old = prev.get(el.dataset.id) || (prev.size && el.closest('.waste') ? from : null);
@@ -77,8 +78,49 @@ export function startSolitaire(root, def, opts, onExit) {
     if (alive && g.phase === 'over') win();
   }
 
+  // ---- drag and drop (mouse, touch, pen) ----
+  const endDrag = () => {
+    if (drag && drag.fl) { drag.fl.remove(); drag.els.forEach(x => { x.style.visibility = ''; }); }
+    drag = null;
+  };
+  root.addEventListener('pointerdown', e => {
+    if (busy || e.button) return;
+    const el = e.target.closest('.sol button.card[data-from]');
+    if (!el) return;
+    drag = { el, id: e.pointerId, x: e.clientX, y: e.clientY, loc: { from: el.dataset.from, c: +el.dataset.c, i: +el.dataset.i } };
+  }, { signal: ctl.signal });
+  addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.fl) {
+      if (Math.hypot(dx, dy) < 8) return;
+      const els = drag.loc.from === 'col' ? [...drag.el.parentElement.children].slice(drag.loc.i) : [drag.el];
+      const r = drag.el.getBoundingClientRect(), fl = document.createElement('div');
+      fl.className = 'fly drag col';
+      fl.style.cssText = `left:${r.left}px;top:${r.top}px;--cw:${r.width}px`;
+      fl.innerHTML = els.map(x => x.outerHTML).join('');
+      document.body.appendChild(fl);
+      els.forEach(x => { x.style.visibility = 'hidden'; });
+      drag.fl = fl; drag.els = els;
+    }
+    drag.fl.style.transform = `translate(${dx}px,${dy}px)`;
+  }, { signal: ctl.signal });
+  addEventListener('pointerup', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const d = drag, dragged = !!d.fl;
+    endDrag();
+    if (!dragged) return;
+    dragEnd = Date.now();
+    const under = document.elementFromPoint(e.clientX, e.clientY);
+    const col = under && under.closest('.col'), fnd = under && under.closest('.sol-found');
+    const ok = col ? g.moveTo(d.loc, { to: 'col', c: +col.dataset.col }) : fnd ? g.moveTo(d.loc, { to: 'found' }) : false;
+    hint = null;
+    if (ok) { sfx('card'); noFlip = true; render(); settle(); } else render();
+  }, { signal: ctl.signal });
+  addEventListener('pointercancel', endDrag, { signal: ctl.signal });
+
   root.addEventListener('click', async e => {
-    if (busy) return;
+    if (busy || Date.now() - dragEnd < 350) return;
     const act = e.target.closest('[data-do]');
     if (act) {
       const what = act.dataset.do;
@@ -109,7 +151,7 @@ export function startSolitaire(root, def, opts, onExit) {
 
   return {
     rerender: render,
-    stop() { alive = false; ctl.abort(); },
+    stop() { alive = false; endDrag(); ctl.abort(); },
     async quit() {
       if (g.phase === 'over' || g.moves === 0) { onExit(); return; }
       const ok = await dialog({
