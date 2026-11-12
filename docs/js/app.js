@@ -131,7 +131,7 @@ function screenSetup(id) {
     `</div><small>${t('setup.playersHint', { n: o.players - 1 })}${teams ? ' · ' + t('setup.teams') : ''}</small></div>`) +
     `<div class="field"><span>${t('setup.difficulty')}</span><div class="seg">` +
     def.difficulty.map(k => `<button type="button" data-diff="${k}" aria-pressed="${k === o.difficulty}">${t('diff.' + k)}</button>`).join('') +
-    `</div></div>` + (def.matchWins ? `<div class="field"><span>${t('setup.wins')}</span><div class="seg">` +
+    `</div></div>` + (def.matchWins ? `<div class="field"><span>${t(def.matchLabel || 'setup.wins')}</span><div class="seg">` +
     def.matchWins.map(k => `<button type="button" data-wins="${k}" aria-pressed="${k === o.wins}">${k}</button>`).join('') + '</div></div>' : '') + `<div>${lvl ? `<small>${t('sol.draw', { n: lvl.draw })} · ${t('sol.passes', { n: lvl.passes < 0 ? '∞' : lvl.passes })}</small>` : ''}</div>` + (saved ? `<a class="btn primary big" href="#/play/${id}">${t('resume.go')}</a><a class="btn big second" href="#/play/${id}" data-fresh>${t('resume.new')}</a>`
       : `<a class="btn primary big" href="#/play/${id}" data-fresh>${t('setup.start')}</a>`) + `</div>` +
     `<details class="rules" open><summary>${t('setup.rules')}</summary><ul>${gt(def, 'rules').map(r => `<li>${esc(r)}</li>`).join('')}</ul>` +

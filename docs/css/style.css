@@ -383,3 +383,13 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
   .me { padding: .2rem; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* v0.9: game log, Danish exchange, eliminated players */
+.log { margin: 0; padding: 0 .2rem 0 0; list-style: none; max-height: 52vh; overflow: auto; display: grid; gap: .3rem; font-size: .95rem; }
+.log li { padding: .3rem .55rem; border-radius: .5rem; background: color-mix(in srgb, var(--ink) 7%, transparent); }
+.log li:has(.log-head) { background: none; padding: .5rem .2rem .1rem; color: var(--accent); }
+.tcards .card.sel { transform: translateY(-.35em); outline: .22em solid var(--gold); outline-offset: .06em; }
+.status .note { display: block; margin-bottom: .4rem; font-size: .9rem; }
+.opp.gone { opacity: .55; }
+.sum.byp th small { display: block; font-weight: 400; }
+.sum.byp .me-row th { color: var(--accent); }

@@ -45,7 +45,7 @@ export function analyze(input, maxJokers = 1) {
 export function createRummyGame(def, opts) {
   const n = opts.players, diff = opts.difficulty, rng = opts.rng || Math.random, R = def.rules;
   let stock = [], discard = [], melds = [], picked = null, plan = [], turned = 0, first = Math.floor(rng() * n);
-  const P = Array.from({ length: n }, () => ({ hand: [], opened: false, total: 0 }));
+  const P = Array.from({ length: n }, () => ({ hand: [], opened: false, total: 0, out: false }));
   const g = { kind: 'rummy', n, teams: false, nTeams: n, teamOf: i => i, phase: 'play', step: 'draw', current: 0, round: 0, summary: null };
 
   function startRound() {
@@ -55,7 +55,8 @@ export function createRummyGame(def, opts) {
     shuffle(stock, rng);
     melds = []; picked = null; turned = 0;
     P.forEach(p => { p.hand = []; p.opened = false; });
-    for (let k = 0; k < def.setup.handSize; k++) for (const p of P) p.hand.push(stock.pop());
+    for (let k = 0; k < def.setup.handSize; k++) for (const p of P) if (!p.out) p.hand.push(stock.pop());
+    while (P[first].out) first = (first + 1) % n;
     discard = [stock.pop()];
     Object.assign(g, { phase: 'play', step: 'draw', current: first, summary: null });
     g.round++;
@@ -142,7 +143,7 @@ export function createRummyGame(def, opts) {
     if (id === picked && p.hand.length > 1) return fail('sameCard');
     take(p, [c]); discard.push(c); picked = null; plan = [];
     if (!p.hand.length) endRound(g.current);
-    else { g.current = (g.current + 1) % n; g.step = 'draw'; }
+    else { do g.current = (g.current + 1) % n; while (P[g.current].out); g.step = 'draw'; }
     return { ok: true };
   };
 
@@ -151,20 +152,23 @@ export function createRummyGame(def, opts) {
     P.forEach((p, i) => { p.total += pen[i]; });
     const totals = P.map(p => p.total);
     g.summary = { round: g.round, winner, rows: [{ key: 'penalty', vals: pen, winner }], roundPts: pen, totals };
-    g.phase = Math.max(...totals) >= R.target ? 'over' : 'roundEnd';
+    // whoever reaches the target is out of the game; the last player left wins
+    P.forEach(p => { if (p.total >= R.target) p.out = true; });
+    g.phase = P[0].out || P.filter(p => !p.out).length < 2 ? 'over' : 'roundEnd';
   }
 
   g.nextRound = () => { first = (first + 1) % n; startRound(); };
 
   g.view = () => ({
-    players: P.map(p => ({ hand: p.hand, handCount: p.hand.length, opened: p.opened, total: p.total })),
+    players: P.map(p => ({ hand: p.hand, handCount: p.hand.length, opened: p.opened, total: p.total, out: p.out })),
     melds, stock: stock.length, top: discard[discard.length - 1] || null,
     step: g.step, provSum: provSum(), opening: R.opening, hasProv: melds.some(m => m.prov)
   });
 
   g.result = () => {
     const scores = P.map(p => p.total), mine = scores[0], other = Math.min(...scores.slice(1));
-    return { outcome: mine < other ? 'win' : mine > other ? 'lose' : 'tie', score: 0, scores };
+    if (P.some(p => !p.out)) return { outcome: P[0].out ? 'lose' : 'win', score: 0, scores };
+    return { outcome: mine < other ? 'win' : mine > other ? 'lose' : 'tie', score: 0, scores };   // everybody went over together
   };
 
   // ---------- finding combinations (bots and hints) ----------

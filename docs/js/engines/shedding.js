@@ -17,6 +17,29 @@ export function createSheddingGame(def, opts) {
     phase: 'play', pending: false, current: Math.floor(rng() * n), lastEvent: null, summary: null, winner: null
   };
 
+  const cost = c => (wild.has(c.r) ? 20 + (c.r === R.burn ? 1 : 0) : val(c.r));   // cheap cards go first, specials last
+  // Before the first turn everybody may exchange cards between the hand and the face-up table cards.
+  let picked = null;
+  const starter = g.current;
+  if (R.swap) {
+    for (let i = 1; i < n; i++) {
+      if (diff === 'easy') continue;
+      const all = [...P[i].hand, ...P[i].up].sort((a, b) => cost(b) - cost(a));   // bots keep their best cards for later
+      P[i].up = all.slice(0, R.stack); P[i].hand = all.slice(R.stack); sortHand(P[i]);
+    }
+    g.swap = true; g.current = 0;
+  }
+  function swapPlay(id, opt) {
+    const p = P[0];
+    if (opt && opt.ready) { g.swap = false; picked = null; g.current = starter; return; }
+    const z = x => (p.hand.some(c => c.id === x) ? 'hand' : 'up');
+    if (!picked || z(picked) === z(id)) { picked = picked === id ? null : id; return; }
+    const a = z(picked) === 'hand' ? picked : id, b = a === picked ? id : picked;
+    const ia = p.hand.findIndex(c => c.id === a), ib = p.up.findIndex(c => c.id === b);
+    [p.hand[ia], p.up[ib]] = [p.up[ib], p.hand[ia]];
+    sortHand(p); picked = null;
+  }
+
   const top = () => pile[pile.length - 1];
   const can = c => !pile.length || wild.has(c.r) || val(c.r) >= val(top().r);
   // Cards are played from the hand first, then the face-up table cards, then the face-down ones (blind).
@@ -27,6 +50,7 @@ export function createSheddingGame(def, opts) {
   };
 
   g.legal = (i = g.current) => {
+    if (g.swap) return [...P[0].hand, ...P[0].up];
     const z = zone(i);
     return z === 'down' ? P[i].down.map((_, k) => ({ id: 'down-' + k })) : P[i][z].filter(can);
   };
@@ -34,13 +58,14 @@ export function createSheddingGame(def, opts) {
   /** Several cards of the same value can be played together: one option per possible count. */
   g.options = (id, i = g.current) => {
     const z = zone(i);
-    if (z === 'down') return [];
+    if (z === 'down' || g.swap) return [];
     const c = P[i][z].find(x => x.id === id), rest = P[i][z].filter(x => x.r === c.r && x !== c);
     if (!rest.length) return [];
     return [0, ...rest.map((_, k) => k + 1)].map(k => { const cards = [c, ...rest.slice(0, k)]; return { ids: cards.map(x => x.id), cards }; });
   };
 
   g.play = (id, opt) => {
+    if (g.swap) { swapPlay(id, opt); return; }
     const i = g.current, p = P[i], z = zone(i);
     g.pending = true;
     if (opt && opt.pickup) { act = 'pickup'; g.lastEvent = { type: 'pickup', p: i }; return; }
@@ -72,11 +97,11 @@ export function createSheddingGame(def, opts) {
   };
 
   g.view = () => ({
-    showScore: false, showPile: false, source: zone(0),
+    showScore: false, showPile: false, source: zone(0), swap: !!g.swap, picked, note: g.swap ? 'play.swapHint' : null,
     players: P.map(p => ({ hand: p.hand, handCount: p.hand.length, up: p.up, down: p.down.length, score: 0 })),
     center: pile.slice(-4).map(c => ({ card: c, p: null, hl: false })), pileCount: pile.length,
     deckCount: deck.length, trumpCard: null, trumpSuit: null, staged: null,
-    actions: g.phase === 'play' && !g.pending && g.current === 0 && zone(0) !== 'down' && !g.legal(0).length ? ['pickup'] : []
+    actions: g.swap ? ['ready'] : g.phase === 'play' && !g.pending && g.current === 0 && zone(0) !== 'down' && !g.legal(0).length ? ['pickup'] : []
   });
 
   g.result = () => ({
@@ -85,11 +110,14 @@ export function createSheddingGame(def, opts) {
   });
 
   g.botMove = (level = diff, exact = false) => {
+    if (g.swap) {                                        // hint: bring the best cards to the table, then start
+      const p = P[0], lo = p.up.reduce((a, b) => (cost(b) < cost(a) ? b : a)), hi = p.hand.reduce((a, b) => (cost(b) > cost(a) ? b : a));
+      return cost(hi) > cost(lo) ? { id: picked === hi.id ? lo.id : hi.id } : { id: null, opt: { ready: true } };
+    }
     const i = g.current, z = zone(i), L = g.legal(i);
     if (!L.length) return { id: null, opt: { pickup: true } };
     const any = () => L[Math.floor(rng() * L.length)];
     if (z === 'down' || (level === 'easy' && rng() < 0.5)) return { id: any().id };
-    const cost = c => (wild.has(c.r) ? 20 + (c.r === R.burn ? 1 : 0) : val(c.r));   // cheap cards go first, specials last
     let pick = L.reduce((a, b) => (cost(b) < cost(a) ? b : a));
     if (level === 'hard' && pile.length >= 6) pick = L.find(c => c.r === R.burn) || pick;
     // a little unpredictability also keeps purely mechanical play from going round in circles

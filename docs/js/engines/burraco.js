@@ -43,6 +43,13 @@ export function createBurracoGame(def, opts) {
   let stock = [], discard = [], melds = [], pots = [], picked = null, first = Math.floor(rng() * n);
   const P = Array.from({ length: n }, () => ({ hand: [] }));
   const T = [{ pot: false, total: 0 }, { pot: false, total: 0 }];
+  // semi-clean burraco: a run whose wild card sits beside at least seven natural cards in a row
+  const semi = m => {
+    if (m.type !== 'run' || !R.semiBonus) return false;
+    let best = 0, cur = 0;
+    for (const c of m.cards) { cur = c.wild ? 0 : cur + 1; best = Math.max(best, cur); }
+    return best >= 7;
+  };
   const g = { kind: 'burraco', n, teams, nTeams: 2, teamOf, phase: 'play', step: 'draw', current: 0, round: 0, summary: null };
 
   function startRound() {
@@ -133,7 +140,7 @@ export function createBurracoGame(def, opts) {
     const of = f => [0, 1].map(f);
     const rows = [
       { key: 'melded', vals: of(t => sum(melds.filter(m => m.team === t).flatMap(m => m.cards))), winner: -1 },
-      { key: 'burracos', vals: of(t => melds.filter(m => m.team === t && m.cards.length >= 7).reduce((a, m) => a + (m.clean ? R.cleanBonus : R.dirtyBonus), 0)), winner: -2 },
+      { key: 'burracos', vals: of(t => melds.filter(m => m.team === t && m.cards.length >= 7).reduce((a, m) => a + (m.clean ? R.cleanBonus : semi(m) ? R.semiBonus : R.dirtyBonus), 0)), winner: -2 },
       { key: 'close', vals: of(t => (t === closer ? R.closeBonus : 0)), winner: -2 },
       { key: 'inHand', vals: of(t => -sum(P.filter((_, i) => teamOf(i) === t).flatMap(p => p.hand))), winner: -1 },
       { key: 'noPot', vals: of(t => (T[t].pot ? 0 : -R.potPenalty)), winner: -1 }

@@ -68,7 +68,7 @@
         "Play starts with an auction: in turn each player calls a card value lower than the previous call (Ace, Three, King, Knight, Knave, 7 … 2) or passes. The last player left is the caller.",
         "The caller chooses the trump suit. Whoever holds the called card of that suit is the caller’s secret partner: this is revealed only when the card is played.",
         "Play is as in Briscola: one card each, no obligation to follow suit; the highest card of the suit led wins the trick unless a trump is played.",
-        "The caller and the partner win with at least 61 points; the other three win with 60 or more."
+        "The caller and the partner win the deal with at least 61 points; the other three with 60 or more. Scoring: if they win, the caller scores +2, the partner +1 and each defender −1; if they lose, the opposite. A caller who called a card they hold plays alone and scores ±4. Taking all 120 points doubles the scores. You can play one, three or five deals: you finish as a winner if your total is above zero."
       ],
       "goal": "As caller or partner, take at least 61 of the 120 points; as one of the other three, stop them.",
       "tips": [
@@ -85,7 +85,7 @@
         "Si comincia con l’asta: a turno ogni giocatore chiama un valore di carta più basso della chiamata precedente (Asso, Tre, Re, Cavallo, Fante, 7 … 2) oppure passa. L’ultimo rimasto è il chiamante.",
         "Il chiamante sceglie il seme di briscola. Chi ha in mano la carta chiamata di quel seme è il suo socio segreto: lo si scopre solo quando la carta viene giocata.",
         "Si gioca come a Briscola: una carta a testa, senza obbligo di rispondere al seme; vince la presa la carta più alta del seme d’uscita, a meno che non venga giocata una briscola.",
-        "Il chiamante e il socio vincono con almeno 61 punti; gli altri tre vincono con 60 o più."
+        "Il chiamante e il socio vincono la mano con almeno 61 punti; gli altri tre con 60 o più. Punteggio: se vincono, il chiamante segna +2, il socio +1 e ogni difensore −1; se perdono, il contrario. Chi chiama una carta che ha in mano gioca da solo e segna ±4. Con tutti i 120 punti (cappotto) i punteggi raddoppiano. Puoi giocare una, tre o cinque mani: chiudi in vincita se il tuo totale è sopra lo zero."
       ],
       "goal": "Da chiamante o da socio, fare almeno 61 dei 120 punti; da uno degli altri tre, impedirlo.",
       "tips": [
@@ -102,7 +102,7 @@
         "Se empieza con una subasta: por turnos cada jugador canta un valor de carta más bajo que el anterior (As, Tres, Rey, Caballo, Sota, 7 … 2) o pasa. El último que queda es el cantante.",
         "El cantante elige el palo de triunfo. Quien tiene la carta cantada de ese palo es su compañero secreto: solo se descubre cuando se juega la carta.",
         "Se juega como en la Briscola: una carta cada uno, sin obligación de seguir el palo; gana la baza la carta más alta del palo de salida, salvo que se juegue un triunfo.",
-        "El cantante y su compañero ganan con al menos 61 puntos; los otros tres ganan con 60 o más."
+        "El llamador y su socio ganan la mano con al menos 61 puntos; los otros tres con 60 o más. Puntuación: si ganan, el llamador anota +2, el socio +1 y cada defensor −1; si pierden, al revés. Quien llama una carta que tiene en la mano juega solo y anota ±4. Con los 120 puntos las puntuaciones se doblan. Puedes jugar una, tres o cinco manos: terminas ganando si tu total está por encima de cero."
       ],
       "goal": "Como cantante o compañero, hacer al menos 61 de los 120 puntos; como uno de los otros tres, impedirlo.",
       "tips": [
@@ -119,7 +119,7 @@
         "On commence par des enchères : à tour de rôle, chaque joueur annonce une valeur de carte plus basse que l’annonce précédente (As, Trois, Roi, Cavalier, Valet, 7 … 2) ou passe. Le dernier en lice est l’appelant.",
         "L’appelant choisit l’atout. Celui qui détient la carte appelée dans cette couleur est son partenaire secret : on ne le découvre que lorsque la carte est jouée.",
         "On joue comme à la Briscola : une carte chacun, sans obligation de fournir ; la plus forte carte de la couleur demandée remporte le pli, sauf si un atout est joué.",
-        "L’appelant et son partenaire gagnent avec au moins 61 points ; les trois autres gagnent avec 60 ou plus."
+        "L’appelant et son partenaire gagnent la manche avec au moins 61 points ; les trois autres avec 60 ou plus. Score : s’ils gagnent, l’appelant marque +2, le partenaire +1 et chaque défenseur −1 ; s’ils perdent, l’inverse. Un appelant qui a appelé une carte de sa propre main joue seul et marque ±4. Avec les 120 points, les scores sont doublés. Vous pouvez jouer une, trois ou cinq manches : vous terminez gagnant si votre total est au-dessus de zéro."
       ],
       "goal": "En tant qu’appelant ou partenaire, faire au moins 61 des 120 points ; en tant que l’un des trois autres, les en empêcher.",
       "tips": [
@@ -136,7 +136,7 @@
         "Zuerst wird gereizt: Reihum ruft jeder Spieler einen Kartenwert, der niedriger ist als der vorige (Ass, Drei, König, Reiter, Bube, 7 … 2), oder passt. Wer übrig bleibt, ist der Rufer.",
         "Der Rufer wählt die Trumpffarbe. Wer die gerufene Karte dieser Farbe hält, ist sein geheimer Partner: Das zeigt sich erst, wenn die Karte gespielt wird.",
         "Gespielt wird wie bei Briscola: jeder eine Karte, kein Farbzwang; die höchste Karte der angespielten Farbe gewinnt den Stich, außer es wird Trumpf gespielt.",
-        "Rufer und Partner gewinnen mit mindestens 61 Punkten; die anderen drei gewinnen mit 60 oder mehr."
+        "Rufer und Partner gewinnen die Runde mit mindestens 61 Punkten, die drei anderen mit 60 oder mehr. Wertung: Gewinnen sie, bekommt der Rufer +2, der Partner +1 und jeder Verteidiger −1; verlieren sie, umgekehrt. Wer eine Karte ruft, die er selbst hält, spielt allein und bekommt ±4. Mit allen 120 Punkten zählt alles doppelt. Du kannst eine, drei oder fünf Runden spielen: Du gewinnst, wenn deine Summe über null liegt."
       ],
       "goal": "Als Rufer oder Partner mindestens 61 der 120 Punkte holen; als einer der drei anderen das verhindern.",
       "tips": [
@@ -153,7 +153,7 @@
         "Começa-se com um leilão: à vez, cada jogador chama um valor de carta mais baixo do que a chamada anterior (Ás, Três, Rei, Cavalo, Valete, 7 … 2) ou passa. O último que fica é o chamador.",
         "O chamador escolhe o naipe de trunfo. Quem tiver a carta chamada desse naipe é o seu parceiro secreto: só se descobre quando a carta é jogada.",
         "Joga-se como na Briscola: uma carta cada, sem obrigação de seguir o naipe; ganha a vaza a carta mais alta do naipe de saída, a menos que se jogue um trunfo.",
-        "O chamador e o parceiro ganham com pelo menos 61 pontos; os outros três ganham com 60 ou mais."
+        "O chamador e o sócio ganham a mão com pelo menos 61 pontos; os outros três com 60 ou mais. Pontuação: se ganharem, o chamador marca +2, o sócio +1 e cada defensor −1; se perderem, o contrário. Quem chama uma carta que tem na mão joga sozinho e marca ±4. Com os 120 pontos as pontuações dobram. Pode jogar uma, três ou cinco mãos: termina a ganhar se o seu total ficar acima de zero."
       ],
       "goal": "Como chamador ou parceiro, fazer pelo menos 61 dos 120 pontos; como um dos outros três, impedi-lo.",
       "tips": [
@@ -170,7 +170,7 @@
         "先进行叫牌：玩家依次叫出比上一次更小的牌点（A、3、国王、骑士、侍从、7……2），或者不叫。最后剩下的玩家成为叫牌者。",
         "叫牌者选择王牌花色。持有该花色被叫那张牌的玩家是叫牌者的秘密同伴：直到这张牌被打出才会揭晓。",
         "出牌规则与 Briscola 相同：每人出一张，不必跟花色；领出花色中最大的牌赢得这一墩，除非有人出王牌。",
-        "叫牌者和同伴至少拿到 61 分即获胜；另外三人拿到 60 分或以上即获胜。"
+        "叫牌者和同伴拿到至少61分即赢得本局；另外三人拿到60分或以上即获胜。计分：若叫牌方获胜，叫牌者+2，同伴+1，每位防守方−1；若失败则相反。叫到自己手中的牌的叫牌者独自作战，得失为±4。拿到全部120分时分数加倍。可以玩一局、三局或五局：总分高于零即为获胜。"
       ],
       "goal": "作为叫牌者或同伴，在 120 分中至少拿到 61 分；作为另外三人之一，则要阻止他们。",
       "tips": [
@@ -187,7 +187,7 @@
         "最初にオークションを行います。順番に、前のコールより弱いカードの数（エース、3、キング、ナイト、ジャック、7…2）をコールするか、パスします。最後に残った人がコーラーです。",
         "コーラーが切り札のスートを選びます。そのスートの指名カードを持つ人がコーラーの秘密のパートナーで、そのカードが出されるまで明かされません。",
         "プレイはブリスコラと同じです。1枚ずつ出し、スートを合わせる義務はありません。最初に出されたスートで最も強いカードが勝ち、切り札が出ればそちらが勝ちます。",
-        "コーラーとパートナーは61点以上で勝ち、残りの3人は60点以上で勝ちです。"
+        "コール側（コールした人とパートナー）は61点以上でその回に勝ち、他の3人は60点以上で勝ちます。得点：コール側が勝てば、コールした人は+2、パートナーは+1、ディフェンスは各−1。負ければその逆です。自分の手札にあるカードをコールした場合は1人で戦い、±4となります。120点すべてを取ると得点は2倍です。1回、3回、5回のいずれかでプレイでき、合計が0より上なら勝ちです。"
       ],
       "goal": "コーラーまたはパートナーなら120点中61点以上を取ること。残りの3人ならそれを阻止することが目的です。",
       "tips": [
@@ -204,7 +204,7 @@
         "먼저 경매를 합니다. 차례대로 앞선 콜보다 낮은 카드 숫자(에이스, 3, 킹, 기사, 잭, 7 … 2)를 부르거나 패스합니다. 마지막까지 남은 사람이 콜러입니다.",
         "콜러가 트럼프 무늬를 고릅니다. 그 무늬의 부른 카드를 가진 사람이 콜러의 비밀 파트너이며, 그 카드가 나올 때에야 밝혀집니다.",
         "진행은 브리스콜라와 같습니다. 한 장씩 내며 무늬를 따를 의무는 없습니다. 처음 나온 무늬에서 가장 높은 카드가 트릭을 가져가고, 트럼프가 나오면 트럼프가 이깁니다.",
-        "콜러와 파트너는 61점 이상이면 이기고, 나머지 세 명은 60점 이상이면 이깁니다."
+        "콜러와 파트너는 61점 이상이면 그 판을 이기고, 나머지 세 명은 60점 이상이면 이깁니다. 점수: 콜러 쪽이 이기면 콜러 +2, 파트너 +1, 수비는 각각 −1이며, 지면 반대입니다. 자신이 가진 카드를 부른 콜러는 혼자 플레이하며 ±4를 받습니다. 120점을 모두 따면 점수가 두 배가 됩니다. 1판, 3판 또는 5판을 플레이할 수 있으며, 합계가 0보다 크면 승리입니다."
       ],
       "goal": "콜러나 파트너라면 120점 중 61점 이상을 얻고, 나머지 세 명이라면 그것을 막는 것이 목표입니다.",
       "tips": [
@@ -213,5 +213,11 @@
         "누가 누구에게 점수를 주는지 보세요. 숨은 파트너가 드러납니다."
       ]
     }
-  }
+  },
+  "matchWins": [
+    1,
+    3,
+    5
+  ],
+  "matchLabel": "setup.deals"
 }

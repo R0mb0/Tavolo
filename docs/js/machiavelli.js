@@ -5,6 +5,7 @@ import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
 import { sfx } from './sfx.js';
+import { createLog } from './log.js';
 
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const SUITS = ['spades', 'hearts', 'clubs', 'diamonds'];
@@ -13,6 +14,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, g, msg = null, hint = null, bySuit = true, drag = null, dragEnd = 0;
   const sel = new Set();
+  const log = createLog(), you = (key, vars) => log.add(t(key, { name: t('play.you'), ...vars }));
 
   const names = () => Array.from({ length: opts.players }, (_, i) => (i === 0 ? t('play.you') : t('play.bot', { n: i })));
   const label = c => `${[1, 11, 12, 13].includes(c.r) ? t('frank.' + c.r) : c.r} · ${t('suit.' + c.s)}`;
@@ -50,7 +52,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
       `<div class="rum-bar">` + b('new', 'mach.new', myTurn && sel.size > 0, 'primary') +
       b('end', 'mach.end', myTurn && v.canEnd, hint && hint.end ? 'primary hinted' : 'primary') + b('reset', 'mach.undo', myTurn && v.dirty) +
       `<span class="grow"></span>` + b('sort', 'rum.sort', true) +
-      `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button></div>` +
+      `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>${log.button()}</div>` +
       `<div class="me${myTurn ? ' active' : ''}"><div class="hand many${me.hand.length > 10 ? ' huge' : ''}">${hand}</div></div></div>`;
   }
 
@@ -68,7 +70,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
     const body = `<p>${t('end.cardsLeft')}</p><ul class="final">` + r.scores.map((sc, k) => `<li class="${k === 0 ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
-    if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; run(); } else onExit();
+    if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; log.clear(); run(); } else onExit();
   }
 
   // bot turns and end of game
@@ -83,6 +85,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
       const a = g.botStep(), name = names()[a.p];
       sfx('card');
       msg = a.type === 'draw' ? () => t('rum.bDraw', { name }) : a.type === 'meld' ? () => t('rum.bMeld', { name }) : a.type === 'layoff' ? () => t('rum.bLay', { name }) : null;
+      log.add(msg ? msg() : t('mach.bEnd', { name }));
     }
     busy = false;
     render();
@@ -132,6 +135,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
 
   root.addEventListener('click', e => {
     if (Date.now() - dragEnd < 350) return;
+    if (e.target.closest('[data-log]')) { log.show(); return; }
     const d = e.target.closest('[data-do]');
     if (d && d.dataset.do === 'sort') { bySuit = !bySuit; render(); return; }
     if (!mine()) return;
@@ -140,8 +144,8 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
       if (what === 'hint') { hint = g.hint(); render(); return; }
       if (what === 'new') done(g.move([...sel], 'new'), 'take');
       else if (what === 'reset') { g.reset(); sel.clear(); msg = null; hint = null; }
-      else if (what === 'end') { if (done(g.endTurn())) { run(); return; } }
-      else if (what === 'stock') { if (done(g.drawCard())) { run(); return; } }
+      else if (what === 'end') { const k = g.view().played; if (done(g.endTurn())) { you('mach.bPlayed', { n: k }); run(); return; } }
+      else if (what === 'stock') { if (done(g.drawCard())) { you('rum.bDraw'); run(); return; } }
       render(); return;
     }
     const grp = e.target.closest('[data-group]');

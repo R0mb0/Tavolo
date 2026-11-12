@@ -5,6 +5,7 @@ import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
 import { sfx } from './sfx.js';
+import { createLog } from './log.js';
 
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const MOVING = '.center [data-id], .staged [data-id], .hand [data-id]';
@@ -13,7 +14,8 @@ const still = matchMedia('(prefers-reduced-motion: reduce)');
 export function startTable(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, g, msg = null, pick = null, chooser = null;
-  let freshSeat = null, flyTo = null, hintId = null, last = null;
+  let freshSeat = null, flyTo = null, hintId = null, last = null, seenRound = 0;
+  const log = createLog();
 
   const names = () => Array.from({ length: opts.players }, (_, i) =>
     i === 0 ? t('play.you') : t('play.bot', { n: i }) + (g.teams && i === 2 ? ` (${t('play.partner')})` : ''));
@@ -84,10 +86,10 @@ export function startTable(root, def, opts, onExit, resume) {
       '</div>';
 
     const me = v.players[0];
-    const btn = (c, on) => cardHTML(c, { tag: 'button', label: label(c), disabled: !on, cls: c.id === hintId ? 'hinted' : '' });
+    const btn = (c, on) => cardHTML(c, { tag: 'button', label: label(c), disabled: !on, cls: (c.id === hintId ? 'hinted' : '') + (c.id === v.picked ? ' sel' : '') });
     const hand = me.hand.map(c => btn(c, usable(c.id))).join('');
     const myTable = me.up ? `<div class="tcards mine" title="${t('play.tableCards')}">` +
-      me.up.map(c => btn(c, v.source === 'up' && usable(c.id))).join('') +
+      me.up.map(c => btn(c, (v.source === 'up' || v.swap) && usable(c.id))).join('') +
       Array.from({ length: me.down }, (_, k) => cardHTML(null, {
         tag: 'button', disabled: !(v.source === 'down' && myTurn), cls: hintId === 'down-' + k ? 'hinted' : '', attrs: ` data-id="down-${k}"`
       })).join('') + '</div>' : '';
@@ -119,8 +121,8 @@ export function startTable(root, def, opts, onExit, resume) {
     root.innerHTML =
       `<div class="table"><div class="opps n${g.n - 1}">${opps}</div>` +
       `<div class="felt">${side}<div class="mid"><div class="center">${center}</div>${staged}</div></div>` +
-      `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${actions || status}</div>` +
-      `<div class="me${myTurn ? ' active' : ''}" data-seat="0"><div class="me-info"><div class="badges">${badges(me)}</div>${top(me)}${myTable}<div class="tools">${hintBtn}${lastBtn}</div></div>` +
+      `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${v.note && !msg ? `<span class="note">${t(v.note)}</span>` : ''}${actions || status}</div>` +
+      `<div class="me${myTurn ? ' active' : ''}" data-seat="0"><div class="me-info"><div class="badges">${badges(me)}</div>${top(me)}${myTable}<div class="tools">${hintBtn}${lastBtn}${log.button()}</div></div>` +
       `<div class="hand${size}">${hand}</div></div>${overlay}</div>`;
     animate(prev);
   }
@@ -171,6 +173,7 @@ export function startTable(root, def, opts, onExit, resume) {
       res({ id: c.id, opt: c.opts[+o.dataset.opt] });
       return;
     }
+    if (e.target.closest('[data-log]')) { log.show(); return; }
     if (e.target.closest('[data-last]') && last) {
       const N = names();
       dialog({
@@ -184,7 +187,7 @@ export function startTable(root, def, opts, onExit, resume) {
     if (!pick || chooser) return;
     if (e.target.closest('[data-hint]')) {
       const h = g.hint();
-      hintId = h.id || (h.opt && h.opt.pickup ? 'pickup' : null);
+      hintId = h.id || (h.opt && h.opt.pickup ? 'pickup' : h.opt && h.opt.ready ? 'ready' : null);
       render(); return;
     }
     const ch = e.target.closest('[data-choice]');
@@ -203,23 +206,29 @@ export function startTable(root, def, opts, onExit, resume) {
   const humanMove = () => new Promise(res => { pick = res; });
 
   async function showSummary() {
-    const s = g.summary, TN = teamNames();
+    const s = g.summary, TN = s.players ? names() : teamNames(), sign = v => (v > 0 ? '+' + v : v);
     const rows = s.rows.map(r => `<tr><th>${t('score.' + r.key)}</th>` +
-      r.vals.map((v, k) => `<td class="${r.winner === k || (r.winner === -2 && v > 0) ? 'won' : ''}">${v}</td>`).join('') + '</tr>').join('');
-    const body = `<table class="sum"><thead><tr><th></th>${TN.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${rows}` +
-      `<tr class="tot"><th>${t('round.points')}</th>${s.roundPts.map(v => `<td>+${v}</td>`).join('')}</tr>` +
+      r.vals.map((v, k) => `<td class="${r.winner === k || (r.winner === -2 && v > 0) ? 'won' : ''}">${r.text ? t(v) : v}</td>`).join('') + '</tr>').join('');
+    let body = `<table class="sum"><thead><tr><th></th>${TN.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${rows}` +
+      `<tr class="tot"><th>${t('round.points')}</th>${s.roundPts.map(v => `<td class="${s.players && v > 0 ? 'won' : ''}">${sign(v)}</td>`).join('')}</tr>` +
       `<tr class="tot big"><th>${t('round.total')}</th>${s.totals.map(v => `<td>${v}</td>`).join('')}</tr></tbody></table>`;
+    if (s.players) {                       // one line per player: easier to read with five of them
+      const role = s.rows.find(r => r.key === 'role'), tr = s.rows.find(r => r.key === 'tricks');
+      body = `<table class="sum byp"><thead><tr><th></th><th>${t('score.cards')}</th><th>${t('round.points')}</th><th>${t('round.total')}</th></tr></thead><tbody>` +
+        TN.map((x, k) => `<tr class="${k === 0 ? 'me-row' : ''}"><th>${x}<small>${t(role.vals[k])}</small></th><td>${tr.vals[k]}</td>` +
+          `<td class="${s.roundPts[k] > 0 ? 'won' : ''}">${sign(s.roundPts[k])}</td><td><b>${sign(s.totals[k])}</b></td></tr>`).join('') + '</tbody></table>';
+    }
     await dialog({ title: t('round.title', { n: s.round }), body, actions: [{ label: t('round.continue'), val: 1, primary: true }] });
     s.shown = true;
   }
 
   async function finish() {
-    const r = g.result(), TN = teamNames();
+    const r = g.result(), TN = r.players ? names() : teamNames();
     record(def.id, r); clearSession();
     sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
     const note = g.kind === 'shedding' ? `<p>${t('end.cardsLeft')}</p>` : '';
     const body = note + '<ul class="final">' + r.scores.map((sc, k) =>
-      `<li class="${k === g.teamOf(0) ? 'mine' : ''}"><span>${TN[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
+      `<li class="${k === (r.players ? 0 : g.teamOf(0)) ? 'mine' : ''}"><span>${TN[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({
       title: t('end.' + r.outcome), body,
       actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }]
@@ -230,23 +239,29 @@ export function startTable(root, def, opts, onExit, resume) {
 
   function newGame() {
     g = createGame(def, opts, resume); resume = null;
-    msg = null; pick = null; chooser = null; freshSeat = null; flyTo = null; hintId = null; last = null;
+    msg = null; pick = null; chooser = null; freshSeat = null; flyTo = null; hintId = null; last = null; seenRound = 0; log.clear();
   }
 
   async function loop() {
     const mine = g;
     while (alive && g === mine) {
+      if (g.round && g.round !== seenRound && g.phase === 'play') { seenRound = g.round; log.head(t('round.title', { n: g.round })); }
       render();
       if (g.announce) {                      // e.g. Tressette declarations at the start of a deal
         const a = g.announce; g.announce = null;
         msg = () => t('play.declare', { list: a.list.map(x => `${names()[x.p]} +${x.pts}`).join(' · ') });
-        render(); await sleep(2600);
+        log.add(msg()); render(); await sleep(2600);
         if (!alive || g !== mine) return;
         msg = null; continue;
       }
       if ((g.phase === 'roundEnd' || g.phase === 'over') && g.summary && !g.summary.shown) { await showSummary(); continue; }
       if (g.phase === 'over') { finish(); return; }
       if (g.phase === 'roundEnd') { g.nextRound(); msg = null; continue; }
+      if (g.swap) {                          // Danish: exchange of cards before the first turn
+        const mv = await humanMove();
+        if (!alive || g !== mine) return;
+        hintId = null; g.play(mv.id, mv.opt); sfx('card'); continue;
+      }
       if (g.pending) {
         await sleep(g.lastEvent ? 1300 : 800);
         if (!alive || g !== mine) return;
@@ -265,7 +280,12 @@ export function startTable(root, def, opts, onExit, resume) {
       else { await sleep(700); if (!alive || g !== mine) return; mv = g.botMove(); }
       if (!alive || g !== mine) return;
       freshSeat = g.current; hintId = null;
+      const cur = g.current, pv = g.view().players[cur], ids = (mv.opt && mv.opt.ids) || (mv.id ? [mv.id] : []);
+      const played = [...pv.hand, ...(pv.up || [])].filter(c => ids.includes(c.id));
       g.play(mv.id, mv.opt);
+      if (!played.length && String(mv.id).startsWith('down-')) played.push(...g.view().center.slice(-1).map(x => x.card));
+      if (played.length) log.add(`<b>${names()[cur]}</b> ${played.map(label).join(', ')}`);
+      if (g.lastEvent && eventText()) log.add(eventText());
       sfx(g.lastEvent && (g.lastEvent.type === 'sweep' || g.lastEvent.type === 'burn') ? 'sweep' : 'card');
       const txt = eventText;
       msg = g.lastEvent ? () => txt() : null;

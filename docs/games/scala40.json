@@ -62,7 +62,7 @@
         "Combinations are sets (three or four cards of the same value in different suits) and runs (three or more consecutive cards of the same suit; the Ace goes before the 2 or after the King). A joker replaces any card, one per combination.",
         "Your first lay-down must be worth at least 40 points: court cards 10, Ace 11 (1 in the run Ace-2-3), the other cards their number.",
         "After opening you can add cards to any combination on the table, take the top card of the discard pile instead of drawing from the deck, and swap a joker on the table for the card it stands for.",
-        "You go out by discarding your last card. The others add up the cards left in their hand (joker 25, Ace 11, court cards 10). When someone reaches 101 points the game ends and the lowest total wins.",
+        "You go out by discarding your last card. The others add up the cards left in their hands (joker 25, Ace 11, court cards 10). A player who reaches 101 points is out of the game: the last player left wins. If you are eliminated, the game ends.",
         "Before opening you may draw only from the deck. If the deck runs out, the discards are shuffled to form a new one; the third time it runs out the deal is called off and everyone counts the cards left in hand."
       ],
       "goal": "Get rid of all your cards by laying them down in combinations, and keep your penalty points lower than everyone else’s.",
@@ -80,7 +80,7 @@
         "Le combinazioni sono i tris o poker (tre o quattro carte dello stesso valore di semi diversi) e le scale (tre o più carte consecutive dello stesso seme; l’Asso va prima del 2 o dopo il Re). Un jolly sostituisce qualsiasi carta, uno per combinazione.",
         "La prima calata deve valere almeno 40 punti: le figure 10, l’Asso 11 (1 nella scala Asso-2-3), le altre carte il loro numero.",
         "Dopo aver aperto puoi attaccare carte a qualsiasi combinazione sul tavolo, prendere la carta in cima agli scarti invece di pescare dal mazzo, e sostituire un jolly sul tavolo con la carta che rappresenta.",
-        "Chiudi scartando la tua ultima carta. Gli altri sommano le carte rimaste in mano (jolly 25, Asso 11, figure 10). Quando qualcuno arriva a 101 punti la partita finisce e vince chi ha il totale più basso.",
+        "Chiudi scartando la tua ultima carta. Gli altri sommano le carte rimaste in mano (jolly 25, Asso 11, figure 10). Chi arriva a 101 punti è eliminato: vince l’ultimo giocatore rimasto in gara. Se vieni eliminato tu, la partita finisce.",
         "Prima di aprire puoi pescare solo dal mazzo. Se il mazzo finisce, gli scarti vengono rimescolati per formarne uno nuovo; la terza volta che finisce la mano viene annullata e tutti contano le carte rimaste in mano."
       ],
       "goal": "Restare senza carte calandole in combinazioni, e accumulare meno punti di penalità degli altri.",
@@ -98,7 +98,7 @@
         "Las combinaciones son tríos o póker (tres o cuatro cartas del mismo valor de palos distintos) y escaleras (tres o más cartas consecutivas del mismo palo; el As va antes del 2 o después del Rey). Un comodín sustituye a cualquier carta, uno por combinación.",
         "Tu primera bajada debe valer al menos 40 puntos: las figuras 10, el As 11 (1 en la escalera As-2-3), las demás cartas su número.",
         "Después de abrir puedes añadir cartas a cualquier combinación de la mesa, tomar la carta de arriba del descarte en lugar de robar del mazo, y cambiar un comodín de la mesa por la carta que representa.",
-        "Cierras descartando tu última carta. Los demás suman las cartas que les quedan (comodín 25, As 11, figuras 10). Cuando alguien llega a 101 puntos la partida termina y gana el total más bajo.",
+        "Cierras descartando tu última carta. Los demás suman las cartas que les quedan en la mano (comodín 25, As 11, figuras 10). Quien llega a 101 puntos queda eliminado: gana el último jugador que sigue en juego. Si te eliminan a ti, la partida termina.",
         "Antes de abrir solo puedes robar del mazo. Si el mazo se acaba, los descartes se barajan para formar uno nuevo; la tercera vez que se acaba, la mano se anula y todos cuentan las cartas que les quedan."
       ],
       "goal": "Quedarte sin cartas bajándolas en combinaciones y acumular menos puntos de penalización que los demás.",
@@ -116,7 +116,7 @@
         "Les combinaisons sont les brelans ou carrés (trois ou quatre cartes de même valeur et de couleurs différentes) et les suites (trois cartes consécutives ou plus de la même couleur ; l’As se place avant le 2 ou après le Roi). Un joker remplace n’importe quelle carte, un par combinaison.",
         "Votre première pose doit valoir au moins 40 points : les figures 10, l’As 11 (1 dans la suite As-2-3), les autres cartes leur nombre.",
         "Après avoir ouvert, vous pouvez ajouter des cartes à n’importe quelle combinaison de la table, prendre la carte du dessus de la défausse au lieu de piocher, et échanger un joker de la table contre la carte qu’il représente.",
-        "Vous terminez en défaussant votre dernière carte. Les autres additionnent les cartes qui leur restent (joker 25, As 11, figures 10). Quand quelqu’un atteint 101 points, la partie s’arrête et le plus petit total gagne.",
+        "Vous terminez en défaussant votre dernière carte. Les autres additionnent les cartes restées en main (joker 25, As 11, figures 10). Un joueur qui atteint 101 points est éliminé : le dernier joueur en lice gagne. Si vous êtes éliminé, la partie s’arrête.",
         "Avant d’ouvrir, vous ne pouvez piocher que dans la pioche. Si elle s’épuise, la défausse est mélangée pour en former une nouvelle ; la troisième fois, la donne est annulée et chacun compte les cartes qui lui restent."
       ],
       "goal": "Vous débarrasser de toutes vos cartes en les posant en combinaisons, et garder moins de points de pénalité que les autres.",
@@ -134,7 +134,7 @@
         "Kombinationen sind Sätze (drei oder vier Karten gleichen Werts in verschiedenen Farben) und Folgen (drei oder mehr aufeinanderfolgende Karten derselben Farbe; das Ass liegt vor der 2 oder nach dem König). Ein Joker ersetzt jede Karte, einer pro Kombination.",
         "Deine erste Auslage muss mindestens 40 Punkte wert sein: Bildkarten 10, Ass 11 (1 in der Folge Ass-2-3), die übrigen Karten ihren Zahlenwert.",
         "Nach dem Eröffnen darfst du Karten an jede Kombination auf dem Tisch anlegen, die oberste Karte der Ablage nehmen statt vom Stapel zu ziehen, und einen Joker auf dem Tisch gegen die Karte tauschen, für die er steht.",
-        "Du beendest die Runde, indem du deine letzte Karte abwirfst. Die anderen zählen ihre Handkarten zusammen (Joker 25, Ass 11, Bildkarten 10). Erreicht jemand 101 Punkte, endet das Spiel und die niedrigste Summe gewinnt.",
+        "Du machst aus, indem du deine letzte Karte abwirfst. Die anderen zählen die Karten, die sie noch auf der Hand haben (Joker 25, Ass 11, Bildkarten 10). Wer 101 Punkte erreicht, scheidet aus: der letzte verbliebene Spieler gewinnt. Scheidest du aus, endet die Partie.",
         "Vor dem Eröffnen darfst du nur vom Stapel ziehen. Ist der Stapel leer, wird die Ablage zu einem neuen gemischt; beim dritten Mal wird das Spiel abgebrochen und alle zählen ihre Handkarten."
       ],
       "goal": "Werde alle Karten los, indem du sie in Kombinationen auslegst, und sammle weniger Minuspunkte als die anderen.",
@@ -152,7 +152,7 @@
         "As combinações são trincas ou quadras (três ou quatro cartas do mesmo valor de naipes diferentes) e sequências (três ou mais cartas seguidas do mesmo naipe; o Ás fica antes do 2 ou depois do Rei). Um joker substitui qualquer carta, um por combinação.",
         "A primeira baixada tem de valer pelo menos 40 pontos: as figuras 10, o Ás 11 (1 na sequência Ás-2-3), as outras cartas o seu número.",
         "Depois de abrir pode juntar cartas a qualquer combinação da mesa, tirar a carta do topo dos descartes em vez de comprar do baralho, e trocar um joker da mesa pela carta que ele representa.",
-        "Fecha descartando a sua última carta. Os outros somam as cartas que lhes restam (joker 25, Ás 11, figuras 10). Quando alguém chega a 101 pontos a partida termina e ganha o total mais baixo.",
+        "Fecha descartando a sua última carta. Os outros somam as cartas que ficaram na mão (jóquer 25, Ás 11, figuras 10). Quem chega a 101 pontos é eliminado: ganha o último jogador que continuar em jogo. Se for você o eliminado, a partida termina.",
         "Antes de abrir só pode comprar do baralho. Se o baralho acabar, os descartes são baralhados para formar um novo; à terceira vez a mão é anulada e todos contam as cartas que têm na mão."
       ],
       "goal": "Ficar sem cartas baixando-as em combinações e acumular menos pontos de penalização do que os outros.",
@@ -170,7 +170,7 @@
         "牌组分为同点牌组（三张或四张点数相同、花色不同的牌）和顺子（三张或更多同花色的连续牌；A 可以放在 2 之前或 K 之后）。王牌可以代替任何牌，每个牌组限用一张。",
         "第一次出牌组必须至少值 40 分：人头牌 10 分，A 11 分（在 A-2-3 的顺子中算 1 分），其他牌按牌面点数计。",
         "开牌后可以把牌接到桌上任何牌组上，可以拿弃牌堆顶的牌来代替摸牌，还可以用王牌所代替的那张牌把桌上的王牌换回来。",
-        "弃掉最后一张牌即为出完。其他人把手里剩下的牌加起来（王牌 25，A 11，人头牌 10）。有人达到 101 分时游戏结束，总分最低者获胜。",
+        "弃掉最后一张牌即可出完。其他人把手中剩余的牌相加（王牌25，A 11，人头牌10）。达到101分的玩家被淘汰：最后留下的玩家获胜。如果你被淘汰，游戏结束。",
         "开牌前只能从牌堆摸牌。牌堆摸完时，把弃牌重新洗成新的牌堆；第三次摸完时本局作废，所有人计算手里剩下的牌。"
       ],
       "goal": "把手牌组成牌组全部出完，并让自己的罚分比其他人都低。",
@@ -188,7 +188,7 @@
         "組み合わせには、セット（同じ数でスートの違う3〜4枚）とラン（同じスートで連続する3枚以上。エースは2の前かキングの後）があります。ジョーカーはどのカードの代わりにもなり、1つの組み合わせに1枚まで使えます。",
         "最初に出す組み合わせは合計40点以上でなければなりません。絵札は10点、エースは11点（エース・2・3のランでは1点）、その他は数字どおりです。",
         "オープン後は、テーブルのどの組み合わせにもカードを付け足せます。山札の代わりに捨て札の一番上を取ることも、テーブルのジョーカーを本来のカードと交換することもできます。",
-        "最後の1枚を捨てるとあがりです。他の人は手札に残ったカードを合計します（ジョーカー25、エース11、絵札10）。誰かが101点に達するとゲーム終了で、合計が最も少ない人の勝ちです。",
+        "最後の1枚を捨てるとあがりです。他のプレイヤーは手札に残ったカードを合計します（ジョーカー25、エース11、絵札10）。101点に達したプレイヤーは脱落し、最後まで残ったプレイヤーの勝ちです。あなたが脱落するとゲーム終了です。",
         "オープン前は山札からしか引けません。山札がなくなったら捨て札を切り直して新しい山札にします。3回目になくなったときはそのディールを打ち切り、全員が手札を数えます。"
       ],
       "goal": "手札を組み合わせにしてすべて出し切り、ペナルティ点を誰よりも少なく抑えます。",
@@ -206,7 +206,7 @@
         "조합에는 세트(숫자가 같고 무늬가 다른 3~4장)와 런(같은 무늬의 연속된 3장 이상, 에이스는 2 앞이나 킹 뒤)이 있습니다. 조커는 어떤 카드든 대신하며 조합 하나에 한 장만 쓸 수 있습니다.",
         "처음 내려놓는 조합은 합계 40점 이상이어야 합니다. 그림 카드는 10점, 에이스는 11점(에이스-2-3 런에서는 1점), 나머지는 숫자대로입니다.",
         "오픈한 뒤에는 테이블의 어떤 조합에든 카드를 붙일 수 있고, 덱 대신 버린 카드의 맨 위를 가져올 수 있으며, 테이블의 조커를 원래 카드와 바꿔 올 수 있습니다.",
-        "마지막 카드를 버리면 끝납니다. 다른 사람들은 손에 남은 카드를 더합니다(조커 25, 에이스 11, 그림 카드 10). 누군가 101점에 이르면 게임이 끝나고 합계가 가장 낮은 사람이 이깁니다.",
+        "마지막 카드를 버리면 끝납니다. 다른 플레이어는 손에 남은 카드를 더합니다(조커 25, 에이스 11, 그림 카드 10). 101점에 도달한 플레이어는 탈락하며, 마지막까지 남은 플레이어가 승리합니다. 당신이 탈락하면 게임이 끝납니다.",
         "오픈 전에는 덱에서만 뽑을 수 있습니다. 덱이 떨어지면 버린 카드를 섞어 새 덱을 만들고, 세 번째로 떨어지면 그 판은 중단되며 모두 손에 남은 카드를 셉니다."
       ],
       "goal": "카드를 조합으로 모두 내려놓아 없애고, 벌점을 다른 사람보다 낮게 유지합니다.",

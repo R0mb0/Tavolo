@@ -6,16 +6,27 @@ export function createCalledGame(def, opts) {
   const order = R.rankOrder, suits = DECKS[def.deck].suits;
   const str = c => order.length - order.indexOf(c.r);
   const pts = c => R.cardPoints[c.r] || 0;
-  const deck = shuffle(buildDeck(def.deck), rng);
-  const P = Array.from({ length: n }, () => ({ hand: deck.splice(-def.setup.handSize) }));
-  const first = Math.floor(rng() * n), score = [0, 0], own = Array(n).fill(0), active = new Set([0, 1, 2, 3, 4]);
-  let bid = -1, bidder = null, trump = null, calledId = null;
+  const P = Array.from({ length: n }, () => ({ hand: [] }));
+  const deals = opts.wins || 1, totals = Array(n).fill(0);     // a match is a fixed number of deals
+  const score = [0, 0], own = Array(n).fill(0), active = new Set();
+  let first = Math.floor(rng() * n), bid = -1, bidder = null, trump = null, calledId = null;
   const susp = Array(n).fill(0);            // how much each player looks like the caller's partner
 
   const g = {
     kind: 'trick', n, teams: false, nTeams: 2, phase: 'play', stage: 'bid', pending: false, current: first,
-    trick: [], winner: null, lastEvent: null, summary: null, caller: null, holder: null, revealed: false
+    trick: [], winner: null, lastEvent: null, summary: null, caller: null, holder: null, revealed: false, round: 0
   };
+  function startRound() {
+    const deck = shuffle(buildDeck(def.deck), rng);
+    P.forEach(p => { p.hand = deck.splice(-def.setup.handSize); });
+    score.fill(0); own.fill(0); susp.fill(0); active.clear();
+    for (let i = 0; i < n; i++) active.add(i);
+    bid = -1; bidder = null; trump = null; calledId = null;
+    Object.assign(g, { phase: 'play', stage: 'bid', pending: false, current: first, trick: [], winner: null, lastEvent: null, summary: null, caller: null, holder: null, revealed: false });
+    g.round++;
+  }
+  startRound();
+  g.nextRound = () => { first = (first + 1) % n; startRound(); };
   g.teamOf = i => (i === g.caller || i === g.holder ? 0 : 1);
   g.teamList = () => [[...new Set([g.caller, g.holder])], [0, 1, 2, 3, 4].filter(i => g.teamOf(i) === 1)];
   g.flyTarget = () => (g.stage === 'play' ? g.winner : null);
@@ -65,10 +76,25 @@ export function createCalledGame(def, opts) {
       const w = g.winner, p = trickPts(g.trick);
       score[g.teamOf(w)] += p; own[w] += p;
       g.trick = []; g.winner = null; g.current = w;
-      if (P.every(x => !x.hand.length)) g.phase = 'over';
+      if (P.every(x => !x.hand.length)) endRound();
     }
     g.lastEvent = null;
   };
+
+  // Traditional scoring: the caller wins or loses 2 points, the partner 1, each defender 1 the other way
+  // (a caller playing alone 4). Taking all 120 points doubles everything.
+  function endRound() {
+    const won = score[0] > R.total / 2, k = (won ? 1 : -1) * (score[0] === R.total || score[1] === R.total ? 2 : 1);
+    const alone = g.caller === g.holder;
+    const roundPts = P.map((_, i) => (i === g.caller ? (alone ? 4 : 2) * k : i === g.holder ? k : -k));
+    roundPts.forEach((v, i) => { totals[i] += v; });
+    g.summary = {
+      round: g.round, players: true, roundPts, totals: totals.slice(),
+      rows: [{ key: 'role', vals: P.map((_, i) => (i === g.caller ? 'role.caller' : i === g.holder ? 'role.partner' : 'role.defender')), text: true, winner: -1 },
+        { key: 'tricks', vals: P.map((_, i) => score[g.teamOf(i)]), winner: -1 }]
+    };
+    g.phase = g.round >= deals ? 'over' : 'roundEnd';
+  }
 
   // what the human is asked during the auction
   function ask() {
@@ -89,8 +115,8 @@ export function createCalledGame(def, opts) {
   });
 
   g.result = () => {
-    const callersWin = score[0] > R.total / 2, mine = g.teamOf(0);
-    return { outcome: (mine === 0) === callersWin ? 'win' : 'lose', score: score[mine], scores: score.slice() };
+    const mine = totals[0];                               // points are zero-sum: finishing above zero is a win
+    return { outcome: mine > 0 ? 'win' : mine < 0 ? 'lose' : 'tie', score: mine, scores: totals.slice(), players: true };
   };
 
   // ---------- bots ----------

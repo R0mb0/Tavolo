@@ -5,6 +5,7 @@ import { t } from './i18n.js';
 import { dialog } from './ui.js';
 import { record, settings } from './store.js';
 import { sfx } from './sfx.js';
+import { createLog } from './log.js';
 
 const sleep = ms => new Promise(r => setTimeout(r, ms * settings.speed));
 const SUITS = ['spades', 'hearts', 'clubs', 'diamonds', 'joker'];
@@ -12,7 +13,9 @@ const SUITS = ['spades', 'hearts', 'clubs', 'diamonds', 'joker'];
 export function startRummy(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, g, msg = null, hint = null, bySuit = true;
-  const sel = new Set();
+  const sel = new Set(), log = createLog();
+  let seenRound = 0;
+  const you = (key, vars) => log.add(t(key, { name: t('play.you'), ...vars }));
 
   const names = () => Array.from({ length: opts.players }, (_, i) =>
     i === 0 ? t('play.you') : t('play.bot', { n: i }) + (g.teams && i === 2 ? ` (${t('play.partner')})` : ''));
@@ -30,10 +33,10 @@ export function startRummy(root, def, opts, onExit, resume) {
     let opps = '';
     for (let i = 1; i < g.n; i++) {
       const p = v.players[i];
-      opps += `<div class="opp${g.phase === 'play' && g.current === i ? ' active' : ''}"><div class="opp-main">` +
+      opps += `<div class="opp${g.phase === 'play' && g.current === i ? ' active' : ''}${p.out ? ' gone' : ''}"><div class="opp-main">` +
         `<div class="opp-name"><span class="avatar">${i}</span>${N[i]}</div>` +
         `<div class="opp-hand"><i class="mini"></i><span class="badge">× ${p.handCount}</span></div>` +
-        `<div class="badges"><span class="badge strong">${p.total} ${t('play.pts')}</span>${p.opened ? `<span class="badge gold">✓ ${t('rum.opened')}</span>` : ''}${potBadge(p)}</div></div></div>`;
+        `<div class="badges"><span class="badge strong">${p.total} ${t('play.pts')}</span>${p.out ? `<span class="badge lost">${t('rum.gone')}</span>` : p.opened ? `<span class="badge gold">✓ ${t('rum.opened')}</span>` : ''}${potBadge(p)}</div></div></div>`;
     }
 
     const hl = k => (hint && hint.pile === k ? ' hinted' : '');
@@ -65,7 +68,7 @@ export function startRummy(root, def, opts, onExit, resume) {
       `<div class="rum-bar"><span class="badge strong">${me.total} ${t('play.pts')}</span>${open}<span class="grow"></span>` +
       b('meld', 'rum.meld', canPlay && sel.size >= 3, 'primary') + b('discard', 'rum.discard', canPlay && sel.size === 1) +
       (v.hasProv && canPlay ? b('revert', 'rum.revert', true) : '') + b('sort', 'rum.sort', true) +
-      `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button></div>` +
+      `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>${log.button()}</div>` +
       `<div class="me${myTurn ? ' active' : ''}"><div class="hand many${me.hand.length > 10 ? ' huge' : ''}">${hand}</div></div></div>`;
   }
 
@@ -85,6 +88,7 @@ export function startRummy(root, def, opts, onExit, resume) {
         `<tr class="tot"><th>${t('round.points')}</th>${s.roundPts.map(v => `<td>${sign(v)}</td>`).join('')}</tr>`
         : `<tr><th>${t('score.penalty')}</th>${s.roundPts.map((v, k) => `<td class="${k === s.winner ? 'won' : ''}">+${v}</td>`).join('')}</tr>`) +
       `<tr class="tot big"><th>${t('round.total')}</th>${s.totals.map(v => `<td>${v}</td>`).join('')}</tr></tbody></table>`;
+    log.add(`${title} — ${N.map((x, k) => `${x} ${s.totals[k]}`).join(' · ')}`);
     await dialog({ title, body, actions: [{ label: t('round.continue'), val: 1, primary: true }] });
   }
 
@@ -95,7 +99,7 @@ export function startRummy(root, def, opts, onExit, resume) {
     const body = (B ? '' : `<p>${t('rum.lowWins')}</p>`) + '<ul class="final">' + r.scores.map((sc, k) => `<li class="${k === g.teamOf(0) ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
-    if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; run(); } else onExit();
+    if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; log.clear(); seenRound = 0; run(); } else onExit();
   }
 
   // Drives everything that is not the human's own action: bot turns, end of round, end of game.
@@ -104,6 +108,7 @@ export function startRummy(root, def, opts, onExit, resume) {
     busy = true;
     const game = g;
     while (alive && g === game) {
+      if (g.round !== seenRound && g.phase === 'play') { seenRound = g.round; log.head(t('round.title', { n: g.round })); }
       if (g.phase !== 'play') {
         render(); sfx('take');
         await showSummary();
@@ -121,14 +126,16 @@ export function startRummy(root, def, opts, onExit, resume) {
       if (a.type === 'draw') say(a.from === 'discard' ? 'rum.bPick' : 'rum.bDraw', { name });
       else if (a.type === 'meld') say('rum.bMeld', { name });
       else if (a.type === 'layoff') say('rum.bLay', { name });
-      else msg = null;
-      if (a.pot) say('bur.takePot', { name });
+      else { msg = null; const top = g.view().top; if (a.type === 'discard' && top) log.add(t('rum.bDiscard', { name, card: label(top) })); }
+      if (msg) log.add(msg());
+      if (a.pot) { say('bur.takePot', { name }); log.add(msg()); }
     }
     busy = false;
     render();
   }
 
   root.addEventListener('click', e => {
+    if (e.target.closest('[data-log]')) { log.show(); return; }
     const d = e.target.closest('[data-do]');
     if (d && d.dataset.do === 'sort') { bySuit = !bySuit; render(); return; }
     if (!mine()) return;
@@ -136,19 +143,21 @@ export function startRummy(root, def, opts, onExit, resume) {
     if (d) {
       const what = d.dataset.do;
       if (what === 'hint') { hint = g.hint(); render(); return; }
-      if (what === 'stock') done(g.draw('stock'));
+      const one = sel.size === 1 ? v.players[0].hand.find(c => sel.has(c.id)) : null;
+      const toss = () => { const ok = done(g.discard([...sel][0])); if (ok && one) you('rum.bDiscard', { card: label(one) }); };
+      if (what === 'stock') { if (done(g.draw('stock'))) you('rum.bDraw'); }
       else if (what === 'pile') {
-        if (v.step === 'draw') done(g.draw('discard'));
-        else if (sel.size === 1) { done(g.discard([...sel][0])); run(); return; }
+        if (v.step === 'draw') { if (done(g.draw('discard'))) you('rum.bPick'); }
+        else if (sel.size === 1) { toss(); run(); return; }
         else say('rum.selectOne');
-      } else if (what === 'meld') done(g.meld([...sel]), 'take');
-      else if (what === 'discard') { done(g.discard([...sel][0])); run(); return; }
+      } else if (what === 'meld') { if (done(g.meld([...sel]), 'take')) you('rum.bMeld'); }
+      else if (what === 'discard') { toss(); run(); return; }
       else if (what === 'revert') { g.revert(); sel.clear(); msg = null; }
       render(); return;
     }
     const m = e.target.closest('[data-meld]');
     if (m) {
-      if (!sel.size) say('rum.pickFirst'); else done(g.layoff(+m.dataset.meld, [...sel]), 'take');
+      if (!sel.size) say('rum.pickFirst'); else if (done(g.layoff(+m.dataset.meld, [...sel]), 'take')) you('rum.bLay');
       render(); return;
     }
     const c = e.target.closest('.hand button.card');
