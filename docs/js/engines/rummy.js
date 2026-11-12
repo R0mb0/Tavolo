@@ -44,7 +44,7 @@ export function analyze(input, maxJokers = 1) {
 
 export function createRummyGame(def, opts) {
   const n = opts.players, diff = opts.difficulty, rng = opts.rng || Math.random, R = def.rules;
-  let stock = [], discard = [], melds = [], picked = null, plan = [], turned = 0, first = Math.floor(rng() * n);
+  let stock = [], discard = [], melds = [], picked = null, mustUse = null, plan = [], turned = 0, first = Math.floor(rng() * n);
   const P = Array.from({ length: n }, () => ({ hand: [], opened: false, total: 0, out: false }));
   const g = { kind: 'rummy', n, teams: false, nTeams: n, teamOf: i => i, phase: 'play', step: 'draw', current: 0, round: 0, summary: null };
 
@@ -53,7 +53,7 @@ export function createRummyGame(def, opts) {
     for (let k = 0; k < R.decks; k++) stock.push(...buildDeck(def.deck).map(c => ({ ...c, id: `${c.id}-${k}` })));
     for (let j = 0; j < R.jokers; j++) stock.push({ id: 'joker-' + j, r: 0, s: 'joker', deck: def.deck });
     shuffle(stock, rng);
-    melds = []; picked = null; turned = 0;
+    melds = []; picked = null; mustUse = null; turned = 0;
     P.forEach(p => { p.hand = []; p.opened = false; });
     for (let k = 0; k < def.setup.handSize; k++) for (const p of P) if (!p.out) p.hand.push(stock.pop());
     while (P[first].out) first = (first + 1) % n;
@@ -72,8 +72,9 @@ export function createRummyGame(def, opts) {
     if (g.phase !== 'play' || g.step !== 'draw') return fail('turn');
     let c;
     if (from === 'discard') {
-      if (!p.opened || !discard.length) return fail('noDiscardPick');
+      if (!discard.length) return fail('noDiscardPick');
       c = discard.pop(); picked = c.id;
+      if (!p.opened) mustUse = c.id;                          // allowed only to open with it in this same turn
     } else {
       if (!stock.length) {                                    // turn the discard pile into a new deck
         const top = discard.pop();
@@ -134,14 +135,26 @@ export function createRummyGame(def, opts) {
     plan = [];
   };
 
+  /** Give back the discard taken to open when the opening does not work out; the turn starts again from the draw. */
+  g.putBack = () => {
+    const p = P[g.current], c = mustUse && p.hand.find(x => x.id === mustUse);
+    if (g.phase !== 'play' || g.step !== 'play' || !mustUse) return fail('turn');
+    g.revert();
+    const card = c || p.hand.find(x => x.id === mustUse);
+    if (!card) return fail('invalid');
+    take(p, [card]); discard.push(card); picked = null; mustUse = null; plan = []; g.step = 'draw';
+    return { ok: true };
+  };
+
   g.discard = id => {
     const p = P[g.current];
     if (g.phase !== 'play' || g.step !== 'play') return fail('turn');
     if (melds.some(m => m.prov)) return fail('openFirst');
     const c = p.hand.find(x => x.id === id);
     if (!c) return fail('invalid');
+    if (mustUse && (!p.opened || p.hand.some(x => x.id === mustUse))) return fail('mustOpen');
     if (id === picked && p.hand.length > 1) return fail('sameCard');
-    take(p, [c]); discard.push(c); picked = null; plan = [];
+    take(p, [c]); discard.push(c); picked = null; mustUse = null; plan = [];
     if (!p.hand.length) endRound(g.current);
     else { do g.current = (g.current + 1) % n; while (P[g.current].out); g.step = 'draw'; }
     return { ok: true };
@@ -162,7 +175,7 @@ export function createRummyGame(def, opts) {
   g.view = () => ({
     players: P.map(p => ({ hand: p.hand, handCount: p.hand.length, opened: p.opened, total: p.total, out: p.out })),
     melds, stock: stock.length, top: discard[discard.length - 1] || null,
-    step: g.step, provSum: provSum(), opening: R.opening, hasProv: melds.some(m => m.prov)
+    step: g.step, mustUse: !!mustUse, provSum: provSum(), opening: R.opening, hasProv: melds.some(m => m.prov)
   });
 
   g.result = () => {
@@ -248,13 +261,21 @@ export function createRummyGame(def, opts) {
     return hand.reduce((a, b) => { const ua = useful(a), ub = useful(b); return ub < ua || (ub === ua && penalty(b.r) > penalty(a.r)) ? b : a; });
   }
 
+  // would the top discard let this player open right now, as part of the opening?
+  function opensWith(p, top) {
+    const found = findMelds([...p.hand, top]).sort((a, b) => b.a.points - a.a.points);
+    while (found.length && sumLen(found) > p.hand.length) found.pop();
+    return sumPts(found) >= R.opening && found.some(m => m.cs.includes(top));
+  }
+
   /** One bot action at a time (draw, lay down, lay off, discard) so the table can show each step. */
   g.botStep = (level = diff) => {
     const i = g.current, p = P[i];
     if (g.step === 'draw') {
       const top = discard[discard.length - 1];
-      const wants = p.opened && top && level !== 'easy' &&
-        (melds.some(m => fits(m, top)) || sumPts(findMelds([...p.hand, top])) > sumPts(findMelds(p.hand)));
+      const wants = top && level !== 'easy' && (p.opened
+        ? melds.some(m => fits(m, top)) || sumPts(findMelds([...p.hand, top])) > sumPts(findMelds(p.hand))
+        : opensWith(p, top));
       const from = wants ? 'discard' : 'stock';
       g.draw(from);
       return { type: 'draw', from, p: i };
@@ -262,6 +283,10 @@ export function createRummyGame(def, opts) {
     const found = playable(p);
     if (found.length && g.meld(found[0].cs.map(c => c.id)).ok) return { type: 'meld', p: i };
     if (melds.some(m => m.prov)) g.revert();
+    if (mustUse && (!p.opened || p.hand.some(c => c.id === mustUse))) {   // the opening did not work out: give the card back
+      g.putBack(); g.draw('stock');
+      return { type: 'draw', from: 'stock', p: i };
+    }
     if (level !== 'easy' || rng() < 0.5) {
       const mv = layoffMove(p);
       if (mv && g.layoff(mv.idx, [mv.id]).ok) return { type: 'layoff', p: i };
@@ -273,9 +298,10 @@ export function createRummyGame(def, opts) {
   /** Suggestion for the human player: what to tap next. */
   g.hint = () => {
     const p = P[g.current];
-    if (g.step === 'draw') return { pile: 'stock' };
+    if (g.step === 'draw') { const top = discard[discard.length - 1]; return { pile: !p.opened && top && opensWith(p, top) ? 'discard' : 'stock' }; }
     const found = playable(p);
     if (found.length) return { ids: found[0].cs.map(c => c.id) };
+    if (mustUse && (!p.opened || p.hand.some(c => c.id === mustUse))) return { putBack: true };
     const mv = layoffMove(p);
     if (mv) return { ids: [mv.id], meld: mv.idx };
     return { ids: [worstCard(p, 'hard').id] };

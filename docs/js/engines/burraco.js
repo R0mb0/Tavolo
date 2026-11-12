@@ -71,10 +71,17 @@ export function createBurracoGame(def, opts) {
   const take = (p, cards) => { p.hand = p.hand.filter(c => !cards.includes(c)); };
   const hasBurraco = t => melds.some(m => m.team === t && m.cards.length >= 7);
   // May the current player get rid of `k` cards by laying them down? `burr`: the team will then own a burraco.
-  function allowed(p, t, k, burr) {
+  const isWild = c => c.r === 0 || c.r === 2;
+  const target = opts.wins > 100 ? opts.wins : R.target;    // the match can be played to a higher score
+  // `used`: the cards laid down, when known, to check that the one left is not a wild card (no closing on a wild card)
+  function allowed(p, t, k, burr, used) {
     const left = p.hand.length - k;
     if (left === 0) return !T[t].pot;                      // only to pick up the pot straight away
-    if (left === 1) return !T[t].pot || burr;              // the last card must be a legal closing discard
+    if (left === 1) {                                      // the last card must be a legal closing discard
+      if (!T[t].pot) return true;
+      const last = used && p.hand.find(c => !used.includes(c));
+      return burr && !(last && isWild(last));
+    }
     return true;
   }
   const maybePot = (p, t) => { if (!p.hand.length && !T[t].pot) { p.hand = pots.pop(); T[t].pot = true; return true; } return false; };
@@ -100,7 +107,7 @@ export function createBurracoGame(def, opts) {
     const cs = p.hand.filter(c => ids.includes(c.id));
     const a = cs.length === ids.length ? analyzeBurraco(cs) : null;
     if (!a) return fail('invalid');
-    if (!allowed(p, t, cs.length, hasBurraco(t) || a.cards.length >= 7)) return fail(p.hand.length === cs.length ? 'keepOne' : 'needBurraco');
+    { const burr = hasBurraco(t) || a.cards.length >= 7; if (!allowed(p, t, cs.length, burr, cs)) return fail(p.hand.length === cs.length ? 'keepOne' : burr ? 'wildClose' : 'needBurraco'); }
     take(p, cs);
     melds.push({ ...a, team: t });
     return { ok: true, pot: maybePot(p, t) };
@@ -113,7 +120,7 @@ export function createBurracoGame(def, opts) {
     const add = p.hand.filter(c => ids.includes(c.id));
     const a = add.length && add.length === ids.length ? analyzeBurraco([...m.cards, ...add]) : null;
     if (!a || a.type !== m.type || (a.type === 'set' ? a.rank !== m.rank : a.suit !== m.suit)) return fail('invalid');
-    if (!allowed(p, t, add.length, hasBurraco(t) || a.cards.length >= 7)) return fail(p.hand.length === add.length ? 'keepOne' : 'needBurraco');
+    { const burr = hasBurraco(t) || a.cards.length >= 7; if (!allowed(p, t, add.length, burr, add)) return fail(p.hand.length === add.length ? 'keepOne' : burr ? 'wildClose' : 'needBurraco'); }
     take(p, add);
     melds[idx] = { ...a, team: t };
     return { ok: true, pot: maybePot(p, t) };
@@ -127,6 +134,7 @@ export function createBurracoGame(def, opts) {
     const c = p.hand.find(x => x.id === id);
     if (!c) return fail('invalid');
     if (p.hand.length === 1 && T[t].pot && !hasBurraco(t)) return fail('needBurraco');
+    if (p.hand.length === 1 && T[t].pot && isWild(c)) return fail('wildClose');
     if (id === picked && p.hand.length > 1) return fail('sameCard');
     take(p, [c]); discard.push(c); picked = null;
     const pot = maybePot(p, t);
@@ -149,7 +157,7 @@ export function createBurracoGame(def, opts) {
     T.forEach((tm, t) => { tm.total += roundPts[t]; });
     const totals = T.map(tm => tm.total);
     g.summary = { round: g.round, winner: closer, rows, roundPts, totals };
-    g.phase = Math.max(...totals) >= R.target && totals[0] !== totals[1] ? 'over' : 'roundEnd';
+    g.phase = Math.max(...totals) >= target && totals[0] !== totals[1] ? 'over' : 'roundEnd';
   }
 
   g.nextRound = () => { first = (first + 1) % n; startRound(); };
@@ -213,11 +221,11 @@ export function createBurracoGame(def, opts) {
   // first legal thing to lay down: a new combination, or a card added to one of the team's combinations
   function nextPlay(p, t) {
     for (const cs of findMelds(p.hand))
-      if (allowed(p, t, cs.length, hasBurraco(t) || cs.length >= 7)) return { ids: cs.map(c => c.id) };
+      if (allowed(p, t, cs.length, hasBurraco(t) || cs.length >= 7, cs)) return { ids: cs.map(c => c.id) };
     for (const c of p.hand) {
-      const isWild = c.r === 0 || c.r === 2;
-      const idx = melds.findIndex(m => m.team === t && fitsMeld(m, c) && (!isWild || (m.clean && m.cards.length === 6)));
-      if (idx >= 0 && allowed(p, t, 1, hasBurraco(t) || melds[idx].cards.length >= 6)) return { ids: [c.id], meld: idx };
+      const wild = isWild(c);
+      const idx = melds.findIndex(m => m.team === t && fitsMeld(m, c) && (!wild || (m.clean && m.cards.length === 6)));
+      if (idx >= 0 && allowed(p, t, 1, hasBurraco(t) || melds[idx].cards.length >= 6, [c])) return { ids: [c.id], meld: idx };
     }
     return null;
   }

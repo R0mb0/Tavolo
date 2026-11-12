@@ -1,4 +1,6 @@
 // Settings and player statistics, persisted in localStorage (no backend, no cookies).
+import { unlocked } from './achievements.js';
+
 const KS = 'tavolo.settings.v1', KT = 'tavolo.stats.v1';
 
 const load = k => { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch { return {}; } };
@@ -36,6 +38,7 @@ export function importData(text) {
 }
 
 export function record(gameId, result, opts = {}) {
+  const before = new Set(unlocked(stats));
   const s = stats[gameId] || (stats[gameId] = { played: 0, won: 0, lost: 0, tied: 0, streak: 0, bestStreak: 0, bestScore: 0 });
   s.played++;
   if (result.outcome === 'win') { s.won++; s.streak++; s.bestStreak = Math.max(s.bestStreak, s.streak); }
@@ -51,4 +54,7 @@ export function record(gameId, result, opts = {}) {
   log.push([s.last, gameId, result.outcome[0], d || '']);
   if (log.length > LOG_MAX) log.splice(0, log.length - LOG_MAX);
   save(KT, stats);
+  const fresh = unlocked(stats).filter(id => !before.has(id));
+  if (fresh.length && typeof dispatchEvent === 'function') dispatchEvent(new CustomEvent('tavolo:achievement', { detail: fresh }));
+  return fresh;
 }

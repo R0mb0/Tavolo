@@ -40,7 +40,8 @@ export function startTable(root, def, opts, onExit, resume) {
     if (e.type === 'pickup') return t('play.pickup', { name: N[e.p] });
     if (e.type === 'pass') return t('play.passes', { name: N[e.p] });
     if (e.type === 'bid') return t('play.bid', { name: N[e.p], rank: [1, 8, 9, 10].includes(e.rank) ? t('rank.' + e.rank) : e.rank });
-    if (e.type === 'call') return t('play.calls', { name: N[e.p], card: label(e.card) });
+    if (e.type === 'bidPts') return t('play.bidPts', { name: N[e.p], pts: e.pts });
+    if (e.type === 'call') return t('play.calls', { name: N[e.p], card: label(e.card) }) + (g.view().need > 61 ? ' · ' + t('play.needPts', { pts: g.view().need }) : '');
     if (e.type === 'partner') return t('play.partnerIs', { name: N[e.p] });
     return null;
   }
@@ -111,7 +112,7 @@ export function startTable(root, def, opts, onExit, resume) {
     if (!chooser && myTurn && v.ask) {                   // a question from the engine (auction, choice of suit)
       overlay = `<div class="chooser"><div class="chooser-box"><h3>${t(v.ask.title)}</h3><div class="asks">` +
         v.ask.options.map(o => `<button type="button" class="opt${hintId === 'c:' + o.id ? ' hinted' : ''}" data-choice="${o.id}">` +
-          (o.card ? cardHTML(o.card, { label: label(o.card) }) : o.suit ? `${suitIcon(o.suit)}<span>${t('suit.' + o.suit)}</span>` : `<span>${t(o.text)}</span>`) + '</button>').join('') +
+          (o.card ? cardHTML(o.card, { label: label(o.card) }) : o.suit ? `${suitIcon(o.suit)}<span>${t('suit.' + o.suit)}</span>` : `<span>${o.label || t(o.text)}</span>`) + '</button>').join('') +
         '</div></div></div>';
     }
 
@@ -219,7 +220,8 @@ export function startTable(root, def, opts, onExit, resume) {
       const role = s.rows.find(r => r.key === 'role'), tr = s.rows.find(r => r.key === 'tricks');
       body = `<table class="sum byp"><thead><tr><th></th><th>${t('score.cards')}</th><th>${t('round.points')}</th><th>${t('round.total')}</th></tr></thead><tbody>` +
         TN.map((x, k) => `<tr class="${k === 0 ? 'me-row' : ''}"><th>${x}<small>${t(role.vals[k])}</small></th><td>${tr.vals[k]}</td>` +
-          `<td class="${s.roundPts[k] > 0 ? 'won' : ''}">${sign(s.roundPts[k])}</td><td><b>${sign(s.totals[k])}</b></td></tr>`).join('') + '</tbody></table>';
+          `<td class="${s.roundPts[k] > 0 ? 'won' : ''}">${sign(s.roundPts[k])}</td><td><b>${sign(s.totals[k])}</b></td></tr>`).join('') + '</tbody></table>' +
+        (s.need > 61 ? `<p class="note">${t('play.needPts', { pts: s.need })}</p>` : '');
     }
     await dialog({ title: t('round.title', { n: s.round }), body, actions: [{ label: t('round.continue'), val: 1, primary: true }] });
     s.shown = true;

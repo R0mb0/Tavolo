@@ -11,6 +11,7 @@ import { dialog, esc } from './ui.js';
 import { loadSession, clearSession } from './session.js';
 import { manualHTML } from './manual.js';
 import { learnHTML } from './learn.js';
+import { ACHIEVEMENTS, unlocked, setGames } from './achievements.js';
 
 const $ = s => document.querySelector(s);
 const app = $('#app');
@@ -153,7 +154,11 @@ function screenHelp(id) {
 function screenStats() {
   const st = getStats(), ids = Object.keys(st).filter(k => defs[k]);
   const io = `<input type="file" id="import-file" accept="application/json,.json" hidden>`;
-  if (!ids.length) return `<section class="screen narrow"><h1>${t('nav.stats')}</h1><p class="lead">${t('stats.empty')}</p><p class="note">${t('stats.note')}</p>` +
+  const got = new Set(unlocked(st));
+  const ach = `<div class="panel"><h2>${t('ach.title')} <small>${got.size} / ${ACHIEVEMENTS.length}</small></h2><ul class="ach">` +
+    ACHIEVEMENTS.map(a => `<li class="${got.has(a.id) ? 'got' : ''}"><span class="medal" aria-hidden="true">${got.has(a.id) ? '★' : '☆'}</span><div><b>${t('ach.' + a.id)}</b>` +
+      `<small>${t('ach.' + a.id + '.d')}${got.has(a.id) ? ` — ${t('ach.done')}` : ''}</small></div></li>`).join('') + '</ul></div>';
+  if (!ids.length) return `<section class="screen narrow"><h1>${t('nav.stats')}</h1><p class="lead">${t('stats.empty')}</p>${ach}<p class="note">${t('stats.note')}</p>` +
     `<div class="btn-row"><button type="button" class="btn" id="import-stats">${t('stats.import')}</button></div>${io}</section>`;
   const cell = (v, l) => `<div class="stat"><b>${v}</b><span>${l}</span></div>`;
   const block = (title, s, extra = '') => {
@@ -175,7 +180,7 @@ function screenStats() {
     days.map(d => `<div class="bar" title="${fmt.format(d.at)}: ${d.won} / ${d.played}"><div class="cbar">${d.played ? `<i style="height:${100 * d.played / max}%"><b style="height:${100 * d.won / d.played}%"></b></i>` : ''}</div><span>${new Date(d.at).getDate()}</span></div>`).join('') +
     `</div><small class="legend"><i class="k1"></i>${t('stats.played')}: ${sum.played}<i class="k2"></i>${t('stats.won')}: ${sum.won}</small></div>`;
   return `<section class="screen narrow"><h1>${t('nav.stats')}</h1>${block(t('stats.total'), tot)}${chart}` +
-    ids.map(k => block(esc(gt(defs[k], 'name')), st[k], cell(st[k].bestStreak, t('stats.streak')) + cell(st[k].bestScore, t('stats.best')))).join('') +
+    ids.map(k => block(esc(gt(defs[k], 'name')), st[k], cell(st[k].bestStreak, t('stats.streak')) + cell(st[k].bestScore, t('stats.best')))).join('') + ach +
     `<p class="note">${t('stats.note')}</p><div class="btn-row"><button type="button" class="btn" id="export-stats">${t('stats.export')}</button>` +
     `<button type="button" class="btn" id="import-stats">${t('stats.import')}</button></div>${io}` +
     `<button type="button" class="btn danger" id="reset-stats">${t('stats.reset')}</button></section>`;
@@ -271,6 +276,14 @@ $('#btn-install').addEventListener('click', async () => {
   await installEvt.userChoice;
   installEvt = null; chrome();
 });
+// a new achievement: a short notice that does not interrupt the game
+addEventListener('tavolo:achievement', e => {
+  const el = document.createElement('div');
+  el.className = 'toast'; el.setAttribute('role', 'status');
+  el.innerHTML = `<span aria-hidden="true">★</span> <b>${t('ach.new')}</b> ${e.detail.map(id => t('ach.' + id)).join(' · ')}`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 6000);
+});
 addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; chrome(); });
 addEventListener('appinstalled', () => { installEvt = null; chrome(); });
 addEventListener('hashchange', () => {
@@ -286,6 +299,7 @@ addEventListener('hashchange', () => {
   catalog = cat;
   const ids = cat.decks.flatMap(d => d.games);
   (await Promise.all(ids.map(id => fetch(`games/${id}.json`).then(r => r.json())))).forEach(d => { defs[d.id] = d; });
+  setGames(Object.fromEntries(ids.map(id => [id, { deck: defs[id].deck, solo: solo(defs[id]) }])));
   chrome();
   render();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});

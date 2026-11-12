@@ -68,12 +68,12 @@ export function startRummy(root, def, opts, onExit, resume) {
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
       `<div class="rum-bar"><span class="badge strong">${me.total} ${t('play.pts')}</span>${open}<span class="grow"></span>` +
       b('meld', 'rum.meld', canPlay && sel.size >= 3, 'primary') + b('discard', 'rum.discard', canPlay && sel.size === 1) +
-      (v.hasProv && canPlay ? b('revert', 'rum.revert', true) : '') + b('sort', 'rum.sort', true) +
+      (v.hasProv && canPlay ? b('revert', 'rum.revert', true) : '') + (v.mustUse && canPlay ? b('putback', 'rum.putBack', true, hint && hint.putBack ? 'hinted' : '') : '') + b('sort', 'rum.sort', true) +
       `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>${log.button()}</div>` +
       `<div class="me${myTurn ? ' active' : ''}"><div class="hand many${me.hand.length > 10 ? ' huge' : ''}">${hand}</div></div></div>`;
   }
 
-  const WHY = { invalid: 'rum.invalid', keepOne: 'rum.keepOne', needOpen: 'rum.needOpen', openFirst: 'rum.openFirst', noDiscardPick: 'rum.noPick', sameCard: 'rum.sameCard', needBurraco: 'bur.needBurraco', notYours: 'bur.notYours' };
+  const WHY = { invalid: 'rum.invalid', keepOne: 'rum.keepOne', needOpen: 'rum.needOpen', openFirst: 'rum.openFirst', noDiscardPick: 'rum.noPick', sameCard: 'rum.sameCard', mustOpen: 'rum.mustOpen', wildClose: 'bur.wildClose', needBurraco: 'bur.needBurraco', notYours: 'bur.notYours' };
   function done(res, sound = 'card') {
     hint = null;
     if (res.ok) { sel.clear(); msg = null; sfx(sound); if (res.pot) say('bur.takePot', { name: t('play.you') }); } else if (WHY[res.reason]) say(WHY[res.reason], { n: g.view().provSum, of: g.view().opening });
@@ -154,6 +154,7 @@ export function startRummy(root, def, opts, onExit, resume) {
       } else if (what === 'meld') { if (done(g.meld([...sel]), 'take')) you('rum.bMeld'); }
       else if (what === 'discard') { toss(); run(); return; }
       else if (what === 'revert') { g.revert(); sel.clear(); msg = null; }
+      else if (what === 'putback') { if (g.putBack().ok) { sel.clear(); msg = null; hint = null; } }
       render(); return;
     }
     const m = e.target.closest('[data-meld]');

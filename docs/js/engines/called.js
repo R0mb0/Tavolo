@@ -9,7 +9,8 @@ export function createCalledGame(def, opts) {
   const P = Array.from({ length: n }, () => ({ hand: [] }));
   const deals = opts.wins || 1, totals = Array(n).fill(0);     // a match is a fixed number of deals
   const score = [0, 0], own = Array(n).fill(0), active = new Set();
-  let first = Math.floor(rng() * n), bid = -1, bidder = null, trump = null, calledId = null;
+  let first = Math.floor(rng() * n), bid = -1, bidder = null, trump = null, calledId = null, need = 0;
+  const LAST = order.length - 1, BASE = R.total / 2 + 1, LADDER = [62, 65, 70, 75, 80, 90, 100, 110, 120];   // after the Two the auction goes on by points
   const susp = Array(n).fill(0);            // how much each player looks like the caller's partner
 
   const g = {
@@ -21,7 +22,7 @@ export function createCalledGame(def, opts) {
     P.forEach(p => { p.hand = deck.splice(-def.setup.handSize); });
     score.fill(0); own.fill(0); susp.fill(0); active.clear();
     for (let i = 0; i < n; i++) active.add(i);
-    bid = -1; bidder = null; trump = null; calledId = null;
+    bid = -1; bidder = null; trump = null; calledId = null; need = BASE;
     Object.assign(g, { phase: 'play', stage: 'bid', pending: false, current: first, trick: [], winner: null, lastEvent: null, summary: null, caller: null, holder: null, revealed: false });
     g.round++;
   }
@@ -41,6 +42,7 @@ export function createCalledGame(def, opts) {
     const i = g.current;
     if (g.stage === 'bid') {
       if (opt.choice === 'pass') { active.delete(i); g.lastEvent = { type: 'pass', p: i }; }
+      else if (String(opt.choice)[0] === 'p') { need = +String(opt.choice).slice(1); bid = LAST; bidder = i; g.lastEvent = { type: 'bidPts', p: i, pts: need }; }
       else { bid = +opt.choice; bidder = i; g.lastEvent = { type: 'bid', p: i, rank: order[bid] }; }
       g.pending = true;
     } else if (g.stage === 'suit') {
@@ -68,7 +70,7 @@ export function createCalledGame(def, opts) {
   g.advance = () => {
     g.pending = false;
     if (g.stage === 'bid') {
-      if (bidder != null && (bid === order.length - 1 || (active.size === 1 && active.has(bidder)))) {
+      if (bidder != null && (need >= R.total || (active.size === 1 && active.has(bidder)))) {
         g.caller = bidder; g.current = bidder; g.stage = 'suit';
       } else { do g.current = (g.current + 1) % n; while (!active.has(g.current)); }
     } else if (g.stage === 'suit') { g.stage = 'play'; g.current = first; }
@@ -84,14 +86,15 @@ export function createCalledGame(def, opts) {
   // Traditional scoring: the caller wins or loses 2 points, the partner 1, each defender 1 the other way
   // (a caller playing alone 4). Taking all 120 points doubles everything.
   function endRound() {
-    const won = score[0] > R.total / 2, k = (won ? 1 : -1) * (score[0] === R.total || score[1] === R.total ? 2 : 1);
+    const won = score[0] >= need, k = (won ? 1 : -1) * (score[0] === R.total || score[1] === R.total ? 2 : 1);
     const alone = g.caller === g.holder;
     const roundPts = P.map((_, i) => (i === g.caller ? (alone ? 4 : 2) * k : i === g.holder ? k : -k));
     roundPts.forEach((v, i) => { totals[i] += v; });
     g.summary = {
       round: g.round, players: true, roundPts, totals: totals.slice(),
       rows: [{ key: 'role', vals: P.map((_, i) => (i === g.caller ? 'role.caller' : i === g.holder ? 'role.partner' : 'role.defender')), text: true, winner: -1 },
-        { key: 'tricks', vals: P.map((_, i) => score[g.teamOf(i)]), winner: -1 }]
+        { key: 'tricks', vals: P.map((_, i) => score[g.teamOf(i)]), winner: -1 }],
+      need
     };
     g.phase = g.round >= deals ? 'over' : 'roundEnd';
   }
@@ -100,8 +103,9 @@ export function createCalledGame(def, opts) {
   function ask() {
     if (g.stage === 'bid') {
       const options = order.map((r, k) => ({ id: String(k), card: { id: `${r}-${suits[0]}`, r, s: suits[0], deck: def.deck } })).filter((_, k) => k > bid);
+      if (bid === LAST) options.push(...LADDER.filter(v => v > need).map(v => ({ id: 'p' + v, label: String(v) })));
       if (!(bidder == null && active.size === 1)) options.push({ id: 'pass', text: 'ask.pass' });
-      return { title: 'ask.bid', options };
+      return { title: bid === LAST ? 'ask.bidPts' : 'ask.bid', options };
     }
     return g.stage === 'suit' ? { title: 'ask.suit', options: suits.map(s => ({ id: s, suit: s })) } : null;
   }
@@ -110,7 +114,7 @@ export function createCalledGame(def, opts) {
     showScore: g.stage === 'play', showPile: false,
     players: P.map((p, i) => ({ hand: p.hand, handCount: p.hand.length, score: own[i] })),
     center: g.trick.map(t => ({ card: t.card, p: t.p, hl: g.pending && t.p === g.winner })),
-    deckCount: 0, trumpCard: calledId ? { id: calledId, r: order[bid], s: trump, deck: def.deck } : null, trumpSuit: trump, staged: null,
+    need, deckCount: 0, trumpCard: calledId ? { id: calledId, r: order[bid], s: trump, deck: def.deck } : null, trumpSuit: trump, staged: null,
     ask: g.phase === 'play' && !g.pending && g.current === 0 ? ask() : null
   });
 
@@ -129,6 +133,10 @@ export function createCalledGame(def, opts) {
     const limit = force < 4.5 ? -1 : Math.min(order.length - 1, lacks(hand, s) + Math.floor(force - 4));
     const k = bid + 1;
     if (bidder == null && active.size === 1) return String(Math.max(0, Math.min(k, order.length - 1)));   // somebody has to call
+    if (bid === LAST) {                                    // by points: only a really strong hand goes on
+      const top = force < 7.5 || diff === 'easy' ? 0 : Math.min(80, BASE + Math.round((force - 7) * 5)), next = LADDER.find(v => v > need);
+      return next && next <= top ? 'p' + next : 'pass';
+    }
     return k <= limit && !(diff === 'easy' && rng() < 0.3) ? String(k) : 'pass';
   }
   function botSuit(i) {

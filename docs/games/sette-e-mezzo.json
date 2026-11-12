@@ -26,8 +26,9 @@
     },
     "wild": "10-denari",
     "bankStands": 5,
-    "chips": 20,
-    "rounds": 12
+    "chips": 30,
+    "rounds": 12,
+    "maxBet": 3
   },
   "i18n": {
     "en": {
@@ -35,10 +36,10 @@
       "tagline": "Beat the bank: get as close as you can to seven and a half without going over.",
       "rules": [
         "Italian deck of 40 cards. Cards from Ace to 7 are worth their number; Knave, Knight and King are worth half a point. The King of coins is the wild card: it takes any whole value from 1 to 7.",
-        "The bank is one of the players and passes to the next player at every hand. Everyone receives one card face down and stakes one chip against the bank. In turn each player may ask for more cards, dealt face up, or stand.",
+        "The bank is one of the players and passes to the next player at every hand. Everyone receives one card face down; after looking at it each player stakes one, two or three chips against the bank. In turn each player may then ask for more cards, dealt face up, or stand.",
         "If your total goes over seven and a half you are bust and lose your chip at once.",
         "When everyone has finished, the banker turns their card over and plays last. A bot holding the bank stands on five or more; when you hold the bank, you decide. A player beats the bank if the bank goes bust or if their total is higher; the bank wins ties.",
-        "The bank collects or pays one chip for each player; seven and a half made with just two cards pays double. After twelve hands, the player with the most chips wins."
+        "The bank collects or pays each player’s stake; seven and a half made with just two cards pays double and gives that player the bank for the next hand. After twelve hands, the player with the most chips wins."
       ],
       "goal": "Get closer to seven and a half than the bank without going over, and finish with more chips than the other players.",
       "tips": [
@@ -52,10 +53,10 @@
       "tagline": "Batti il banco: avvicinati il più possibile a sette e mezzo senza sballare.",
       "rules": [
         "Mazzo italiano da 40 carte. Le carte dall’Asso al 7 valgono il loro numero; Fante, Cavallo e Re valgono mezzo punto. Il Re di denari è la matta: prende qualsiasi valore intero da 1 a 7.",
-        "Il banco è uno dei giocatori e passa al giocatore successivo a ogni mano. Tutti ricevono una carta coperta e puntano un gettone contro il banco. A turno ogni giocatore può chiedere altre carte, date scoperte, oppure stare.",
+        "Il banco è uno dei giocatori e passa al giocatore successivo a ogni mano. Tutti ricevono una carta coperta; dopo averla guardata ogni giocatore punta uno, due o tre gettoni contro il banco. Poi, a turno, può chiedere altre carte, date scoperte, oppure stare.",
         "Se il tuo totale supera sette e mezzo hai sballato e perdi subito il gettone.",
         "Quando tutti hanno finito, il banco scopre la sua carta e gioca per ultimo. Quando il banco è un bot, si ferma a cinque o più; quando il banco sei tu, decidi tu. Chi non è il banco vince se il banco sballa o se ha un totale più alto; a parità vince il banco.",
-        "Il banco incassa o paga un gettone a ciascun giocatore; il sette e mezzo fatto con due sole carte paga doppio. Dopo dodici mani vince chi ha più gettoni."
+        "Il banco incassa o paga a ciascuno la sua puntata; il sette e mezzo fatto con due sole carte paga doppio e dà a quel giocatore il banco per la mano successiva. Dopo dodici mani vince chi ha più gettoni."
       ],
       "goal": "Avvicinarsi a sette e mezzo più del banco senza superarlo, e finire con più gettoni degli altri giocatori.",
       "tips": [
@@ -69,10 +70,10 @@
       "tagline": "Gana a la banca: acércate todo lo posible a siete y media sin pasarte.",
       "rules": [
         "Baraja italiana de 40 cartas. Las cartas del As al 7 valen su número; Sota, Caballo y Rey valen medio punto. El Rey de oros es el comodín: toma cualquier valor entero del 1 al 7.",
-        "La banca es uno de los jugadores y pasa al siguiente en cada mano. Todos reciben una carta tapada y apuestan una ficha contra la banca. Por turnos cada jugador puede pedir más cartas, dadas boca arriba, o plantarse.",
+        "La banca es uno de los jugadores y pasa al siguiente en cada mano. Todos reciben una carta tapada; después de mirarla cada jugador apuesta una, dos o tres fichas contra la banca. Luego, por turnos, puede pedir más cartas, dadas boca arriba, o plantarse.",
         "Si tu total supera siete y media te has pasado y pierdes la ficha al momento.",
         "Cuando todos han terminado, la banca descubre su carta y juega la última. Si la banca es un bot, se planta con cinco o más; si la banca eres tú, decides tú. Un jugador gana a la banca si esta se pasa o si su total es más alto; en caso de empate gana la banca.",
-        "La banca cobra o paga una ficha a cada jugador; el siete y medio hecho con solo dos cartas paga doble. Después de doce manos gana quien tiene más fichas."
+        "La banca cobra o paga a cada uno su apuesta; el siete y medio hecho con solo dos cartas paga doble y da a ese jugador la banca en la mano siguiente. Después de doce manos gana quien tiene más fichas."
       ],
       "goal": "Acercarte a siete y media más que la banca sin pasarte, y terminar con más fichas que los demás jugadores.",
       "tips": [
@@ -86,10 +87,10 @@
       "tagline": "Battez la banque : approchez le plus possible de sept et demi sans dépasser.",
       "rules": [
         "Jeu italien de 40 cartes. Les cartes de l’As au 7 valent leur nombre ; Valet, Cavalier et Roi valent un demi-point. Le Roi de deniers est la carte passe-partout : il prend n’importe quelle valeur entière de 1 à 7.",
-        "La banque est tenue par un des joueurs et passe au joueur suivant à chaque main. Chacun reçoit une carte face cachée et mise un jeton contre la banque. À tour de rôle, chaque joueur peut demander d’autres cartes, données face visible, ou rester.",
+        "La banque est tenue par un des joueurs et passe au joueur suivant à chaque main. Chacun reçoit une carte face cachée ; après l’avoir regardée, chaque joueur mise un, deux ou trois jetons contre la banque. Puis, à son tour, il peut demander d’autres cartes, données face visible, ou rester.",
         "Si votre total dépasse sept et demi, vous sautez et perdez aussitôt votre jeton.",
         "Quand tout le monde a fini, le banquier retourne sa carte et joue en dernier. Un bot qui tient la banque s’arrête à cinq ou plus ; quand c’est vous, vous décidez. Un joueur bat la banque si elle dépasse ou si son total est plus élevé ; en cas d’égalité, la banque gagne.",
-        "La banque encaisse ou paie un jeton à chaque joueur ; le sept et demi fait avec deux cartes seulement paie double. Après douze mains, le joueur qui a le plus de jetons gagne."
+        "La banque encaisse ou paie la mise de chacun ; le sept et demi fait avec deux cartes seulement paie double et donne la banque à ce joueur pour la main suivante. Après douze mains, le joueur qui a le plus de jetons gagne."
       ],
       "goal": "Approcher de sept et demi plus que la banque sans dépasser, et finir avec plus de jetons que les autres joueurs.",
       "tips": [
@@ -103,10 +104,10 @@
       "tagline": "Schlage die Bank: Komm so nah wie möglich an siebeneinhalb, ohne darüber zu gehen.",
       "rules": [
         "Italienisches Blatt mit 40 Karten. Karten von Ass bis 7 zählen ihren Zahlenwert; Bube, Reiter und König zählen einen halben Punkt. Der Münz-König ist die wilde Karte: Er nimmt jeden ganzen Wert von 1 bis 7 an.",
-        "Die Bank hält einer der Spieler, sie geht nach jeder Runde an den nächsten weiter. Alle erhalten eine verdeckte Karte und setzen einen Chip gegen die Bank. Reihum darf jeder Spieler weitere, offen ausgeteilte Karten verlangen oder stehen bleiben.",
+        "Die Bank hält einer der Spieler, sie geht nach jeder Runde an den nächsten weiter. Alle erhalten eine verdeckte Karte; nachdem er sie angesehen hat, setzt jeder Spieler einen, zwei oder drei Chips gegen die Bank. Danach darf er reihum weitere, offen ausgeteilte Karten verlangen oder stehen bleiben.",
         "Übersteigt deine Summe siebeneinhalb, hast du dich überkauft und verlierst sofort deinen Chip.",
         "Wenn alle fertig sind, deckt die Bank ihre Karte auf und spielt zuletzt. Ein Bot als Bank bleibt bei fünf oder mehr stehen; hältst du die Bank, entscheidest du. Ein Spieler schlägt die Bank, wenn sie sich überkauft oder wenn sein Wert höher ist; bei Gleichstand gewinnt die Bank.",
-        "Die Bank kassiert oder zahlt jedem Spieler einen Chip; siebeneinhalb mit nur zwei Karten zahlt doppelt. Nach zwölf Runden gewinnt, wer die meisten Chips hat."
+        "Die Bank kassiert oder zahlt jedem seinen Einsatz; siebeneinhalb mit nur zwei Karten zahlt doppelt und bringt diesem Spieler die Bank für die nächste Runde. Nach zwölf Runden gewinnt, wer die meisten Chips hat."
       ],
       "goal": "Komm näher an siebeneinhalb als die Bank, ohne darüber zu gehen, und beende das Spiel mit mehr Chips als die anderen Spieler.",
       "tips": [
@@ -120,10 +121,10 @@
       "tagline": "Vença a banca: aproxime-se o mais possível de sete e meio sem passar.",
       "rules": [
         "Baralho italiano de 40 cartas. As cartas do Ás ao 7 valem o seu número; Valete, Cavalo e Rei valem meio ponto. O Rei de ouros é o curinga: assume qualquer valor inteiro de 1 a 7.",
-        "A banca é um dos jogadores e passa ao jogador seguinte em cada mão. Todos recebem uma carta virada para baixo e apostam uma ficha contra a banca. À vez, cada jogador pode pedir mais cartas, dadas viradas para cima, ou ficar.",
+        "A banca é um dos jogadores e passa ao jogador seguinte em cada mão. Todos recebem uma carta virada para baixo; depois de a ver, cada jogador aposta uma, duas ou três fichas contra a banca. Depois, à vez, pode pedir mais cartas, dadas viradas para cima, ou ficar.",
         "Se o seu total passar de sete e meio rebentou e perde logo a ficha.",
         "Quando todos terminam, a banca vira a sua carta e joga por último. Um bot com a banca fica com cinco ou mais; quando a banca é você, decide você. Um jogador ganha à banca se ela estourar ou se o seu total for mais alto; em caso de empate ganha a banca.",
-        "A banca recebe ou paga uma ficha a cada jogador; o sete e meio feito com apenas duas cartas paga a dobrar. Depois de doze mãos ganha quem tiver mais fichas."
+        "A banca recebe ou paga a cada um a sua aposta; o sete e meio feito com apenas duas cartas paga a dobrar e dá a esse jogador a banca na mão seguinte. Depois de doze mãos ganha quem tiver mais fichas."
       ],
       "goal": "Aproximar-se de sete e meio mais do que a banca sem passar, e acabar com mais fichas do que os outros jogadores.",
       "tips": [
@@ -137,10 +138,10 @@
       "tagline": "战胜庄家：尽量接近七点半，但不要超过。",
       "rules": [
         "使用 40 张意大利牌。A 到 7 按牌面点数计，侍从、骑士和国王各算半点。钱币国王是万能牌：可以当作 1 到 7 的任意整数。",
-        "庄家由玩家轮流担任，每局换到下一位。每人获得一张暗牌，并向庄家下注一枚筹码。玩家依次可以继续要牌（明牌发出）或停牌。",
+        "庄家由玩家轮流担任，每局换到下一位。每人获得一张暗牌；看牌之后，每位玩家向庄家下注一、二或三枚筹码。然后依次可以继续要牌（明牌发出）或停牌。",
         "如果总点数超过七点半就爆牌，立刻输掉筹码。",
         "所有人结束后，庄家翻开自己的牌并最后行动。机器人做庄时到五点或以上即停牌；你做庄时由你决定。庄家爆牌或闲家点数更高时闲家获胜；点数相同则庄家胜。",
-        "庄家向每位玩家收取或支付一枚筹码；仅用两张牌凑成七点半时双倍赔付。十二局后筹码最多者获胜。"
+        "庄家按每位玩家的下注收取或赔付；仅用两张牌凑成七点半时双倍赔付，并且该玩家在下一局担任庄家。十二局后筹码最多者获胜。"
       ],
       "goal": "比庄家更接近七点半且不超过，并在结束时拥有比其他玩家更多的筹码。",
       "tips": [
@@ -154,10 +155,10 @@
       "tagline": "親に勝とう。7.5を超えないように、できるだけ近づけます。",
       "rules": [
         "40枚のイタリアンデッキを使います。エースから7は数字どおり、ジャック・ナイト・キングは0.5点です。コインのキングはワイルドで、1から7の好きな整数になります。",
-        "親はプレイヤーの1人が務め、1回ごとに次のプレイヤーへ移ります。全員が伏せたカードを1枚受け取り、親に対してチップを1枚賭けます。順番に、各プレイヤーは表向きで配られるカードを追加で引くか、ステイします。",
+        "親はプレイヤーの1人が務め、1回ごとに次のプレイヤーへ移ります。全員が伏せたカードを1枚受け取り、それを見てから親に対してチップを1〜3枚賭けます。その後、順番に、表向きで配られるカードを追加で引くか、ステイします。",
         "合計が7.5を超えるとバストとなり、すぐにチップを失います。",
         "全員が終わると、親は自分のカードを表にして最後にプレイします。ボットが親のときは5以上でステイし、あなたが親のときは自分で決めます。親がバストするか、自分の合計のほうが高ければ子の勝ち。同点は親の勝ちです。",
-        "親は各プレイヤーからチップを1枚受け取るか、1枚支払います。2枚だけで作った7.5は2倍の配当です。12回終了後、チップが最も多い人の勝ちです。"
+        "親は各プレイヤーの賭け金を受け取るか支払います。2枚だけで作った7.5は2倍の配当となり、そのプレイヤーが次の回の親になります。12回終了後、チップが最も多い人の勝ちです。"
       ],
       "goal": "7.5を超えずに親より近づけ、最終的に他のプレイヤーより多くのチップを持つことを目指します。",
       "tips": [
@@ -171,10 +172,10 @@
       "tagline": "뱅커를 이기세요. 7.5를 넘지 않으면서 최대한 가깝게 만듭니다.",
       "rules": [
         "40장 이탈리아 덱을 씁니다. 에이스부터 7까지는 숫자대로, 잭·기사·킹은 0.5점입니다. 동전 킹은 와일드 카드로 1부터 7까지 원하는 정수가 됩니다.",
-        "뱅커는 플레이어 중 한 명이 맡으며 매 판 다음 플레이어에게 넘어갑니다. 모두 뒤집힌 카드 한 장을 받고 뱅커를 상대로 칩 한 개를 겁니다. 차례대로 각 플레이어는 앞면으로 주는 카드를 더 받거나 스탠드할 수 있습니다.",
+        "뱅커는 플레이어 중 한 명이 맡으며 매 판 다음 플레이어에게 넘어갑니다. 모두 뒤집힌 카드 한 장을 받고, 카드를 확인한 뒤 뱅커를 상대로 칩 1~3개를 겁니다. 그다음 차례대로 앞면으로 주는 카드를 더 받거나 스탠드할 수 있습니다.",
         "합계가 7.5를 넘으면 버스트가 되어 즉시 칩을 잃습니다.",
         "모두 끝나면 뱅커가 자신의 카드를 공개하고 마지막으로 플레이합니다. 봇이 뱅커일 때는 5 이상에서 멈추고, 당신이 뱅커일 때는 직접 결정합니다. 뱅커가 버스트하거나 자신의 합계가 더 높으면 플레이어가 이기며, 동점이면 뱅커가 이깁니다.",
-        "뱅커는 각 플레이어에게서 칩 한 개를 받거나 지급합니다. 카드 두 장만으로 만든 7과 1/2은 두 배를 지급합니다. 12판 후 칩이 가장 많은 사람이 승리합니다."
+        "뱅커는 각 플레이어의 베팅만큼 받거나 지급합니다. 카드 두 장만으로 만든 7과 1/2은 두 배를 지급하며, 그 플레이어가 다음 판의 뱅커가 됩니다. 12판 후 칩이 가장 많은 사람이 승리합니다."
       ],
       "goal": "7.5를 넘지 않으면서 뱅커보다 가깝게 만들고, 다른 플레이어보다 많은 칩으로 끝내는 것이 목표입니다.",
       "tips": [

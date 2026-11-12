@@ -23,7 +23,7 @@ export function startBanking(root, def, opts, onExit, resume) {
   function note() {
     const e = g.lastEvent, N = names();
     if (g.round !== seenRound) { seenRound = g.round; log.head(`${t('sm.round', { n: g.round, of: g.rounds })} · ${t('sm.bank')}: ${N[g.banker]}`); }
-    if (e) log.add(t(e.type === 'hit' ? 'sm.eHit' : e.type === 'stand' ? 'sm.eStand' : 'sm.eBust', { name: N[e.p] }));
+    if (e) log.add(t(e.type === 'bet' ? 'sm.eBet' : e.type === 'hit' ? 'sm.eHit' : e.type === 'stand' ? 'sm.eStand' : 'sm.eBust', { name: N[e.p], n: e.k }));
     if (g.phase === 'show') log.add(g.view().players.map((p, i) => `${N[i]} ${p.delta > 0 ? '+' : ''}${p.delta}`).join(' · '));
   }
 
@@ -33,7 +33,7 @@ export function startBanking(root, def, opts, onExit, resume) {
     const v = g.view(), N = names(), myTurn = mine();
     const cards = (cs, hidden) => cs.map((c, k) => (hidden && k === 0 ? cardHTML(null) : cardHTML(c, { label: label(c) }))).join('');
     const outcome = p => (p.delta ? `<span class="badge ${p.delta > 0 ? 'gold' : 'lost'}">${p.delta > 0 ? '+' : ''}${p.delta}</span>` : p.state === 'bust' ? `<span class="badge lost">${t('sm.bust')}</span>` : '');
-    const bk = p => (p.banker ? `<span class="badge gold">${t('sm.bank')}</span>` : '');
+    const bk = p => (p.banker ? `<span class="badge gold">${t('sm.bank')}</span>` : p.bet ? `<span class="badge" title="${t('sm.stake')}">${t('sm.stake')} ${p.bet}</span>` : '');
     const seat = (p, i) =>
       `<div class="opp bseat${v.current === i ? ' active' : ''}"><div class="opp-main"><div class="opp-name"><span class="avatar">${i}</span>${N[i]}</div>` +
       `<div class="badges">${bk(p)}<span class="badge strong">${frac(p.total)}</span><span class="badge">● ${p.chips}</span>${outcome(p)}</div></div>` +
@@ -45,12 +45,13 @@ export function startBanking(root, def, opts, onExit, resume) {
 
     const me = v.players[0];
     const hand = t('sm.round', { n: v.round, of: v.rounds });
-    const status = v.phase === 'show' ? hand : myTurn ? `${hand} · ${t(v.banker === 0 ? 'sm.bankTurn' : 'sm.turn')}`
+    const status = v.phase === 'show' ? hand : myTurn ? `${hand} · ${t(v.needBet ? 'sm.betTurn' : v.banker === 0 ? 'sm.bankTurn' : 'sm.turn')}`
       : v.current > 0 ? t('play.turnOf', { name: N[v.current] }) : '';
     const b = (act, key, cls = '') => `<button type="button" class="btn ${cls}${hint === act ? ' hinted' : ''}" data-do="${act}"${myTurn ? '' : ' disabled'}>${t(key)}</button>`;
     const bar = v.phase === 'show'
       ? `<button type="button" class="btn primary big" data-do="next">${t(v.round >= v.rounds ? 'sm.final' : 'sm.next')}</button>`
-      : b('hit', 'sm.hit', 'primary') + b('stand', 'sm.stand') +
+      : (v.needBet && myTurn ? Array.from({ length: v.maxBet }, (_, k) => `<button type="button" class="btn${k ? '' : ' primary'}${hint === 'bet' + (k + 1) ? ' hinted' : ''}" data-do="bet" data-k="${k + 1}">${t('sm.stake')} ${k + 1}</button>`).join('')
+        : b('hit', 'sm.hit', 'primary') + b('stand', 'sm.stand')) +
         `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>`;
     const bar2 = bar + log.button();
 
@@ -99,7 +100,7 @@ export function startBanking(root, def, opts, onExit, resume) {
     if (!mine()) return;
     if (what === 'hint') { hint = g.hint(); render(); return; }
     hint = null; sfx('card');
-    if (what === 'hit') g.hit(); else if (what === 'stand') g.stand();
+    if (what === 'bet') g.bet(+d.dataset.k); else if (what === 'hit') g.hit(); else if (what === 'stand') g.stand();
     note(); run();
   }, { signal: ctl.signal });
 

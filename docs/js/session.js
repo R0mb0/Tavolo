@@ -6,7 +6,7 @@ import { ENGINES } from './engines/index.js';
 const KEY = 'tavolo.resume.v1', VERSION = 1;
 // every engine method that changes the state of a game
 const ACTIONS = ['play', 'advance', 'nextRound', 'draw', 'meld', 'layoff', 'revert', 'discard', 'botStep', 'move', 'reset', 'endTurn',
-  'drawCard', 'hit', 'stand', 'bankStep', 'tap', 'moveTo', 'undo', 'newDeal', 'autoStep'];
+  'drawCard', 'hit', 'stand', 'bet', 'putBack', 'bankStep', 'tap', 'moveTo', 'undo', 'newDeal', 'autoStep'];
 
 function seeded(seed) {                                   // mulberry32, with a counter of the numbers drawn
   let a = seed >>> 0, n = 0;
