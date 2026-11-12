@@ -1,0 +1,220 @@
+{
+  "id": "brisca",
+  "version": 1,
+  "deck": "spanish",
+  "engine": "trick",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 2,
+    "teamsAt": [
+      4
+    ]
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 3,
+    "removeForPlayers": {
+      "3": [
+        "2-copas"
+      ]
+    }
+  },
+  "rules": {
+    "trump": "lastCard",
+    "followSuit": false,
+    "drawAfterTrick": true,
+    "rankOrder": [
+      1,
+      3,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      2
+    ],
+    "cardPoints": {
+      "1": 11,
+      "3": 10,
+      "8": 2,
+      "9": 3,
+      "10": 4
+    }
+  },
+  "win": {
+    "type": "mostPoints",
+    "total": 120
+  },
+  "manual": {
+    "examples": [
+      {
+        "trick": [
+          "10-copas",
+          "1-copas"
+        ],
+        "win": "1-copas"
+      },
+      {
+        "trick": [
+          "1-copas",
+          "2-espadas"
+        ],
+        "win": "2-espadas",
+        "trump": "espadas"
+      }
+    ]
+  },
+  "matchWins": [
+    1,
+    2,
+    3
+  ],
+  "passPlay": true,
+  "i18n": {
+    "en": {
+      "name": "Brisca",
+      "tagline": "The Spanish cousin of Briscola: 120 points and a trump suit.",
+      "rules": [
+        "Each player gets three cards; one card is turned face up and its suit is trump for the whole deal. With four players you play in pairs.",
+        "In turn everyone plays one card. You are free to play any card: there is no obligation to follow suit.",
+        "The trick goes to the highest trump or, without trumps, to the highest card of the suit led. From strongest to weakest: As, Three, Rey, Caballo, Sota, then 7 down to 2.",
+        "The winner of the trick draws first from the deck and leads the next one. As 11 points, Three 10, Rey 4, Caballo 3, Sota 2: whoever takes at least 61 wins."
+      ],
+      "goal": "Take more than half of the 120 points in the deck.",
+      "tips": [
+        "Save the As and the Three for tricks you are sure to win.",
+        "Small trumps are perfect for stealing a trick full of points."
+      ]
+    },
+    "it": {
+      "name": "Brisca",
+      "tagline": "La cugina spagnola della Briscola: 120 punti e un seme di briscola.",
+      "rules": [
+        "Ogni giocatore riceve tre carte; una carta viene scoperta e il suo seme è la briscola per tutta la mano. In quattro si gioca a coppie.",
+        "A turno ognuno gioca una carta. Puoi giocare la carta che vuoi: non c’è obbligo di rispondere al seme.",
+        "La presa va alla briscola più alta oppure, senza briscole, alla carta più alta del seme d’uscita. Dalla più forte alla più debole: As, Tre, Rey, Caballo, Sota, poi dal 7 al 2.",
+        "Chi vince la presa pesca per primo dal mazzo e gioca per primo la successiva. As 11 punti, Tre 10, Rey 4, Caballo 3, Sota 2: vince chi ne fa almeno 61."
+      ],
+      "goal": "Prendi più della metà dei 120 punti del mazzo.",
+      "tips": [
+        "Tieni As e Tre per le prese che sei sicuro di vincere.",
+        "Le briscole piccole sono perfette per rubare una presa ricca di punti."
+      ]
+    },
+    "es": {
+      "name": "Brisca",
+      "tagline": "La prima española de la Briscola: 120 puntos y un palo de triunfo.",
+      "rules": [
+        "Cada jugador recibe tres cartas; se descubre una carta y su palo es el triunfo durante toda la mano. Con cuatro jugadores se juega por parejas.",
+        "Por turnos cada uno juega una carta. Puedes jugar la carta que quieras: no hay obligación de seguir el palo.",
+        "La baza es para el triunfo más alto o, sin triunfos, para la carta más alta del palo de salida. De más fuerte a más débil: As, Tres, Rey, Caballo, Sota, y luego del 7 al 2.",
+        "Quien gana la baza roba primero del mazo y sale en la siguiente. As 11 puntos, Tres 10, Rey 4, Caballo 3, Sota 2: gana quien consigue al menos 61."
+      ],
+      "goal": "Consigue más de la mitad de los 120 puntos de la baraja.",
+      "tips": [
+        "Guarda el As y el Tres para las bazas que seguro vas a ganar.",
+        "Los triunfos pequeños son perfectos para robar una baza cargada de puntos."
+      ]
+    },
+    "fr": {
+      "name": "Brisca",
+      "tagline": "La cousine espagnole de la Briscola : 120 points et une couleur d’atout.",
+      "rules": [
+        "Chaque joueur reçoit trois cartes ; une carte est retournée et sa couleur est l’atout pour toute la manche. À quatre, on joue en équipes de deux.",
+        "À tour de rôle, chacun joue une carte. Vous êtes libre de jouer n’importe laquelle : il n’y a pas d’obligation de fournir.",
+        "Le pli revient à l’atout le plus fort ou, sans atout, à la carte la plus forte de la couleur demandée. De la plus forte à la plus faible : As, Trois, Rey, Caballo, Sota, puis du 7 au 2.",
+        "Le gagnant du pli pioche en premier et entame le suivant. As 11 points, Trois 10, Rey 4, Caballo 3, Sota 2 : celui qui en fait au moins 61 gagne."
+      ],
+      "goal": "Prenez plus de la moitié des 120 points du jeu.",
+      "tips": [
+        "Gardez l’As et le Trois pour les plis que vous êtes sûr de gagner.",
+        "Les petits atouts sont parfaits pour voler un pli riche en points."
+      ]
+    },
+    "de": {
+      "name": "Brisca",
+      "tagline": "Die spanische Cousine der Briscola: 120 Punkte und eine Trumpffarbe.",
+      "rules": [
+        "Jeder Spieler erhält drei Karten; eine Karte wird aufgedeckt, ihre Farbe ist für die ganze Runde Trumpf. Zu viert spielt man in Paaren.",
+        "Reihum spielt jeder eine Karte. Du darfst jede beliebige Karte spielen: es gibt keinen Farbzwang.",
+        "Der Stich geht an den höchsten Trumpf oder, ohne Trumpf, an die höchste Karte der angespielten Farbe. Von stark nach schwach: As, Drei, Rey, Caballo, Sota, dann 7 bis 2.",
+        "Wer den Stich gewinnt, zieht zuerst vom Stapel und spielt zum nächsten aus. As 11 Punkte, Drei 10, Rey 4, Caballo 3, Sota 2: wer mindestens 61 holt, gewinnt."
+      ],
+      "goal": "Hole mehr als die Hälfte der 120 Punkte im Spiel.",
+      "tips": [
+        "Hebe As und Drei für Stiche auf, die du sicher gewinnst.",
+        "Kleine Trümpfe sind ideal, um einen punktereichen Stich zu stehlen."
+      ]
+    },
+    "pt": {
+      "name": "Brisca",
+      "tagline": "A prima espanhola da Briscola: 120 pontos e um naipe de trunfo.",
+      "rules": [
+        "Cada jogador recebe três cartas; vira-se uma carta e o seu naipe é o trunfo durante toda a mão. Com quatro jogadores joga-se em pares.",
+        "À vez, cada um joga uma carta. Pode jogar a carta que quiser: não há obrigação de assistir ao naipe.",
+        "A vaza vai para o trunfo mais alto ou, sem trunfos, para a carta mais alta do naipe de saída. Da mais forte à mais fraca: As, Três, Rey, Caballo, Sota, depois do 7 ao 2.",
+        "Quem ganha a vaza compra primeiro do baralho e sai na seguinte. As 11 pontos, Três 10, Rey 4, Caballo 3, Sota 2: ganha quem fizer pelo menos 61."
+      ],
+      "goal": "Faça mais de metade dos 120 pontos do baralho.",
+      "tips": [
+        "Guarde o As e o Três para as vazas que tem a certeza de ganhar.",
+        "Os trunfos pequenos são perfeitos para roubar uma vaza cheia de pontos."
+      ]
+    },
+    "zh": {
+      "name": "Brisca",
+      "tagline": "布里斯科拉的西班牙表亲：120分和一门王牌花色。",
+      "rules": [
+        "每位玩家发三张牌；翻开一张牌，其花色为整局的王牌。四人游戏时两两组队。",
+        "玩家依次出一张牌。可以出任意一张牌：不必跟花色。",
+        "这一墩归最大的王牌；没有王牌时归首出花色中最大的牌。从大到小：As、3、Rey、Caballo、Sota，然后从7到2。",
+        "赢得这一墩的人先从牌堆摸牌，并在下一墩先出。As 11分，3 10分，Rey 4分，Caballo 3分，Sota 2分：拿到至少61分者获胜。"
+      ],
+      "goal": "拿到整副牌120分中的一半以上。",
+      "tips": [
+        "把As和3留给确定能赢的那一墩。",
+        "小王牌最适合用来抢下分数多的一墩。"
+      ]
+    },
+    "ja": {
+      "name": "Brisca",
+      "tagline": "ブリスコラのスペイン版：120点と切り札のスート。",
+      "rules": [
+        "各プレイヤーに3枚配り、1枚を表にします。そのスートがその回の切り札です。4人のときはペアで戦います。",
+        "順番に1枚ずつ出します。どのカードを出してもかまいません。スートを合わせる必要はありません。",
+        "トリックはいちばん強い切り札が取ります。切り札がなければ、最初に出たスートのいちばん強いカードが取ります。強い順に：As、3、Rey、Caballo、Sota、その後7から2。",
+        "トリックを取った人が先に山札から引き、次のトリックを始めます。As 11点、3 10点、Rey 4点、Caballo 3点、Sota 2点。61点以上取った人の勝ちです。"
+      ],
+      "goal": "山札の120点の半分より多く取ります。",
+      "tips": [
+        "Asと3は、確実に取れるトリックのために取っておきましょう。",
+        "小さな切り札は、点数の多いトリックを奪うのに最適です。"
+      ]
+    },
+    "ko": {
+      "name": "Brisca",
+      "tagline": "브리스콜라의 스페인 사촌: 120점과 으뜸 무늬.",
+      "rules": [
+        "각 플레이어는 카드 세 장을 받고, 한 장을 앞면으로 뒤집어 그 무늬가 판 전체의 으뜸 무늬가 됩니다. 4인일 때는 짝을 이뤄 플레이합니다.",
+        "차례대로 한 장씩 냅니다. 어떤 카드든 낼 수 있으며, 무늬를 따라야 할 의무는 없습니다.",
+        "트릭은 가장 높은 으뜸 카드가 가져가며, 으뜸 카드가 없으면 처음 나온 무늬의 가장 높은 카드가 가져갑니다. 강한 순서: As, 3, Rey, Caballo, Sota, 그다음 7부터 2까지.",
+        "트릭을 이긴 사람이 먼저 덱에서 뽑고 다음 트릭을 시작합니다. As 11점, 3 10점, Rey 4점, Caballo 3점, Sota 2점: 61점 이상 딴 쪽이 승리합니다."
+      ],
+      "goal": "덱의 120점 중 절반 넘게 따세요.",
+      "tips": [
+        "As와 3은 확실히 이길 트릭을 위해 아껴 두세요.",
+        "작은 으뜸 카드는 점수가 많은 트릭을 가로채기에 딱 좋습니다."
+      ]
+    }
+  }
+}

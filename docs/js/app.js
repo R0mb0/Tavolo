@@ -19,12 +19,21 @@ const dark = matchMedia('(prefers-color-scheme: dark)');
 let catalog = null, defs = {}, active = null, installEvt = null, fresh = false, coach = false;
 
 // ---------- settings ----------
+const CARD_LOOKS = ['modern', 'nap', 'pia', 'sic'], modernSuits = {};
 function applySettings() {
   const root = document.documentElement;
   const theme = settings.theme === 'auto' ? (dark.matches ? 'dark' : 'light') : settings.theme;
   root.dataset.theme = theme;
   root.dataset.cb = settings.cb ? '1' : '0';
   root.dataset.still = settings.still ? '1' : '0';
+  // look of the Italian deck: the four suit symbols are swapped in place, so every card and icon follows
+  const look = CARD_LOOKS.includes(settings.cards) ? settings.cards : 'modern';
+  root.dataset.cards = look;
+  for (const s of ['denari', 'coppe', 'spade', 'bastoni']) {
+    const el = document.getElementById('s-' + s);
+    if (!(s in modernSuits)) modernSuits[s] = el.innerHTML;
+    el.innerHTML = look === 'modern' ? modernSuits[s] : document.getElementById(`${look}-${s}`).innerHTML;
+  }
   root.style.setProperty('--zoom', settings.zoom);
   $('meta[name=theme-color]').content = theme === 'dark' ? '#0c1714' : '#1f6f4f';
 }
@@ -49,6 +58,8 @@ function openSettings() {
     `<div class="field"><span>${t('set.theme')}</span>${seg('theme', [['auto', t('set.auto')], ['light', t('set.light')], ['dark', t('set.dark')]], settings.theme)}</div>` +
     `<div class="field"><span>${t('set.zoom')}</span>${seg('zoom', [[1, '100%'], [1.15, '115%'], [1.3, '130%'], [1.5, '150%']], settings.zoom)}</div>` +
     `<div class="field"><span>${t('set.speed')}</span>${seg('speed', [[1.6, t('speed.slow')], [1, t('speed.normal')], [0.5, t('speed.fast')]], settings.speed)}</div>` +
+    `<label class="field"><span>${t('set.cards')}</span><select id="set-cards">${CARD_LOOKS.map(k => `<option value="${k}"${k === settings.cards ? ' selected' : ''}>${t('cards.' + k)}</option>`).join('')}</select></label>` +
+    `<div class="looks" aria-hidden="true">${[[1, 'denari'], [5, 'coppe'], [8, 'bastoni'], [9, 'spade'], [10, 'denari']].map(([r, s]) => cardHTML({ id: `${r}-${s}`, r, s, deck: 'italian' })).join('')}</div>` +
     `<label class="field row"><span>${t('set.colorblind')}</span><input type="checkbox" id="set-cb"${settings.cb ? ' checked' : ''}></label>` +
     `<label class="field row"><span>${t('set.still')}</span><input type="checkbox" id="set-still"${settings.still ? ' checked' : ''}></label>` +
     `<label class="field row"><span>${t('set.sound')}</span><input type="checkbox" id="set-sound"${settings.sound ? ' checked' : ''}></label>`;
@@ -67,6 +78,7 @@ function openSettings() {
       d.addEventListener('change', e => {
         if (e.target.id === 'set-lang') { settings.lang = e.target.value; refresh(true); }
         if (e.target.id === 'set-cb') { settings.cb = e.target.checked; refresh(); }
+        if (e.target.id === 'set-cards') { settings.cards = e.target.value; refresh(); }
         if (e.target.id === 'set-still') { settings.still = e.target.checked; refresh(); }
         if (e.target.id === 'set-sound') { settings.sound = e.target.checked; saveSettings(); }
       });
@@ -89,7 +101,9 @@ const solo = def => def.players.options.length === 1 && def.players.options[0] =
 const range = o => (o.length > 1 ? `${o[0]}–${o[o.length - 1]}` : `${o[0]}`);
 const SAMPLE = {
   italian: [{ r: 1, s: 'denari' }, { r: 10, s: 'coppe' }, { r: 7, s: 'spade' }, { r: 3, s: 'bastoni' }],
-  french: [{ r: 1, s: 'spades' }, { r: 13, s: 'hearts' }, { r: 12, s: 'diamonds' }, { r: 11, s: 'clubs' }]
+  french: [{ r: 1, s: 'spades' }, { r: 13, s: 'hearts' }, { r: 12, s: 'diamonds' }, { r: 11, s: 'clubs' }],
+  spanish: [{ r: 1, s: 'oros' }, { r: 10, s: 'copas' }, { r: 7, s: 'espadas' }, { r: 9, s: 'bastos' }],
+  german: [{ r: 14, s: 'eichel' }, { r: 13, s: 'herz' }, { r: 12, s: 'laub' }, { r: 7, s: 'schellen' }]
 };
 const fan = id => `<div class="fan" aria-hidden="true">${SAMPLE[id].map(c => cardHTML({ ...c, id: `${c.r}-${c.s}`, deck: id })).join('')}</div>`;
 
@@ -122,7 +136,8 @@ function optsFor(def) {
   return {
     players: def.players.options.includes(o.players) ? o.players : def.players.default,
     difficulty: def.difficulty.includes(o.difficulty) ? o.difficulty : 'medium',
-    wins: def.matchWins ? (def.matchWins.includes(o.wins) ? o.wins : def.matchWins[0]) : 1
+    wins: def.matchWins ? (def.matchWins.includes(o.wins) ? o.wins : def.matchWins[0]) : 1,
+    humans: def.passPlay && o.humans === 2 ? 2 : 1
   };
 }
 
@@ -134,10 +149,13 @@ function screenSetup(id) {
   return `<section class="screen narrow"><h1>${esc(gt(def, 'name'))}</h1><p class="lead">${esc(gt(def, 'tagline'))}</p>` +
     `<div class="panel">` + (solo(def) ? '' : `<div class="field"><span>${t('setup.players')}</span><div class="seg">` +
     def.players.options.map(n => `<button type="button" data-players="${n}" aria-pressed="${n === o.players}">${n}</button>`).join('') +
-    `</div><small>${t('setup.playersHint', { n: o.players - 1 })}${teams ? ' · ' + t('setup.teams') : ''}</small></div>`) +
-    `<div class="field"><span>${t('setup.difficulty')}</span><div class="seg">` +
+    `</div><small>${t(o.humans === 2 ? 'setup.playersHint2' : 'setup.playersHint', { n: o.players - o.humans })}${teams ? ' · ' + t('setup.teams') : ''}</small></div>`) +
+    (def.passPlay ? `<div class="field"><span>${t('setup.humans')}</span><div class="seg">` +
+      [1, 2].map(k => `<button type="button" data-humans="${k}" aria-pressed="${k === o.humans}">${t('humans.' + k)}</button>`).join('') +
+      `</div>${o.humans === 2 ? `<small>${t('setup.humansHint')}</small>` : ''}</div>` : '') +
+    (o.players - o.humans < 1 && !solo(def) ? '' : `<div class="field"><span>${t('setup.difficulty')}</span><div class="seg">` +
     def.difficulty.map(k => `<button type="button" data-diff="${k}" aria-pressed="${k === o.difficulty}">${t('diff.' + k)}</button>`).join('') +
-    `</div></div>` + (def.matchWins ? `<div class="field"><span>${t(def.matchLabel || 'setup.wins')}</span><div class="seg">` +
+    `</div></div>`) + (def.matchWins ? `<div class="field"><span>${t(def.matchLabel || 'setup.wins')}</span><div class="seg">` +
     def.matchWins.map(k => `<button type="button" data-wins="${k}" aria-pressed="${k === o.wins}">${k}</button>`).join('') + '</div></div>' : '') + `<div>${lvl ? `<small>${t('sol.draw', { n: lvl.draw })} · ${t('sol.passes', { n: lvl.passes < 0 ? '∞' : lvl.passes })}</small>` : ''}</div>` + (saved ? `<a class="btn primary big" href="#/play/${id}">${t('resume.go')}</a><a class="btn big second" href="#/play/${id}" data-fresh>${t('resume.new')}</a>`
       : `<a class="btn primary big" href="#/play/${id}" data-fresh>${t('setup.start')}</a>`) + `</div>` +
     `<details class="rules" open><summary>${t('setup.rules')}</summary><ul>${gt(def, 'rules').map(r => `<li>${esc(r)}</li>`).join('')}</ul>` +
@@ -218,12 +236,13 @@ function back() {
 app.addEventListener('click', async e => {
   if (e.target.closest('[data-fresh]')) { fresh = true; clearSession(); }
   coach = !!e.target.closest('[data-coach]');
-  const p = e.target.closest('[data-players],[data-diff],[data-wins]');
+  const p = e.target.closest('[data-players],[data-diff],[data-wins],[data-humans]');
   if (p) {
     const id = route()[1], o = optsFor(defs[id]);
     if (p.dataset.players) o.players = +p.dataset.players;
     if (p.dataset.diff) o.difficulty = p.dataset.diff;
     if (p.dataset.wins) o.wins = +p.dataset.wins;
+    if (p.dataset.humans) o.humans = +p.dataset.humans;
     settings.last[id] = o; saveSettings(); render();
     return;
   }

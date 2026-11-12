@@ -1,0 +1,165 @@
+{
+  "id": "mau-mau",
+  "version": 1,
+  "deck": "german",
+  "engine": "maumau",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 3
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 5
+  },
+  "rules": {
+    "drawTwo": 7,
+    "skip": 8,
+    "wild": 11
+  },
+  "passPlay": true,
+  "i18n": {
+    "en": {
+      "name": "Mau-Mau",
+      "tagline": "The German classic: be the first to get rid of all your cards.",
+      "rules": [
+        "Everyone gets five cards and one card is turned face up to start the pile.",
+        "In turn play one card of the same suit or the same rank as the card on top of the pile. If you cannot or do not want to, draw one card and your turn ends.",
+        "A 7 makes the next player draw two cards, unless they answer with another 7: then the following player draws four, and so on. An 8 makes the next player skip a turn.",
+        "An Unter can be played on any card except another Unter, and lets you choose the suit to follow. The first player with no cards wins; the others count the cards left in hand."
+      ],
+      "goal": "Be the first to play all your cards.",
+      "tips": [
+        "Keep an Unter for the moment when nothing else fits.",
+        "When the next player has few cards left, hit them with a 7 or an 8."
+      ]
+    },
+    "it": {
+      "name": "Mau-Mau",
+      "tagline": "Il classico tedesco: liberati per primo di tutte le carte.",
+      "rules": [
+        "Ognuno riceve cinque carte e una carta viene scoperta per iniziare la pila.",
+        "A turno gioca una carta dello stesso seme o dello stesso valore di quella in cima alla pila. Se non puoi o non vuoi, peschi una carta e il turno finisce.",
+        "Un 7 fa pescare due carte al giocatore successivo, a meno che risponda con un altro 7: allora quello dopo ne pesca quattro, e così via. Un 8 fa saltare il turno al giocatore successivo.",
+        "Un Unter si può giocare su qualsiasi carta tranne un altro Unter, e ti fa scegliere il seme da seguire. Vince chi resta per primo senza carte; gli altri contano le carte rimaste in mano."
+      ],
+      "goal": "Gioca per primo tutte le tue carte.",
+      "tips": [
+        "Tieni un Unter per il momento in cui non hai altro da giocare.",
+        "Quando il giocatore dopo di te ha poche carte, colpiscilo con un 7 o un 8."
+      ]
+    },
+    "es": {
+      "name": "Mau-Mau",
+      "tagline": "El clásico alemán: sé el primero en quedarte sin cartas.",
+      "rules": [
+        "Cada uno recibe cinco cartas y se descubre una carta para empezar la pila.",
+        "Por turnos juega una carta del mismo palo o del mismo valor que la de encima de la pila. Si no puedes o no quieres, robas una carta y termina tu turno.",
+        "Un 7 hace robar dos cartas al jugador siguiente, salvo que responda con otro 7: entonces el siguiente roba cuatro, y así sucesivamente. Un 8 hace perder el turno al jugador siguiente.",
+        "Un Unter se puede jugar sobre cualquier carta salvo otro Unter, y te deja elegir el palo que hay que seguir. Gana el primero que se queda sin cartas; los demás cuentan las cartas que les quedan."
+      ],
+      "goal": "Sé el primero en jugar todas tus cartas.",
+      "tips": [
+        "Guarda un Unter para cuando no tengas otra carta que jugar.",
+        "Cuando al jugador siguiente le queden pocas cartas, atácale con un 7 o un 8."
+      ]
+    },
+    "fr": {
+      "name": "Mau-Mau",
+      "tagline": "Le classique allemand : soyez le premier à vous débarrasser de vos cartes.",
+      "rules": [
+        "Chacun reçoit cinq cartes et une carte est retournée pour commencer la pile.",
+        "À votre tour, jouez une carte de la même couleur ou de la même valeur que celle du dessus de la pile. Si vous ne pouvez pas ou ne voulez pas, piochez une carte et votre tour se termine.",
+        "Un 7 fait piocher deux cartes au joueur suivant, sauf s’il répond par un autre 7 : le suivant en pioche alors quatre, et ainsi de suite. Un 8 fait passer son tour au joueur suivant.",
+        "Un Unter peut être joué sur n’importe quelle carte sauf un autre Unter, et vous laisse choisir la couleur à suivre. Le premier joueur sans cartes gagne ; les autres comptent les cartes restées en main."
+      ],
+      "goal": "Soyez le premier à jouer toutes vos cartes.",
+      "tips": [
+        "Gardez un Unter pour le moment où rien d’autre ne convient.",
+        "Quand le joueur suivant a peu de cartes, frappez-le avec un 7 ou un 8."
+      ]
+    },
+    "de": {
+      "name": "Mau-Mau",
+      "tagline": "Der deutsche Klassiker: werde als Erster alle Karten los.",
+      "rules": [
+        "Jeder erhält fünf Karten, eine Karte wird als Beginn des Ablagestapels aufgedeckt.",
+        "Spiele reihum eine Karte derselben Farbe oder desselben Werts wie die oberste Karte des Stapels. Kannst oder willst du nicht, ziehst du eine Karte und dein Zug endet.",
+        "Eine 7 lässt den nächsten Spieler zwei Karten ziehen, außer er antwortet mit einer weiteren 7: dann zieht der Folgende vier, und so weiter. Eine 8 lässt den nächsten Spieler aussetzen.",
+        "Ein Unter darf auf jede Karte außer einen anderen Unter gespielt werden, und du wünschst dir die Farbe. Wer zuerst keine Karten mehr hat, gewinnt; die anderen zählen ihre Handkarten."
+      ],
+      "goal": "Spiele als Erster alle deine Karten aus.",
+      "tips": [
+        "Hebe einen Unter für den Moment auf, in dem nichts anderes passt.",
+        "Hat der nächste Spieler nur noch wenige Karten, triff ihn mit einer 7 oder einer 8."
+      ]
+    },
+    "pt": {
+      "name": "Mau-Mau",
+      "tagline": "O clássico alemão: seja o primeiro a ficar sem cartas.",
+      "rules": [
+        "Cada um recebe cinco cartas e vira-se uma carta para começar a pilha.",
+        "À vez, jogue uma carta do mesmo naipe ou do mesmo valor da que está no topo da pilha. Se não puder ou não quiser, compra uma carta e a sua vez termina.",
+        "Um 7 faz o jogador seguinte comprar duas cartas, a não ser que responda com outro 7: então o seguinte compra quatro, e assim por diante. Um 8 faz o jogador seguinte perder a vez.",
+        "Um Unter pode ser jogado sobre qualquer carta exceto outro Unter, e deixa-o escolher o naipe a seguir. Ganha o primeiro a ficar sem cartas; os outros contam as cartas que ficaram na mão."
+      ],
+      "goal": "Seja o primeiro a jogar todas as suas cartas.",
+      "tips": [
+        "Guarde um Unter para quando não tiver mais nada que sirva.",
+        "Quando o jogador seguinte tiver poucas cartas, ataque-o com um 7 ou um 8."
+      ]
+    },
+    "zh": {
+      "name": "Mau-Mau",
+      "tagline": "德国经典：最先出完所有手牌。",
+      "rules": [
+        "每人发五张牌，翻开一张牌作为牌堆的开始。",
+        "轮到你时，打出一张与牌堆顶牌同花色或同点数的牌。不能出或不想出时，摸一张牌，回合结束。",
+        "7会让下一位玩家摸两张牌，除非他也打出一张7：那么再下一位摸四张，依此类推。8会让下一位玩家跳过一回合。",
+        "Unter 可以压在除另一张 Unter 之外的任何牌上，并由你指定接下来的花色。最先出完牌的玩家获胜；其他人计算手中剩余的牌数。"
+      ],
+      "goal": "最先打出所有手牌。",
+      "tips": [
+        "留一张 Unter，等到没有别的牌可出时再用。",
+        "下家手牌不多时，用7或8对付他。"
+      ]
+    },
+    "ja": {
+      "name": "Mau-Mau",
+      "tagline": "ドイツの定番：最初に手札をなくした人の勝ち。",
+      "rules": [
+        "全員に5枚ずつ配り、1枚を表にして場札の山を始めます。",
+        "順番に、山のいちばん上のカードと同じスートか同じ数字のカードを1枚出します。出せない、または出したくない場合は1枚引いて手番を終えます。",
+        "7を出すと次のプレイヤーは2枚引きます。ただし7で返せば、その次の人が4枚引くことになり、以下同様です。8を出すと次のプレイヤーは1回休みです。",
+        "Unterは、別のUnter以外のどのカードの上にも出せ、次のスートを指定できます。最初に手札がなくなった人の勝ち。他の人は手札に残った枚数を数えます。"
+      ],
+      "goal": "最初に手札をすべて出します。",
+      "tips": [
+        "ほかに出せるカードがないときのために、Unterを1枚取っておきましょう。",
+        "次のプレイヤーの手札が少ないときは、7か8で攻めましょう。"
+      ]
+    },
+    "ko": {
+      "name": "Mau-Mau",
+      "tagline": "독일의 고전: 가장 먼저 카드를 모두 내세요.",
+      "rules": [
+        "모두 다섯 장씩 받고, 한 장을 앞면으로 뒤집어 더미를 시작합니다.",
+        "차례가 되면 더미 맨 위 카드와 같은 무늬나 같은 숫자의 카드를 한 장 냅니다. 낼 수 없거나 내고 싶지 않으면 한 장 뽑고 차례를 마칩니다.",
+        "7을 내면 다음 플레이어는 두 장을 뽑습니다. 다만 7로 받아치면 그다음 사람이 네 장을 뽑게 되며, 이렇게 이어집니다. 8을 내면 다음 플레이어는 한 번 쉽니다.",
+        "Unter는 다른 Unter를 제외한 어떤 카드 위에도 낼 수 있으며, 다음에 따라야 할 무늬를 정할 수 있습니다. 가장 먼저 카드를 다 낸 사람이 승리하고, 나머지는 손에 남은 카드를 셉니다."
+      ],
+      "goal": "가장 먼저 손패를 모두 내세요.",
+      "tips": [
+        "다른 낼 카드가 없을 때를 위해 Unter 한 장을 남겨 두세요.",
+        "다음 플레이어의 카드가 얼마 남지 않았다면 7이나 8로 공격하세요."
+      ]
+    }
+  }
+}

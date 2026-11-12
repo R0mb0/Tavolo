@@ -8,6 +8,7 @@ import { createBurracoGame } from './burraco.js';
 import { createMachiavelliGame } from './machiavelli.js';
 import { createBankingGame } from './banking.js';
 import { createCalledGame } from './called.js';
+import { createMauMauGame } from './maumau.js';
 
 export const ENGINES = {
   trick: createTrickGame,
@@ -18,5 +19,6 @@ export const ENGINES = {
   burraco: createBurracoGame,
   machiavelli: createMachiavelliGame,
   banking: createBankingGame,
-  called: createCalledGame
+  called: createCalledGame,
+  maumau: createMauMauGame
 };

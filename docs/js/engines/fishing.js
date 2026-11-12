@@ -43,6 +43,16 @@ export function createFishingGame(def, opts) {
     if (R.steal) T.forEach((tm, k) => {
       if (k !== me && tm.pile.length && tm.pile[tm.pile.length - 1].r === c.r) out.push({ take: [], steal: k });
     });
+    if (R.sumTo) {                                         // Escoba: the card played and the cards taken add up to 15
+      const rec = (start, left, acc) => {
+        if (left === 0 && acc.length) out.push({ take: acc.slice(), steal: null });
+        for (let k = start; k < table.length; k++) if (table[k].r <= left) {
+          acc.push(table[k].id); rec(k + 1, left - table[k].r, acc); acc.pop();
+        }
+      };
+      rec(0, R.sumTo - c.r, []);
+      return out;
+    }
     const singles = table.filter(x => x.r === c.r);
     singles.forEach(x => out.push({ take: [x.id], steal: null }));
     if (R.captureSums && !(R.singleFirst && singles.length)) {
@@ -97,6 +107,9 @@ export function createFishingGame(def, opts) {
       cards: () => T.map(t => t.pile.length),
       coins: () => T.map(t => t.pile.filter(c => c.s === S.coinSuit).length),
       settebello: () => T.map(t => (t.pile.some(c => c.id === S.settebello) ? 1 : 0)),
+      golds: () => T.map(t => t.pile.filter(c => c.s === S.coinSuit).length),
+      sevenGold: () => T.map(t => (t.pile.some(c => c.id === S.settebello) ? 1 : 0)),
+      sevens: () => T.map(t => t.pile.filter(c => c.r === 7).length),
       primiera: () => T.map(t => suits.reduce((a, s) => a + Math.max(0, ...t.pile.filter(c => c.s === s).map(c => prim[c.r] || 0)), 0))
     };
     for (const key of S.items) {
@@ -153,6 +166,8 @@ export function createFishingGame(def, opts) {
     const tsum = table.reduce((a, x) => a + x.r, 0);
     const unseen = r => Math.max(0, 4 - (seenR[r] || 0) - hand.filter(x => x.r === r).length);
     const pair = c => hand.filter(x => x.r === c.r).length > 1;
+    // which card would clear a table worth `s`? (Scopa: the same value; Escoba: what is missing to 15)
+    const clears = s => { const r = R.sumTo ? R.sumTo - s : s; return r >= 1 && r <= 10 ? r : 0; };
 
     const ev = m => {
       if (S.type === 'mostCards') {
@@ -169,7 +184,7 @@ export function createFishingGame(def, opts) {
         }
         const left = tsum - tk.reduce((a, x) => a + x.r, 0);
         if (tk.length === table.length) v += m.opt.noSweep ? 0 : 15;
-        else if (left <= 10) v -= smart ? 2 * unseen(left) : 1;
+        else if (clears(left)) v -= smart ? 2 * unseen(clears(left)) : 1;
         return v;
       }
       let v = -m.c.r * 0.05;
@@ -177,7 +192,7 @@ export function createFishingGame(def, opts) {
       if (m.c.r === 7) v -= 4;
       if (m.c.id === S.settebello) v -= 10;
       const ns = tsum + m.c.r;
-      if (ns <= 10) v -= smart ? 2.5 * unseen(ns) : 3;
+      if (clears(ns)) v -= smart ? 2.5 * unseen(clears(ns)) : 3;
       if (smart && pair(m.c)) v += 1;
       return v;
     };

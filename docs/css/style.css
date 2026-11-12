@@ -436,3 +436,34 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .panel h2 small { font-weight: 400; color: var(--muted); margin-left: .4rem; }
 .toast { position: fixed; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom)); transform: translateX(-50%); z-index: 60; max-width: calc(100vw - 2rem);
   padding: .7rem 1rem; border-radius: .8rem; background: var(--ink); color: var(--bg); box-shadow: var(--shadow); font-size: .95rem; }
+
+/* v1.2: regional looks of the Italian deck */
+.court .fig { display: none; width: 2.3em; height: 2.9em; }
+:root:not([data-cards="modern"]) .card.it .court span { display: none; }
+:root:not([data-cards="modern"]) .card.it .court .fig { display: block; }
+:root:not([data-cards="modern"]) .card.it .court { flex-direction: row; align-items: flex-end; gap: 0; }
+:root:not([data-cards="modern"]) .card.it .court .si { width: .95em; height: .95em; margin-left: -.25em; }
+:root:not([data-cards="modern"]) .card.it .idx { color: var(--card-ink); }
+:root[data-cards="nap"] { --kg: #e8b53a; --kr: #c8372d; --kb: #2f5d9e; --kv: #3f8a4f; --ko: #3a2a1c; --kh: #9a6a3c; --ks: #f0c8a0; --kp: #fff7e6; --back1: #2c4f86; --back2: #1e3a66; }
+:root[data-cards="pia"] { --kg: #dba92b; --kr: #b23a3a; --kb: #27508f; --kv: #2f7d5a; --ko: #1e2a3a; --kh: #7b5a44; --ks: #efc9a4; --kp: #f7f1e1; --back1: #7b2f3a; --back2: #5a1f29; }
+:root[data-cards="sic"] { --kg: #f0a81e; --kr: #d9482b; --kb: #2a7fb0; --kv: #4c9a3a; --ko: #2b2b2b; --kh: #b07a3e; --ks: #f2cba3; --kp: #fff6df; --back1: #2f7a4d; --back2: #205a37; }
+:root[data-cards="nap"] .card.it { background: #f9f0db; }
+:root[data-cards="pia"] .card.it { background: #f4eddc; }
+:root[data-cards="sic"] .card.it { background: #fcf4e0; border-radius: .3em; }
+:root[data-cards="pia"] .card.it::after, :root[data-cards="sic"] .card.it::after { content: ""; position: absolute; inset: .14em; border: .06em solid var(--ko); border-radius: .36em; pointer-events: none; }
+:root[data-cards="sic"] .card.it::after { inset: .1em; border-color: var(--kr); border-radius: .22em; }
+.looks { display: flex; justify-content: center; gap: .4rem; --cw: 3.4rem; margin: -.2rem 0 .6rem; }
+
+/* v1.4: Spanish and German decks */
+:root { --xg: #e2a61f; --xr: #c63a2b; --xb: #2c5aa0; --xv: #3c8a4a; --xo: #33261a; --dg: #e3b02c; --dr: #c23b33; --dv: #3d8b45; --db: #7a4a2a; --do: #2a2622; }
+.card.es, .card.de { --kg: #e2a61f; --kr: #c63a2b; --kb: #2c5aa0; --kv: #3c8a4a; --ko: #33261a; --kh: #9a6a3c; --ks: #f0c8a0; --kp: #fff7e6; background: #faf3e2; }
+.card.de { --kr: #b8352e; --kb: #3d6b3f; --kg: #e3b02c; background: #f6f1e4; }
+.card.es .idx, .card.de .idx { color: var(--card-ink); }
+.card.es .court, .card.de .court { flex-direction: row; align-items: flex-end; gap: 0; }
+.card.es .court .fig, .card.de .court .fig { display: block; }
+.card.es .court .si, .card.de .court .si { width: .95em; height: .95em; margin-left: -.25em; }
+.card.de .court.r12 { align-items: flex-start; }                 /* the Ober carries the suit high, the Unter low */
+.card.es::after { content: ""; position: absolute; inset: .12em; border: .06em solid var(--xo); border-radius: .38em; pointer-events: none; clip-path: polygon(0 0, 38% 0, 38% 6%, 62% 6%, 62% 0, 100% 0, 100% 100%, 62% 100%, 62% 94%, 38% 94%, 38% 100%, 0 100%); }
+.pips.n8 .si, .pips.n9 .si { width: .9em; height: .9em; }
+.pips.n9, .pips.n10 { width: 3.2em; }
+.pips.n10 .si { width: .84em; height: .84em; }

@@ -24,6 +24,7 @@ export function manualParts(def) {
     if (kind === 'trick') { if (R.trump !== 'none') tb.push('man.t.trump'); tb.push('man.t.center.trick'); }
     else if (kind === 'called') tb = ['man.t.hand', 'man.t.opps', 'man.t.turn', 'man.k.auction', 'man.k.card', 'man.t.center.trick'];
     else if (kind === 'banking') tb = ['man.b.bank', 'man.b.you', 'man.b.chips'];
+    else if (kind === 'maumau') tb.push('man.u.pile');
     else if (kind === 'shedding') { tb.push('man.d.pile', 'man.d.table'); if (R.swap) tb.push('man.d.swap'); }
     else if (kind === 'machiavelli') tb = ['man.t.opps', 'man.t.turn', 'man.m.table', 'man.m.buttons', 'man.m.drag', 'man.m.draw'];
     else if (kind === 'rummy' || kind === 'burraco') tb = ['man.t.opps', 'man.t.turn', 'man.r.piles', 'man.r.melds', 'man.r.hand'];
@@ -54,6 +55,7 @@ export function manualParts(def) {
   const ctl = kind === 'banking' ? ['man.c.leave', 'man.c.settings'] : kind === 'patience' ? ['man.c.hint', 'man.c.undo', 'man.c.leave', 'man.c.settings'] : ['man.c.hint', 'man.c.leave', 'man.c.settings'];
   if (['trick', 'called', 'fishing'].includes(kind)) ctl.splice(1, 0, 'man.c.last');
   if (kind !== 'patience') ctl.splice(-2, 0, 'man.c.log');
+  if (def.passPlay) ctl.push('man.c.pass');
   ctl.push('man.c.resume');
   out += sec(t('man.controls'), list(ctl.map(k => t(k))));
   return parts;
