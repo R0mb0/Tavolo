@@ -83,7 +83,7 @@ function openSettings() {
         if (e.target.id === 'set-sound') { settings.sound = e.target.checked; saveSettings(); }
       });
       d.addEventListener('click', e => {
-        const b = e.target.closest('[data-theme],[data-zoom],[data-speed]');
+        const b = e.target.closest('button[data-theme],button[data-zoom],button[data-speed]');
         if (!b) return;
         if (b.dataset.theme) settings.theme = b.dataset.theme;
         if (b.dataset.zoom) settings.zoom = +b.dataset.zoom;
