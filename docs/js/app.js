@@ -133,11 +133,12 @@ function screenDeck(id) {
 
 function optsFor(def) {
   const o = settings.last[def.id] || {};
+  const players = def.players.options.includes(o.players) ? o.players : def.players.default;
   return {
-    players: def.players.options.includes(o.players) ? o.players : def.players.default,
+    players,
     difficulty: def.difficulty.includes(o.difficulty) ? o.difficulty : 'medium',
     wins: def.matchWins ? (def.matchWins.includes(o.wins) ? o.wins : def.matchWins[0]) : 1,
-    humans: def.passPlay && o.humans === 2 ? 2 : 1
+    humans: def.passPlay ? Math.min(Math.max(o.humans | 0, 1), players) : 1   // people on this device: the others are bots
   };
 }
 
@@ -149,10 +150,10 @@ function screenSetup(id) {
   return `<section class="screen narrow"><h1>${esc(gt(def, 'name'))}</h1><p class="lead">${esc(gt(def, 'tagline'))}</p>` +
     `<div class="panel">` + (solo(def) ? '' : `<div class="field"><span>${t('setup.players')}</span><div class="seg">` +
     def.players.options.map(n => `<button type="button" data-players="${n}" aria-pressed="${n === o.players}">${n}</button>`).join('') +
-    `</div><small>${t(o.humans === 2 ? 'setup.playersHint2' : 'setup.playersHint', { n: o.players - o.humans })}${teams ? ' · ' + t('setup.teams') : ''}</small></div>`) +
-    (def.passPlay ? `<div class="field"><span>${t('setup.humans')}</span><div class="seg">` +
-      [1, 2].map(k => `<button type="button" data-humans="${k}" aria-pressed="${k === o.humans}">${t('humans.' + k)}</button>`).join('') +
-      `</div>${o.humans === 2 ? `<small>${t('setup.humansHint')}</small>` : ''}</div>` : '') +
+    `</div><small>${t(o.humans === 1 ? 'setup.playersHint' : o.humans < o.players ? 'setup.playersHintN' : 'setup.playersHintAll', { n: o.players - o.humans, h: o.humans })}${teams ? ' · ' + t('setup.teams') : ''}</small></div>`) +
+    (def.passPlay ? `<div class="field"><span>${t('setup.humans')}</span><div class="seg${o.players > 3 ? ' many' : ''}">` +
+      Array.from({ length: o.players }, (_, k) => k + 1).map(k => `<button type="button" data-humans="${k}" aria-pressed="${k === o.humans}">${k === 1 ? t('humans.1') : t('humans.n', { n: k })}</button>`).join('') +
+      `</div>${o.humans > 1 ? `<small>${t('setup.humansHint')}</small>` : ''}</div>` : '') +
     (o.players - o.humans < 1 && !solo(def) ? '' : `<div class="field"><span>${t('setup.difficulty')}</span><div class="seg">` +
     def.difficulty.map(k => `<button type="button" data-diff="${k}" aria-pressed="${k === o.difficulty}">${t('diff.' + k)}</button>`).join('') +
     `</div></div>`) + (def.matchWins ? `<div class="field"><span>${t(def.matchLabel || 'setup.wins')}</span><div class="seg">` +

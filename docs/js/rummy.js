@@ -15,15 +15,15 @@ export function startRummy(root, def, opts, onExit, resume) {
   let alive = true, busy = false, g, msg = null, hint = null, bySuit = true;
   const sel = new Set(), log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items }));
   let seenRound = 0;
-  // Two people on one device: the second one sits in seat 1. `me` is the seat the table is drawn for,
+  // Several people on one device: they take the first seats. `me` is the seat the table is drawn for,
   // `ready` says that this person has taken the device (their cards stay face down until then).
-  const humans = opts.humans === 2 ? 2 : 1, isHuman = i => i < humans;
+  const humans = Math.min(Math.max(opts.humans | 0, 1), opts.players), isHuman = i => i < humans;
   let me = 0, ready = humans === 1;
 
-  const names = () => Array.from({ length: opts.players }, (_, i) => (humans === 2
-    ? (i < 2 ? t('pass.player', { n: i + 1 }) : t('play.bot', { n: i - 1 }))
+  const names = () => Array.from({ length: opts.players }, (_, i) => (humans > 1
+    ? (i < humans ? t('pass.player', { n: i + 1 }) : t('play.bot', { n: i - humans + 1 }))
     : i === 0 ? t('play.you') : t('play.bot', { n: i }) + (g.teams && i === 2 ? ` (${t('play.partner')})` : '')));
-  const who = () => (humans === 2 ? names()[me] : t('play.you'));
+  const who = () => (humans > 1 ? names()[me] : t('play.you'));
   const you = (key, vars) => log.add(t(key, { name: who(), ...vars }));
   const teamNames = () => { const N = names(); return g.teams ? [`${N[0]} + ${N[2]}`, `${N[1]} + ${N[3]}`] : N; };
   const potBadge = p => (p.pot ? `<span class="badge gold">✓ ${t('bur.pot')}</span>` : '');
@@ -35,14 +35,14 @@ export function startRummy(root, def, opts, onExit, resume) {
     if (!alive) return;
     if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
     const v = g.view(), N = names(), own = v.players[me], myTurn = mine(), B = g.kind === 'burraco', myTeam = g.teamOf(me);
-    const secret = humans === 2 && !(g.phase === 'play' && g.current === me && ready);   // nobody else may see this hand
+    const secret = humans > 1 && !(g.phase === 'play' && g.current === me && ready);   // nobody else may see this hand
     const canPlay = myTurn && v.step === 'play', H = !!v.handOnly;       // H: a game played in the hand only (Chinchón)
 
     let opps = '';
     for (let k = 1; k < g.n; k++) {
       const i = (me + k) % g.n, p = v.players[i];
       opps += `<div class="opp${g.phase === 'play' && g.current === i ? ' active' : ''}${p.out ? ' gone' : ''}"><div class="opp-main">` +
-        `<div class="opp-name"><span class="avatar">${humans === 2 ? (isHuman(i) ? i + 1 : 'B') : i}</span>${N[i]}</div>` +
+        `<div class="opp-name"><span class="avatar">${humans > 1 ? (isHuman(i) ? i + 1 : 'B') : i}</span>${N[i]}</div>` +
         `<div class="opp-hand"><i class="mini"></i><span class="badge">× ${p.handCount}</span></div>` +
         `<div class="badges"><span class="badge strong">${p.total} ${t('play.pts')}</span>${p.out ? `<span class="badge lost">${t('rum.gone')}</span>` : p.opened ? `<span class="badge gold">✓ ${t('rum.opened')}</span>` : ''}${potBadge(p)}</div></div></div>`;
     }
@@ -74,7 +74,7 @@ export function startRummy(root, def, opts, onExit, resume) {
       `<div class="table rum"><div class="opps n${g.n - 1}">${opps}</div>` +
       `<div class="felt">${piles}<div class="melds">${melds}</div></div>` +
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
-      `<div class="rum-bar">${humans === 2 ? `<span class="badge strong">${N[me]}</span>` : ''}<span class="badge strong">${own.total} ${t('play.pts')}</span>${open}<span class="grow"></span>` +
+      `<div class="rum-bar">${humans > 1 ? `<span class="badge strong">${N[me]}</span>` : ''}<span class="badge strong">${own.total} ${t('play.pts')}</span>${open}<span class="grow"></span>` +
       (H ? b('close', 'rum.close', canPlay && sel.size === 1 && v.closable.includes([...sel][0]), 'primary' + (hint && hint.close ? ' hinted' : ''))
         : b('meld', 'rum.meld', canPlay && sel.size >= 3, 'primary')) + b('discard', 'rum.discard', canPlay && sel.size === 1) +
       (v.hasProv && canPlay ? b('revert', 'rum.revert', true) : '') + (v.mustUse && canPlay ? b('putback', 'rum.putBack', true, hint && hint.putBack ? 'hinted' : '') : '') + b('sort', 'rum.sort', true) +
@@ -106,11 +106,11 @@ export function startRummy(root, def, opts, onExit, resume) {
     const r = g.result(), B = g.kind === 'burraco', N = B ? teamNames() : names();
     if (!opts.coach && humans === 1) record(def.id, r, opts);
     clearSession();
-    // with two people there is no "you": the title names the winner
+    // with several people there is no "you": the title names the winner
     const best = (r.lowWins ? Math.min : Math.max)(...r.scores), lead = r.scores.filter(x => x === best).length === 1 ? r.scores.indexOf(best) : -1;
-    const title = humans === 2 ? (lead < 0 ? t('end.tie') : t('pass.wins', { name: N[lead] })) : t('end.' + r.outcome);
-    sfx(humans === 2 || r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
-    const body = (B ? '' : `<p>${t('rum.lowWins')}</p>`) + '<ul class="final">' + r.scores.map((sc, k) => `<li class="${(humans === 2 ? k === lead : k === g.teamOf(0)) ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
+    const title = humans > 1 ? (lead < 0 ? t('end.tie') : t('pass.wins', { name: N[lead] })) : t('end.' + r.outcome);
+    sfx(humans > 1 || r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
+    const body = (B ? '' : `<p>${t('rum.lowWins')}</p>`) + '<ul class="final">' + r.scores.map((sc, k) => `<li class="${(humans > 1 ? k === lead : k === g.teamOf(0)) ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title, body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
     if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; log.clear(); seenRound = 0; me = 0; ready = humans === 1; run(); } else onExit();
@@ -132,7 +132,7 @@ export function startRummy(root, def, opts, onExit, resume) {
         continue;
       }
       if (isHuman(g.current)) {
-        if (humans === 2 && (me !== g.current || !ready)) {  // the device changes hands: cards stay face down until the next person is ready
+        if (humans > 1 && (me !== g.current || !ready)) {  // the device changes hands: cards stay face down until the next person is ready
           me = g.current; ready = false; sel.clear(); hint = null; render();
           await dialog({ title: t('pass.title', { name: names()[me] }), body: `<p>${t('pass.text')}</p>`, actions: [{ label: t('pass.ready'), val: 1, primary: true }] });
           if (!alive || g !== game) break;

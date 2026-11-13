@@ -100,6 +100,8 @@ select { padding: .6rem .7rem; border-radius: .6rem; border: 1px solid var(--lin
 .seg { display: flex; border: 1px solid var(--line); border-radius: .7rem; overflow: hidden; background: var(--bg); }
 .seg button { flex: 1; min-height: 2.75rem; padding: .4rem .5rem; border: 0; background: none; border-left: 1px solid var(--line); }
 .seg button:first-child { border-left: 0; }
+.seg.many { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.2rem, 1fr)); gap: 1px; }
+.seg.many button { border-left: 0; box-shadow: 0 0 0 1px var(--line); }
 .seg button[aria-pressed=true] { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
 
 .btn {
@@ -260,7 +262,7 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .tcards .card.back:first-child, .tcards .card.face + .card.back { margin-left: 0; }
 .tcards.mine .card.back { margin-left: 0; }
 .badge.more { background: rgb(0 0 0 / .3); color: var(--felt-ink); font-weight: 700; align-self: center; }
-.status .btn { min-height: 2.4rem; }
+.status .btn { min-height: 2.4rem; margin: 0 .2rem; padding: .3rem .9rem; font-size: .95rem; }
 .btn.hinted { outline: 3px solid var(--gold); outline-offset: 2px; }
 .hint { border: 1px solid var(--line); background: var(--surface); }
 .card.hinted { outline: .25em solid var(--gold); outline-offset: .1em; animation: nudge .7s ease-in-out infinite alternate; }

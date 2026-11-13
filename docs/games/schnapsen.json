@@ -1,6 +1,6 @@
 {
   "id": "schnapsen",
-  "version": 1,
+  "version": 2,
   "deck": "german",
   "engine": "trick",
   "players": {
@@ -57,7 +57,9 @@
     "gamePoints": {
       "half": 33,
       "match": 7
-    }
+    },
+    "exchange": 11,
+    "closing": true
   },
   "win": {
     "type": "mostPoints",
@@ -91,12 +93,14 @@
         "Only twenty cards are used: Ass, 10, König, Ober and Unter of each suit. Each player gets five cards, one card is turned up to show the trump suit, and after every trick both players draw, the winner first.",
         "While there are cards to draw you may play any card. When the deck is finished you must follow suit and beat the card led if you can; without the suit you must play a trump.",
         "Ass 11 points, 10 ten, König 4, Ober 3, Unter 2. When you are on lead and hold König and Ober of one suit, the pair is announced for you: 20 points, 40 in trumps. As soon as a player reaches 66 the deal ends.",
+        "When you are on lead and hold the trump Unter, you may exchange it for the face-up trump card. Also on lead, while more than two cards are left to draw, you may close the talon: nobody draws any more, the strict rules apply at once and you must reach 66. If you do not, your opponent scores 2 game points, 3 if they had no trick when you closed.",
         "The winner of a deal scores 1 game point, 2 if the loser has fewer than 33 points, 3 if the loser took no trick. If nobody reaches 66, the deal goes to whoever takes the last trick. The match is played to 7 game points."
       ],
       "goal": "Win deals by reaching 66 points first; the first player with 7 game points wins the match.",
       "tips": [
         "Keep König and Ober of the same suit together until you are on lead: the pair is worth more than a trick.",
-        "Count the points as you go: with 66 in sight, a single Ass or 10 can end the deal."
+        "Count the points as you go: with 66 in sight, a single Ass or 10 can end the deal.",
+        "Close the talon only when the cards in your hand are enough to reach 66 by themselves: a failed close costs at least 2 game points."
       ]
     },
     "it": {
@@ -106,12 +110,14 @@
         "Si usano solo venti carte: Ass, 10, König, Ober e Unter di ogni seme. Ogni giocatore riceve cinque carte, una carta viene scoperta per indicare la briscola e dopo ogni presa entrambi pescano, prima chi ha vinto.",
         "Finché ci sono carte da pescare puoi giocare la carta che vuoi. Quando il mazzo è finito devi rispondere al seme e superare la carta giocata se puoi; senza quel seme devi giocare una briscola.",
         "Ass 11 punti, 10 dieci, König 4, Ober 3, Unter 2. Quando tocca a te uscire e hai König e Ober dello stesso seme, la coppia viene annunciata per te: 20 punti, 40 se è di briscola. Appena un giocatore arriva a 66 la mano finisce.",
+        "Quando tocca a te uscire e hai l’Unter di briscola, puoi scambiarlo con la carta di briscola scoperta. Sempre quando esci, finché restano più di due carte da pescare, puoi chiudere il mazzo: nessuno pesca più, valgono subito le regole strette e devi arrivare a 66. Se non ci riesci, l’avversario segna 2 punti partita, 3 se non aveva ancora fatto prese quando hai chiuso.",
         "Chi vince la mano segna 1 punto partita, 2 se l’avversario ha meno di 33 punti, 3 se non ha fatto nessuna presa. Se nessuno arriva a 66, la mano va a chi fa l’ultima presa. Si gioca ai 7 punti partita."
       ],
       "goal": "Vinci le mani arrivando per primo a 66 punti; vince la partita chi fa per primo 7 punti partita.",
       "tips": [
         "Tieni insieme König e Ober dello stesso seme finché non tocca a te uscire: la coppia vale più di una presa.",
-        "Conta i punti mentre giochi: quando i 66 sono vicini, un solo Ass o un 10 può chiudere la mano."
+        "Conta i punti mentre giochi: quando i 66 sono vicini, un solo Ass o un 10 può chiudere la mano.",
+        "Chiudi il mazzo solo quando le carte che hai in mano bastano da sole per arrivare a 66: una chiusura fallita costa almeno 2 punti partita."
       ]
     },
     "es": {
@@ -121,12 +127,14 @@
         "Solo se usan veinte cartas: Ass, 10, König, Ober y Unter de cada palo. Cada jugador recibe cinco cartas, se descubre una para marcar el triunfo y tras cada baza ambos roban, primero quien ganó.",
         "Mientras queden cartas por robar puedes jugar la carta que quieras. Cuando se acaba el mazo debes asistir al palo y superar la carta jugada si puedes; sin ese palo debes jugar triunfo.",
         "Ass 11 puntos, 10 diez, König 4, Ober 3, Unter 2. Cuando te toca salir y tienes König y Ober del mismo palo, la pareja se canta por ti: 20 puntos, 40 si es de triunfo. En cuanto un jugador llega a 66 la mano termina.",
+        "Cuando te toca salir y tienes el Unter de triunfo, puedes cambiarlo por la carta de triunfo descubierta. También al salir, mientras queden más de dos cartas por robar, puedes cerrar el mazo: nadie roba más, se aplican enseguida las reglas estrictas y debes llegar a 66. Si no lo consigues, tu rival anota 2 puntos de partida, 3 si no tenía ninguna baza cuando cerraste.",
         "Quien gana la mano anota 1 punto de partida, 2 si el rival tiene menos de 33 puntos, 3 si no hizo ninguna baza. Si nadie llega a 66, la mano es para quien hace la última baza. Se juega a 7 puntos de partida."
       ],
       "goal": "Gana manos llegando primero a 66 puntos; gana la partida quien hace primero 7 puntos de partida.",
       "tips": [
         "Guarda juntos König y Ober del mismo palo hasta que te toque salir: la pareja vale más que una baza.",
-        "Cuenta los puntos mientras juegas: con los 66 cerca, un solo Ass o un 10 puede cerrar la mano."
+        "Cuenta los puntos mientras juegas: con los 66 cerca, un solo Ass o un 10 puede cerrar la mano.",
+        "Cierra el mazo solo cuando las cartas de tu mano basten por sí solas para llegar a 66: un cierre fallido cuesta al menos 2 puntos de partida."
       ]
     },
     "fr": {
@@ -136,12 +144,14 @@
         "On n’utilise que vingt cartes : Ass, 10, König, Ober et Unter de chaque couleur. Chaque joueur reçoit cinq cartes, une carte est retournée pour indiquer l’atout et, après chaque pli, les deux joueurs piochent, le gagnant d’abord.",
         "Tant qu’il reste des cartes à piocher, vous pouvez jouer n’importe quelle carte. Quand le talon est épuisé, vous devez fournir et monter si possible ; sans la couleur, vous devez couper.",
         "Ass 11 points, 10 dix, König 4, Ober 3, Unter 2. Quand vous avez la main et tenez König et Ober d’une même couleur, la paire est annoncée pour vous : 20 points, 40 à l’atout. Dès qu’un joueur atteint 66, la manche s’arrête.",
+        "Quand vous avez l’entame et tenez l’Unter d’atout, vous pouvez l’échanger contre la carte d’atout retournée. Toujours à l’entame, tant qu’il reste plus de deux cartes à piocher, vous pouvez fermer le talon : plus personne ne pioche, les règles strictes s’appliquent aussitôt et vous devez atteindre 66. Sinon, votre adversaire marque 2 points de partie, 3 s’il n’avait aucun pli au moment de la fermeture.",
         "Le gagnant de la manche marque 1 point de partie, 2 si le perdant a moins de 33 points, 3 s’il n’a fait aucun pli. Si personne n’atteint 66, la manche revient à celui qui fait le dernier pli. Le match se joue en 7 points de partie."
       ],
       "goal": "Gagnez des manches en atteignant 66 points le premier ; le premier à 7 points de partie remporte le match.",
       "tips": [
         "Gardez ensemble König et Ober d’une même couleur jusqu’à avoir la main : la paire vaut plus qu’un pli.",
-        "Comptez les points en jouant : quand les 66 sont proches, un seul Ass ou un 10 peut terminer la manche."
+        "Comptez les points en jouant : quand les 66 sont proches, un seul Ass ou un 10 peut terminer la manche.",
+        "Ne fermez le talon que si les cartes de votre main suffisent à elles seules pour atteindre 66 : une fermeture ratée coûte au moins 2 points de partie."
       ]
     },
     "de": {
@@ -151,12 +161,14 @@
         "Es werden nur zwanzig Karten verwendet: Ass, 10, König, Ober und Unter jeder Farbe. Jeder Spieler erhält fünf Karten, eine Karte wird als Trumpf aufgedeckt, und nach jedem Stich ziehen beide, der Gewinner zuerst.",
         "Solange noch Karten zu ziehen sind, darfst du jede Karte spielen. Ist der Stapel aufgebraucht, musst du Farbe bedienen und überstechen, wenn du kannst; ohne die Farbe musst du trumpfen.",
         "Ass 11 Punkte, 10 zehn, König 4, Ober 3, Unter 2. Bist du am Ausspiel und hältst König und Ober einer Farbe, wird das Paar für dich angesagt: 20 Punkte, 40 in Trumpf. Sobald ein Spieler 66 erreicht, endet die Runde.",
+        "Wenn du am Ausspielen bist und den Trumpf-Unter hältst, darfst du ihn gegen die aufgedeckte Trumpfkarte tauschen. Ebenfalls beim Ausspielen darfst du, solange noch mehr als zwei Karten im Talon liegen, den Talon zudrehen: Niemand zieht mehr, es gelten sofort Farb- und Stichzwang, und du musst 66 erreichen. Gelingt das nicht, bekommt dein Gegner 2 Spielpunkte, 3, wenn er beim Zudrehen noch keinen Stich hatte.",
         "Der Gewinner einer Runde bekommt 1 Spielpunkt, 2, wenn der Verlierer weniger als 33 Punkte hat, 3, wenn er keinen Stich gemacht hat. Erreicht niemand 66, geht die Runde an den, der den letzten Stich macht. Gespielt wird bis 7 Spielpunkte."
       ],
       "goal": "Gewinne Runden, indem du zuerst 66 Punkte erreichst; wer zuerst 7 Spielpunkte hat, gewinnt die Partie.",
       "tips": [
         "Halte König und Ober einer Farbe zusammen, bis du am Ausspiel bist: das Paar ist mehr wert als ein Stich.",
-        "Zähle die Punkte mit: sind die 66 in Reichweite, kann ein einziges Ass oder eine 10 die Runde beenden."
+        "Zähle die Punkte mit: sind die 66 in Reichweite, kann ein einziges Ass oder eine 10 die Runde beenden.",
+        "Dreh den Talon nur zu, wenn deine Handkarten allein für 66 reichen: Ein misslungenes Zudrehen kostet mindestens 2 Spielpunkte."
       ]
     },
     "pt": {
@@ -166,12 +178,14 @@
         "Só se usam vinte cartas: Ass, 10, König, Ober e Unter de cada naipe. Cada jogador recebe cinco cartas, vira-se uma carta para indicar o trunfo e depois de cada vaza ambos compram, primeiro quem ganhou.",
         "Enquanto houver cartas para comprar pode jogar a carta que quiser. Quando o baralho acaba tem de assistir ao naipe e superar a carta jogada se puder; sem esse naipe tem de jogar trunfo.",
         "Ass 11 pontos, 10 dez, König 4, Ober 3, Unter 2. Quando é a sua vez de sair e tem König e Ober do mesmo naipe, o par é anunciado por si: 20 pontos, 40 se for de trunfo. Assim que um jogador chega a 66 a mão termina.",
+        "Quando é a sua vez de sair e tem o Unter de trunfo, pode trocá-lo pela carta de trunfo virada. Também ao sair, enquanto houver mais de duas cartas para comprar, pode fechar o baralho: ninguém compra mais, as regras estritas aplicam-se de imediato e tem de chegar aos 66. Se não conseguir, o adversário marca 2 pontos de jogo, 3 se não tinha nenhuma vaza quando fechou.",
         "Quem ganha a mão marca 1 ponto de partida, 2 se o adversário tiver menos de 33 pontos, 3 se não tiver feito nenhuma vaza. Se ninguém chegar a 66, a mão vai para quem fizer a última vaza. Joga-se até 7 pontos de partida."
       ],
       "goal": "Ganhe mãos chegando primeiro a 66 pontos; ganha a partida quem fizer primeiro 7 pontos de partida.",
       "tips": [
         "Guarde juntos König e Ober do mesmo naipe até ser a sua vez de sair: o par vale mais do que uma vaza.",
-        "Conte os pontos enquanto joga: com os 66 à vista, um único Ass ou um 10 pode fechar a mão."
+        "Conte os pontos enquanto joga: com os 66 à vista, um único Ass ou um 10 pode fechar a mão.",
+        "Feche o baralho apenas quando as cartas da sua mão bastarem sozinhas para chegar aos 66: um fecho falhado custa pelo menos 2 pontos de jogo."
       ]
     },
     "zh": {
@@ -181,12 +195,14 @@
         "只使用二十张牌：每种花色的 Ass、10、König、Ober 和 Unter。每位玩家发五张牌，翻开一张牌决定王牌花色，每墩之后双方各摸一张，赢家先摸。",
         "牌堆还有牌时可以出任意一张牌。牌堆用完后必须跟花色，并且能压过就要压过；没有该花色时必须出王牌。",
         "Ass 11分，10 十分，König 4分，Ober 3分，Unter 2分。轮到你先出且手中有同花色的 König 和 Ober 时，系统会替你宣布这一对：20分，王牌花色40分。任何一方达到66分，本局立即结束。",
+        "轮到你出牌并持有王牌 Unter 时，可以用它换取翻开的王牌。同样在你出牌时，只要牌堆里还剩两张以上的牌，你可以关闭牌堆：此后不再摸牌，立即适用严格规则，而且你必须达到 66 分。如果没有做到，对手得 2 个局分；如果你关闭牌堆时对手还没有赢过一墩，则得 3 分。",
         "赢得一局得1个比赛分；对手不足33分得2分；对手一墩未得得3分。如果无人达到66分，赢得最后一墩的人赢得本局。比赛打到7个比赛分。"
       ],
       "goal": "先达到66分即赢得一局；先拿到7个比赛分的人赢得整场比赛。",
       "tips": [
         "把同花色的 König 和 Ober 留在一起，直到轮到你先出：这一对比一墩牌更值钱。",
-        "边打边算分：接近66分时，一张 Ass 或 10 就能结束这一局。"
+        "边打边算分：接近66分时，一张 Ass 或 10 就能结束这一局。",
+        "只有当手里的牌本身就足以达到 66 分时才关闭牌堆：关闭失败至少要付出 2 个局分。"
       ]
     },
     "ja": {
@@ -196,12 +212,14 @@
         "使うのは20枚だけ：各スートの Ass、10、König、Ober、Unter。各プレイヤーに5枚配り、1枚を表にして切り札を示します。トリックごとに両者が引き、勝ったほうが先に引きます。",
         "引くカードが残っている間は、どのカードを出してもかまいません。山札がなくなると、スートに従い、可能なら上回らなければなりません。そのスートがなければ切り札を出します。",
         "Ass 11点、10 は10点、König 4点、Ober 3点、Unter 2点。自分がリードする番で同じスートの König と Ober を持っていれば、ペアが自動的に宣言されます：20点、切り札なら40点。どちらかが66点に達した時点でその回は終わります。",
+        "自分がリードする番で切り札のウンターを持っていれば、表向きの切り札と交換できます。同じくリードの番で、山札が2枚より多く残っていれば山札を閉じることができます。以後は誰もカードを引かず、すぐに厳格なルールが適用され、66点に届かなければなりません。届かなかった場合、相手にゲームポイント2点、閉じた時点で相手がトリックを取っていなければ3点が入ります。",
         "その回の勝者は1ゲームポイント。相手が33点未満なら2、相手がトリックを1つも取れなければ3です。誰も66点に届かなければ、最後のトリックを取った人がその回の勝ちです。7ゲームポイント先取です。"
       ],
       "goal": "先に66点に達してその回を取ります。先に7ゲームポイントを取った人が試合の勝者です。",
       "tips": [
         "同じスートの König と Ober は、自分がリードする番まで一緒に持っておきましょう。ペアは1トリックより価値があります。",
-        "プレイしながら点数を数えましょう。66点が近ければ、Ass か10の1枚でその回が終わります。"
+        "プレイしながら点数を数えましょう。66点が近ければ、Ass か10の1枚でその回が終わります。",
+        "手札だけで66点に届くときだけ山札を閉じましょう。失敗すると少なくともゲームポイント2点を失います。"
       ]
     },
     "ko": {
@@ -211,12 +229,14 @@
         "스무 장만 사용합니다: 각 무늬의 Ass, 10, König, Ober, Unter. 각 플레이어는 다섯 장을 받고, 한 장을 뒤집어 으뜸 무늬를 정하며, 트릭마다 둘 다 뽑되 이긴 사람이 먼저 뽑습니다.",
         "뽑을 카드가 남아 있는 동안에는 어떤 카드든 낼 수 있습니다. 덱이 떨어지면 무늬를 따라야 하고 가능하면 더 높은 카드를 내야 하며, 그 무늬가 없으면 으뜸 카드를 내야 합니다.",
         "Ass 11점, 10은 10점, König 4점, Ober 3점, Unter 2점. 선을 잡았을 때 같은 무늬의 König와 Ober를 들고 있으면 페어가 자동으로 선언됩니다: 20점, 으뜸 무늬면 40점. 누군가 66점에 도달하면 그 판은 즉시 끝납니다.",
+        "내가 선을 잡았고 트럼프 운터를 가지고 있으면 공개된 트럼프 카드와 바꿀 수 있습니다. 또 선을 잡았을 때 뽑을 카드가 두 장보다 많이 남아 있으면 더미를 닫을 수 있습니다. 그 뒤로는 아무도 카드를 뽑지 않고, 엄격한 규칙이 바로 적용되며, 66점에 도달해야 합니다. 도달하지 못하면 상대가 게임 점수 2점을, 닫을 때 상대가 트릭을 하나도 따지 못했다면 3점을 얻습니다.",
         "판을 이기면 게임 점수 1점, 상대가 33점 미만이면 2점, 상대가 트릭을 하나도 못 땄으면 3점입니다. 아무도 66점에 도달하지 못하면 마지막 트릭을 가져간 사람이 그 판을 이깁니다. 게임 점수 7점까지 플레이합니다."
       ],
       "goal": "먼저 66점에 도달해 판을 이기세요. 먼저 게임 점수 7점을 얻는 사람이 경기에서 승리합니다.",
       "tips": [
         "같은 무늬의 König와 Ober는 선을 잡을 때까지 함께 들고 있으세요. 페어는 트릭 하나보다 가치가 큽니다.",
-        "플레이하면서 점수를 세세요. 66점이 가까우면 Ass나 10 한 장으로 판이 끝날 수 있습니다."
+        "플레이하면서 점수를 세세요. 66점이 가까우면 Ass나 10 한 장으로 판이 끝날 수 있습니다.",
+        "손에 든 카드만으로 66점에 도달할 수 있을 때만 더미를 닫으세요. 실패하면 게임 점수를 최소 2점 내줍니다."
       ]
     }
   }

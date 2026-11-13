@@ -168,7 +168,7 @@ export function createRummyGame(def, opts) {
     // whoever reaches the target is out of the game; the last player left wins
     P.forEach(p => { if (p.total >= R.target) p.out = true; });
     // the game goes on while a person is still in it and there is somebody to play against
-    g.phase = P.slice(0, opts.humans === 2 ? 2 : 1).every(p => p.out) || P.filter(p => !p.out).length < 2 ? 'over' : 'roundEnd';
+    g.phase = P.slice(0, Math.min(Math.max(opts.humans | 0, 1), P.length)).every(p => p.out) || P.filter(p => !p.out).length < 2 ? 'over' : 'roundEnd';
   }
 
   g.nextRound = () => { first = (first + 1) % n; startRound(); };

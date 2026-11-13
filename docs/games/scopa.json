@@ -76,10 +76,10 @@
       "name": "Scopa",
       "tagline": "Prendi le carte dal tavolo e fai scopa. Vince chi arriva a 11 punti.",
       "rules": [
-        "Gioca una carta per prendere dal tavolo una carta dello stesso valore, oppure più carte la cui somma è uguale (Fante 8, Cavallo 9, Re 10). Se c'è una carta singola uguale, devi prendere quella.",
+        "Gioca una carta per prendere dal tavolo una carta dello stesso valore, oppure più carte la cui somma è uguale (Fante 8, Cavallo 9, Re 10). Se c’è una carta singola uguale, devi prendere quella.",
         "Se la tua carta non prende nulla resta sul tavolo. Se svuoti il tavolo fai scopa: 1 punto.",
         "A fine mano, 1 punto ciascuno per: più carte, più denari, il settebello e la primiera (la carta migliore di ogni seme: il 7 vale di più, poi 6 e Asso).",
-        "Chi ha fatto l'ultima presa prende le carte rimaste sul tavolo. Vince chi arriva per primo a 11 punti."
+        "Chi ha fatto l’ultima presa prende le carte rimaste sul tavolo. Vince chi arriva per primo a 11 punti."
       ],
       "goal": "Prendi più carte e carte migliori degli avversari, soprattutto denari e sette, e arriva per primo a 11 punti.",
       "tips": [
@@ -110,7 +110,7 @@
       "rules": [
         "Jouez une carte pour ramasser une carte de même valeur, ou plusieurs cartes dont la somme est égale (Valet 8, Cavalier 9, Roi 10). Si une carte seule correspond, vous devez prendre celle-là.",
         "Si votre carte ne ramasse rien, elle reste sur la table. Vider la table est une scopa : 1 point.",
-        "À la fin de chaque manche, 1 point pour : le plus de cartes, le plus de deniers, le sept de deniers et la meilleure primiera (meilleure carte de chaque couleur : le 7 vaut le plus, puis le 6 et l'As).",
+        "À la fin de chaque manche, 1 point pour : le plus de cartes, le plus de deniers, le sept de deniers et la meilleure primiera (meilleure carte de chaque couleur : le 7 vaut le plus, puis le 6 et l’As).",
         "Le dernier joueur à avoir ramassé prend les cartes restantes. Le premier à 11 points gagne."
       ],
       "goal": "Ramassez plus de cartes, et de meilleures, que vos adversaires — surtout les deniers et les sept — et atteignez 11 points en premier.",

@@ -78,7 +78,7 @@
       "tagline": "Il classico italiano di prese: 120 punti e un seme di briscola.",
       "rules": [
         "Ogni giocatore ha 3 carte. La carta scoperta accanto al mazzo indica il seme di briscola.",
-        "Si gioca una carta a turno; non c'è obbligo di rispondere al seme. Vince la presa la carta più alta del seme d'uscita, a meno che non venga giocata una briscola.",
+        "Si gioca una carta a turno; non c’è obbligo di rispondere al seme. Vince la presa la carta più alta del seme d’uscita, a meno che non venga giocata una briscola.",
         "Ordine delle carte: Asso, Tre, Re, Cavallo, Fante, 7, 6, 5, 4, 2. Punti: Asso 11, Tre 10, Re 4, Cavallo 3, Fante 2.",
         "Dopo ogni presa tutti pescano una carta, per primo chi ha vinto. Vince chi supera 60 punti su 120.",
         "Nelle opzioni puoi scegliere una partita più lunga: vince chi si aggiudica per primo due o tre mani."
@@ -109,10 +109,10 @@
     },
     "fr": {
       "name": "Briscola",
-      "tagline": "Le classique italien de plis : 120 points et une couleur d'atout.",
+      "tagline": "Le classique italien de plis : 120 points et une couleur d’atout.",
       "rules": [
-        "Chaque joueur a 3 cartes. La carte retournée près de la pioche indique l'atout.",
-        "On joue une carte à son tour ; on n'est jamais obligé de fournir. La plus forte carte de la couleur demandée remporte le pli, sauf si un atout est joué.",
+        "Chaque joueur a 3 cartes. La carte retournée près de la pioche indique l’atout.",
+        "On joue une carte à son tour ; on n’est jamais obligé de fournir. La plus forte carte de la couleur demandée remporte le pli, sauf si un atout est joué.",
         "Ordre : As, Trois, Roi, Cavalier, Valet, 7, 6, 5, 4, 2. Points : As 11, Trois 10, Roi 4, Cavalier 3, Valet 2.",
         "Après chaque pli, chacun pioche une carte, le gagnant en premier. Il faut dépasser 60 points sur 120 pour gagner.",
         "Dans les options, vous pouvez choisir une partie plus longue : le premier camp à gagner deux ou trois donnes l’emporte."

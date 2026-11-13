@@ -15,25 +15,25 @@ export function startBanking(root, def, opts, onExit, resume) {
   let alive = true, busy = false, g, hint = null;
   const log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items }));
 
-  // Two people on one device: the second one sits in seat 1. `me` is the seat the table is drawn for,
+  // Several people on one device: they take the first seats. `me` is the seat the table is drawn for,
   // `ready` says that this person has taken the device (their cards stay face down until then).
-  const humans = opts.humans === 2 ? 2 : 1, isHuman = i => i < humans;
+  const humans = Math.min(Math.max(opts.humans | 0, 1), opts.players), isHuman = i => i < humans;
   let me = 0, ready = humans === 1;
-  const names = () => Array.from({ length: opts.players }, (_, i) => (humans === 2
-    ? (i < 2 ? t('pass.player', { n: i + 1 }) : t('play.bot', { n: i - 1 }))
+  const names = () => Array.from({ length: opts.players }, (_, i) => (humans > 1
+    ? (i < humans ? t('pass.player', { n: i + 1 }) : t('play.bot', { n: i - humans + 1 }))
     : i === 0 ? t('play.you') : t('play.bot', { n: i })));
-  const who = () => (humans === 2 ? names()[me] : t('play.you'));
-  const avatar = i => (humans === 2 ? (isHuman(i) ? i + 1 : 'B') : i);
+  const who = () => (humans > 1 ? names()[me] : t('play.you'));
+  const avatar = i => (humans > 1 ? (isHuman(i) ? i + 1 : 'B') : i);
   // the device changes hands: cards stay face down until the next person is ready
   const handOver = async seat => {
     me = seat; ready = false; hint = null; render();
     await dialog({ title: t('pass.title', { name: names()[seat] }), body: `<p>${t('pass.text')}</p>`, actions: [{ label: t('pass.ready'), val: 1, primary: true }] });
     ready = true;
   };
-  // with two people there is no "you": the title of the final dialog names the winner
+  // with several people there is no "you": the title of the final dialog names the winner
   const verdict = (r, N) => {
     const best = (r.lowWins ? Math.min : Math.max)(...r.scores), lead = r.scores.filter(x => x === best).length === 1 ? r.scores.indexOf(best) : -1;
-    return { lead, title: humans === 2 ? (lead < 0 ? t('end.tie') : t('pass.wins', { name: N[lead] })) : t('end.' + r.outcome) };
+    return { lead, title: humans > 1 ? (lead < 0 ? t('end.tie') : t('pass.wins', { name: N[lead] })) : t('end.' + r.outcome) };
   };
   const label = c => `${[1, 8, 9, 10].includes(c.r) ? t('rank.' + c.r) : c.r} · ${t('suit.' + c.s)}`;
   const mine = () => (g.phase === 'play' || g.phase === 'bank') && g.current === me && ready && !busy;
@@ -50,7 +50,7 @@ export function startBanking(root, def, opts, onExit, resume) {
     if (!alive) return;
     if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
     const myTurn = mine(), N = names();
-    const v = g.view(humans === 2 && !myTurn ? -1 : me);   // with two people a face-down card is shown only to its owner, during their turn
+    const v = g.view(humans > 1 && !myTurn ? -1 : me);   // with several people a face-down card is shown only to its owner, during their turn
     const cards = (cs, hidden) => cs.map((c, k) => (hidden && k === 0 ? cardHTML(null) : cardHTML(c, { label: label(c) }))).join('');
     const outcome = p => (p.delta ? `<span class="badge ${p.delta > 0 ? 'gold' : 'lost'}">${p.delta > 0 ? '+' : ''}${p.delta}</span>` : p.state === 'bust' ? `<span class="badge lost">${t('sm.bust')}</span>` : '');
     const bk = p => (p.banker ? `<span class="badge gold">${t('sm.bank')}</span>` : p.bet ? `<span class="badge" title="${t('sm.stake')}">${t('sm.stake')} ${p.bet}</span>` : '');
@@ -77,7 +77,7 @@ export function startBanking(root, def, opts, onExit, resume) {
 
     root.innerHTML = `<div class="table bank"><div class="felt">${bank ? `<div class="bank-top">${bank}</div>` : ''}${opps ? `<div class="bank-opps">${opps}</div>` : ''}</div>` +
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
-      `<div class="me${myTurn ? ' active' : ''}"><div class="me-info"><div class="badges">${humans === 2 ? `<span class="badge strong">${N[me]}</span>` : ''}${bk(own)}<span class="badge strong big">${frac(own.total)}</span><span class="badge">● ${own.chips}</span>${outcome(own)}</div>` +
+      `<div class="me${myTurn ? ' active' : ''}"><div class="me-info"><div class="badges">${humans > 1 ? `<span class="badge strong">${N[me]}</span>` : ''}${bk(own)}<span class="badge strong big">${frac(own.total)}</span><span class="badge">● ${own.chips}</span>${outcome(own)}</div>` +
       `</div><div class="hand bhand">${cards(own.cards, own.hidden)}</div></div>` +
       `<div class="rum-bar center">${bar2}</div></div>`;
   }
@@ -87,8 +87,8 @@ export function startBanking(root, def, opts, onExit, resume) {
     if (!opts.coach && humans === 1) record(def.id, r, opts);
     clearSession();
     const { lead, title } = verdict(r, N);
-    sfx(humans === 2 || r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
-    const body = '<ul class="final">' + r.scores.map((sc, k) => `<li class="${(humans === 2 ? k === lead : k === 0) ? 'mine' : ''}"><span>${N[k]}</span><b>● ${sc}</b></li>`).join('') + '</ul>';
+    sfx(humans > 1 || r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
+    const body = '<ul class="final">' + r.scores.map((sc, k) => `<li class="${(humans > 1 ? k === lead : k === 0) ? 'mine' : ''}"><span>${N[k]}</span><b>● ${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title, body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
     if (val === 'again') { g = createGame(def, opts); log.clear(); seenRound = 0; me = 0; ready = humans === 1; run(); } else onExit();
@@ -103,7 +103,7 @@ export function startBanking(root, def, opts, onExit, resume) {
       if (g.phase === 'over') { busy = false; render(); finish(); return; }
       if (g.phase === 'show') break;
       if (isHuman(g.current)) {
-        if (humans === 2 && (me !== g.current || !ready)) await handOver(g.current);
+        if (humans > 1 && (me !== g.current || !ready)) await handOver(g.current);
         break;
       }
       render();

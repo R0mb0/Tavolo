@@ -1,5 +1,5 @@
 // Service worker: offline support (stale-while-revalidate). Bump VERSION on every release.
-const VERSION = 'tavolo-v1.8.0';
+const VERSION = 'tavolo-v1.9.0';
 const ASSETS = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css',
   'js/app.js', 'js/cards.js', 'js/i18n.js', 'js/store.js', 'js/table.js', 'js/ui.js', 'js/manual.js', 'js/sfx.js', 'js/solitaire.js', 'js/rummy.js', 'js/machiavelli.js', 'js/banking.js', 'js/session.js', 'js/log.js', 'js/learn.js', 'js/achievements.js',

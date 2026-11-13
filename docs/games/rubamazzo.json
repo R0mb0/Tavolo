@@ -37,7 +37,7 @@
       "tagline": "Steal the pile! A quick, family-friendly capture game.",
       "rules": [
         "Play a card to capture a table card of the same value. Captured cards go face up on your pile.",
-        "If your card matches the top card of an opponent's pile, you can steal their whole pile.",
+        "If your card matches the top card of an opponent’s pile, you can steal their whole pile.",
         "If your card captures nothing it stays on the table.",
         "When all the cards have been played, whoever has the most cards wins."
       ],
@@ -85,7 +85,7 @@
       "tagline": "Volez le paquet ! Un jeu de ramassage rapide et familial.",
       "rules": [
         "Jouez une carte pour ramasser une carte de même valeur sur la table. Les cartes gagnées vont face visible sur votre paquet.",
-        "Si votre carte est identique à celle du dessus du paquet d'un adversaire, vous pouvez lui voler tout son paquet.",
+        "Si votre carte est identique à celle du dessus du paquet d’un adversaire, vous pouvez lui voler tout son paquet.",
         "Si votre carte ne ramasse rien, elle reste sur la table.",
         "Quand toutes les cartes ont été jouées, celui qui en a le plus gagne."
       ],

@@ -20,7 +20,7 @@ export function createSheddingGame(def, opts) {
   const cost = c => (wild.has(c.r) ? 20 + (c.r === R.burn ? 1 : 0) : val(c.r));   // cheap cards go first, specials last
   // Before the first turn everybody may exchange cards between the hand and the face-up table cards.
   let picked = null;
-  const starter = g.current, people = opts.humans === 2 ? 2 : 1;     // with two people each one makes the exchange in turn
+  const starter = g.current, people = Math.min(Math.max(opts.humans | 0, 1), n);     // with two people each one makes the exchange in turn
   if (R.swap) {
     for (let i = people; i < n; i++) {
       if (diff === 'easy') continue;

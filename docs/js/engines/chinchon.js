@@ -4,7 +4,7 @@ import { buildDeck, shuffle } from '../cards.js';
 
 export function createChinchonGame(def, opts) {
   const n = opts.players, diff = opts.difficulty, rng = opts.rng || Math.random, R = def.rules;
-  const people = opts.humans === 2 ? 2 : 1;
+  const people = Math.min(Math.max(opts.humans | 0, 1), n);
   const P = Array.from({ length: n }, () => ({ hand: [], total: 0, out: false }));
   let stock = [], discard = [], first = Math.floor(rng() * n), picked = null, turned = 0;
   // `handOnly`: nothing is laid on the table, the table module shows a "close" button instead of "meld".

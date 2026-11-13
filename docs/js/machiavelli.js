@@ -16,25 +16,25 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
   const sel = new Set();
   const log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items })), you = (key, vars) => log.add(t(key, { name: who(), ...vars }));
 
-  // Two people on one device: the second one sits in seat 1. `me` is the seat the table is drawn for,
+  // Several people on one device: they take the first seats. `me` is the seat the table is drawn for,
   // `ready` says that this person has taken the device (their cards stay face down until then).
-  const humans = opts.humans === 2 ? 2 : 1, isHuman = i => i < humans;
+  const humans = Math.min(Math.max(opts.humans | 0, 1), opts.players), isHuman = i => i < humans;
   let me = 0, ready = humans === 1;
-  const names = () => Array.from({ length: opts.players }, (_, i) => (humans === 2
-    ? (i < 2 ? t('pass.player', { n: i + 1 }) : t('play.bot', { n: i - 1 }))
+  const names = () => Array.from({ length: opts.players }, (_, i) => (humans > 1
+    ? (i < humans ? t('pass.player', { n: i + 1 }) : t('play.bot', { n: i - humans + 1 }))
     : i === 0 ? t('play.you') : t('play.bot', { n: i })));
-  const who = () => (humans === 2 ? names()[me] : t('play.you'));
-  const avatar = i => (humans === 2 ? (isHuman(i) ? i + 1 : 'B') : i);
+  const who = () => (humans > 1 ? names()[me] : t('play.you'));
+  const avatar = i => (humans > 1 ? (isHuman(i) ? i + 1 : 'B') : i);
   // the device changes hands: cards stay face down until the next person is ready
   const handOver = async seat => {
     me = seat; ready = false; hint = null; render();
     await dialog({ title: t('pass.title', { name: names()[seat] }), body: `<p>${t('pass.text')}</p>`, actions: [{ label: t('pass.ready'), val: 1, primary: true }] });
     ready = true;
   };
-  // with two people there is no "you": the title of the final dialog names the winner
+  // with several people there is no "you": the title of the final dialog names the winner
   const verdict = (r, N) => {
     const best = (r.lowWins ? Math.min : Math.max)(...r.scores), lead = r.scores.filter(x => x === best).length === 1 ? r.scores.indexOf(best) : -1;
-    return { lead, title: humans === 2 ? (lead < 0 ? t('end.tie') : t('pass.wins', { name: N[lead] })) : t('end.' + r.outcome) };
+    return { lead, title: humans > 1 ? (lead < 0 ? t('end.tie') : t('pass.wins', { name: N[lead] })) : t('end.' + r.outcome) };
   };
 
   const label = c => `${[1, 11, 12, 13].includes(c.r) ? t('frank.' + c.r) : c.r} · ${t('suit.' + c.s)}`;
@@ -45,7 +45,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
     if (!alive) return;
     if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
     const v = g.view(), N = names(), own = v.players[me], myTurn = mine();
-    const secret = humans === 2 && !(g.phase === 'play' && g.current === me && ready);   // nobody else may see this hand
+    const secret = humans > 1 && !(g.phase === 'play' && g.current === me && ready);   // nobody else may see this hand
     const cls = c => (sel.has(c.id) ? 'sel ' : '') + (hint && hint.ids && hint.ids.includes(c.id) ? 'hinted' : '');
     const btn = c => cardHTML(c, { tag: 'button', label: label(c), disabled: !myTurn, cls: cls(c) });
 
@@ -73,7 +73,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
       `<div class="table rum mach"><div class="opps n${g.n - 1}">${opps}</div>` +
       `<div class="felt">${pile}<div class="melds">${groups}</div></div>` +
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
-      `<div class="rum-bar">${humans === 2 ? `<span class="badge strong">${N[me]}</span>` : ''}` + b('new', 'mach.new', myTurn && sel.size > 0, 'primary') +
+      `<div class="rum-bar">${humans > 1 ? `<span class="badge strong">${N[me]}</span>` : ''}` + b('new', 'mach.new', myTurn && sel.size > 0, 'primary') +
       b('end', 'mach.end', myTurn && v.canEnd, hint && hint.end ? 'primary hinted' : 'primary') + b('reset', 'mach.undo', myTurn && v.dirty) +
       `<span class="grow"></span>` + b('sort', 'rum.sort', true) +
       `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>${log.button()}</div>` +
@@ -92,8 +92,8 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
     if (!opts.coach && humans === 1) record(def.id, r, opts);
     clearSession();
     const { lead, title } = verdict(r, N);
-    sfx(humans === 2 || r.outcome === 'win' ? 'win' : 'lose');
-    const body = `<p>${t('end.cardsLeft')}</p><ul class="final">` + r.scores.map((sc, k) => `<li class="${(humans === 2 ? k === lead : k === 0) ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
+    sfx(humans > 1 || r.outcome === 'win' ? 'win' : 'lose');
+    const body = `<p>${t('end.cardsLeft')}</p><ul class="final">` + r.scores.map((sc, k) => `<li class="${(humans > 1 ? k === lead : k === 0) ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
     const val = await dialog({ title, body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
     if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; log.clear(); me = 0; ready = humans === 1; run(); } else onExit();
@@ -106,7 +106,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
     const game = g;
     while (alive && g === game && g.phase === 'play') {
       if (isHuman(g.current)) {
-        if (humans === 2 && (me !== g.current || !ready)) { sel.clear(); await handOver(g.current); }
+        if (humans > 1 && (me !== g.current || !ready)) { sel.clear(); await handOver(g.current); }
         break;
       }
       render();

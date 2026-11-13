@@ -22,7 +22,7 @@ export function createTrickGame(def, opts) {
     return (whole || !frac ? whole : '') + frac;
   };
 
-  let deck, trumpCard, trump, score, decl, sung, first = Math.floor(rng() * n);
+  let deck, trumpCard, trump, score, decl, sung, closed, took, seen, first = Math.floor(rng() * n);
   const P = Array.from({ length: n }, () => ({ hand: [] }));
   const totals = Array(nTeams).fill(0);
 
@@ -38,6 +38,7 @@ export function createTrickGame(def, opts) {
     trumpCard = hasTrump ? deck[0] : null;            // bottom of the deck, drawn last
     trump = hasTrump ? trumpCard.s : null;
     score = Array(nTeams).fill(0); decl = Array(nTeams).fill(0); sung = new Set();
+    closed = null; took = Array(nTeams).fill(0); seen = new Set();
     P.forEach(p => { p.hand = []; });
     const size = (def.setup.handSizeFor || {})[n] || def.setup.handSize;
     for (let k = 0; k < size; k++)
@@ -74,7 +75,7 @@ export function createTrickGame(def, opts) {
 
   g.legal = (i = g.current) => {
     const hand = P[i].hand;
-    if (R.followSuit && g.trick.length && !(R.freeWhileDeck && deck.length)) {
+    if (R.followSuit && g.trick.length && !(R.freeWhileDeck && deck.length && !closed)) {
       const same = hand.filter(c => c.s === g.trick[0].card.s);
       if (!R.mustBeat) { if (same.length) return same; return hand.slice(); }
       // Tute: follow suit and beat the trick if you can; without the suit, trump it if you can.
@@ -91,7 +92,34 @@ export function createTrickGame(def, opts) {
     return hand.slice();
   };
 
-  g.play = id => {
+  // Schnapsen: on lead, the trump Unter may be exchanged for the face-up trump card, and the talon may be closed
+  // (no more drawing, strict rules at once, and the player who closed must reach the deal target).
+  const onLead = () => g.phase === 'play' && !g.pending && !g.trick.length && !closed;
+  const canSwap = i => !!R.exchange && onLead() && deck.length >= 2 && trumpCard.r !== R.exchange && P[i].hand.some(c => c.s === trump && c.r === R.exchange);
+  const canClose = () => !!R.closing && onLead() && deck.length >= 4;
+  function swapTrump() {
+    const i = g.current, h = P[i].hand, k = h.findIndex(c => c.s === trump && c.r === R.exchange);
+    const low = h[k];
+    h[k] = trumpCard; deck[0] = low; trumpCard = low;
+    g.lastEvent = { type: 'swapTrump', p: i };
+    if (R.marriage) sing(i);                             // the card taken may complete a pair
+    if (R.dealTarget && score[teamOf(i)] >= R.dealTarget) endRound(teamOf(i));
+  }
+  function closeTalon() {
+    const t = teamOf(g.current);
+    closed = { by: t, oppHad: took.some((v, k) => k !== t && v > 0) };
+    g.lastEvent = { type: 'closeTalon', p: g.current };
+  }
+  // The end of a deal: whoever closed the talon and did not get to the target loses it, 2 game points (3 if the
+  // opponent had no trick when the talon was closed).
+  function dealOver(w) {
+    if (closed && (w !== closed.by || score[w] < R.dealTarget)) endRound(closed.by === 0 ? 1 : 0, closed.oppHad ? 2 : 3);
+    else endRound(w);
+  }
+
+  g.play = (id, opt) => {
+    if (opt && opt.swapTrump) { if (canSwap(g.current)) swapTrump(); return; }
+    if (opt && opt.closeTalon) { if (canClose()) closeTalon(); return; }
     const h = P[g.current].hand;
     const c = h.splice(h.findIndex(x => x.id === id), 1)[0];
     g.trick.push({ p: g.current, card: c });
@@ -107,16 +135,17 @@ export function createTrickGame(def, opts) {
 
   g.advance = () => {
     const w = g.winner;
-    score[teamOf(w)] += trickPts(g.trick);
+    score[teamOf(w)] += trickPts(g.trick); took[teamOf(w)]++;
+    g.trick.forEach(x => seen.add(x.card.id));
     g.trick = []; g.pending = false; g.winner = null;
-    if (deck.length) for (let i = 0; i < n; i++) P[(w + i) % n].hand.push(deck.pop());
+    if (deck.length && !closed) for (let i = 0; i < n; i++) P[(w + i) % n].hand.push(deck.pop());
     g.current = w;
-    if (R.dealTarget && score[teamOf(w)] >= R.dealTarget) { endRound(teamOf(w)); return; }   // enough points: the deal stops at once
+    if (R.dealTarget && score[teamOf(w)] >= R.dealTarget) { dealOver(teamOf(w)); return; }   // enough points: the deal stops at once
     if (R.marriage && P[w].hand.length) sing(w);         // the winner of a trick sings a pair
-    if ((R.dealTarget && score[teamOf(w)] >= R.dealTarget) || P.every(p => !p.hand.length)) endRound(teamOf(w));
+    if ((R.dealTarget && score[teamOf(w)] >= R.dealTarget) || P.every(p => !p.hand.length)) dealOver(teamOf(w));
   };
 
-  function endRound(lastTeam) {
+  function endRound(lastTeam, fixed) {
     const bonus = R.lastTrickPoints || 0;
     const cardUnits = score.slice();
     score[lastTeam] += bonus;
@@ -124,7 +153,7 @@ export function createTrickGame(def, opts) {
       // Schnapsen: the deal goes to whoever reached the deal target (or took the last trick) and is worth
       // 1, 2 or 3 game points according to how far behind the loser is.
       const w = lastTeam, lose = Math.max(...score.filter((_, t) => t !== w));
-      const gp = lose === 0 ? 3 : lose < R.gamePoints.half ? 2 : 1;
+      const gp = fixed || (lose === 0 ? 3 : lose < R.gamePoints.half ? 2 : 1);
       const roundPts = score.map((_, t) => (t === w ? gp : 0));
       roundPts.forEach((v, t) => { totals[t] += v; });
       g.summary = { round: g.round, rows: [{ key: 'tricks', vals: score.map(fmt), winner: w }], roundPts, totals: totals.slice() };
@@ -162,7 +191,9 @@ export function createTrickGame(def, opts) {
       return { hand: p.hand, handCount: p.hand.length, sweeps: games || R.gamePoints ? totals[t] : 0, score: fmt(target ? (totals[t] + decl[t]) * div + score[t] : score[t]) };
     }),
     center: g.trick.map(t => ({ card: t.card, p: t.p, hl: g.pending && t.p === g.winner })),
-    deckCount: deck.length, trumpCard: deck.length && hasTrump ? trumpCard : null, trumpSuit: trump, staged: null
+    deckCount: deck.length, trumpCard: deck.length && hasTrump && !closed ? trumpCard : null, trumpSuit: trump, staged: null,
+    note: closed && g.phase === 'play' ? 'play.talonClosed' : null,
+    actions: [canSwap(g.current) && 'swapTrump', canClose() && 'closeTalon'].filter(Boolean)
   });
 
   g.result = () => {
@@ -207,8 +238,22 @@ export function createTrickGame(def, opts) {
     return best;
   }
 
+  // Points a player can count on after closing the talon: what is already scored plus the cards that cannot be beaten.
+  function sure(i) {
+    const h = P[i].hand, mine = new Set(h.map(c => c.id));
+    const out = buildDeck(def.deck).filter(c => order.includes(c.r) && (!def.setup.ranks || def.setup.ranks.includes(c.r)) &&
+      !mine.has(c.id) && !seen.has(c.id) && c.id !== trumpCard.id);       // cards that may be in the other hand
+    const top = c => !out.some(o => o.s === c.s && str(o) > str(c));
+    const trumps = h.filter(c => c.s === trump && top(c)).length, outTrumps = out.filter(c => c.s === trump).length;
+    let v = score[teamOf(i)];
+    for (const c of h) if (top(c) && (c.s === trump || outTrumps <= trumps)) v += pts(c) + 3;
+    return v;
+  }
+
   g.botMove = (level = diff) => {
     const i = g.current, legal = g.legal(i);
+    if (canSwap(i) && (level !== 'easy' || rng() < 0.5)) return { id: null, opt: { swapTrump: true } };
+    if (level !== 'easy' && canClose() && sure(i) >= R.dealTarget) return { id: null, opt: { closeTalon: true } };
     const rnd = () => legal[Math.floor(rng() * legal.length)];
     if (level === 'easy' && rng() < 0.55) return { id: rnd().id };
     if (level === 'medium' && rng() < 0.12) return { id: rnd().id };
