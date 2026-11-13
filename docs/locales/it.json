@@ -352,5 +352,11 @@
  "play.mmSkip": "{name} salta il turno",
  "play.mmWish": "{name} chiede {suit}",
  "man.u.pile": "Al centro c’è la pila: devi seguire il seme o il valore della carta in cima. Quando è stato chiesto un seme, il suo simbolo compare accanto al mazzo. Il pulsante «Pesca una carta» è sotto il tavolo.",
- "play.sing": "Coppia cantata: {list}"
+ "play.sing": "Coppia cantata: {list}",
+ "rum.close": "Chiudi",
+ "rum.cantClose": "Per chiudere, le carte fuori dalle combinazioni devono valere 5 punti o meno",
+ "rum.dead": "Fuori combinazione: {n}",
+ "rum.chinchon": "{name} fa chinchón!",
+ "man.ch.hand": "In basso c’è la tua mano: le carte con il bordo colorato fanno già parte di una combinazione e un’etichetta dice quanti punti restano fuori. Seleziona una carta, poi «Scarta» oppure, quando è permesso, «Chiudi».",
+ "rum.playHand": "Seleziona una carta da scartare, oppure chiudi"
 }

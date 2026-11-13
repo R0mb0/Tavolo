@@ -15,9 +15,28 @@ export function startBanking(root, def, opts, onExit, resume) {
   let alive = true, busy = false, g, hint = null;
   const log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items }));
 
-  const names = () => Array.from({ length: opts.players }, (_, i) => (i === 0 ? t('play.you') : t('play.bot', { n: i })));
+  // Two people on one device: the second one sits in seat 1. `me` is the seat the table is drawn for,
+  // `ready` says that this person has taken the device (their cards stay face down until then).
+  const humans = opts.humans === 2 ? 2 : 1, isHuman = i => i < humans;
+  let me = 0, ready = humans === 1;
+  const names = () => Array.from({ length: opts.players }, (_, i) => (humans === 2
+    ? (i < 2 ? t('pass.player', { n: i + 1 }) : t('play.bot', { n: i - 1 }))
+    : i === 0 ? t('play.you') : t('play.bot', { n: i })));
+  const who = () => (humans === 2 ? names()[me] : t('play.you'));
+  const avatar = i => (humans === 2 ? (isHuman(i) ? i + 1 : 'B') : i);
+  // the device changes hands: cards stay face down until the next person is ready
+  const handOver = async seat => {
+    me = seat; ready = false; hint = null; render();
+    await dialog({ title: t('pass.title', { name: names()[seat] }), body: `<p>${t('pass.text')}</p>`, actions: [{ label: t('pass.ready'), val: 1, primary: true }] });
+    ready = true;
+  };
+  // with two people there is no "you": the title of the final dialog names the winner
+  const verdict = (r, N) => {
+    const best = (r.lowWins ? Math.min : Math.max)(...r.scores), lead = r.scores.filter(x => x === best).length === 1 ? r.scores.indexOf(best) : -1;
+    return { lead, title: humans === 2 ? (lead < 0 ? t('end.tie') : t('pass.wins', { name: N[lead] })) : t('end.' + r.outcome) };
+  };
   const label = c => `${[1, 8, 9, 10].includes(c.r) ? t('rank.' + c.r) : c.r} · ${t('suit.' + c.s)}`;
-  const mine = () => (g.phase === 'play' || g.phase === 'bank') && g.current === 0 && !busy;
+  const mine = () => (g.phase === 'play' || g.phase === 'bank') && g.current === me && ready && !busy;
   let seenRound = 0;
   // one line in the log for what just happened
   function note() {
@@ -30,23 +49,24 @@ export function startBanking(root, def, opts, onExit, resume) {
   function render() {
     if (!alive) return;
     if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
-    const v = g.view(), N = names(), myTurn = mine();
+    const myTurn = mine(), N = names();
+    const v = g.view(humans === 2 && !myTurn ? -1 : me);   // with two people a face-down card is shown only to its owner, during their turn
     const cards = (cs, hidden) => cs.map((c, k) => (hidden && k === 0 ? cardHTML(null) : cardHTML(c, { label: label(c) }))).join('');
     const outcome = p => (p.delta ? `<span class="badge ${p.delta > 0 ? 'gold' : 'lost'}">${p.delta > 0 ? '+' : ''}${p.delta}</span>` : p.state === 'bust' ? `<span class="badge lost">${t('sm.bust')}</span>` : '');
     const bk = p => (p.banker ? `<span class="badge gold">${t('sm.bank')}</span>` : p.bet ? `<span class="badge" title="${t('sm.stake')}">${t('sm.stake')} ${p.bet}</span>` : '');
     const seat = (p, i) =>
-      `<div class="opp bseat${v.current === i ? ' active' : ''}"><div class="opp-main"><div class="opp-name"><span class="avatar">${i}</span>${N[i]}</div>` +
+      `<div class="opp bseat${v.current === i ? ' active' : ''}"><div class="opp-main"><div class="opp-name"><span class="avatar">${avatar(i)}</span>${N[i]}</div>` +
       `<div class="badges">${bk(p)}<span class="badge strong">${frac(p.total)}</span><span class="badge">● ${p.chips}</span>${outcome(p)}</div></div>` +
       `<div class="bcards">${cards(p.cards, p.hidden)}</div></div>`;
 
-    const bank = v.banker > 0 ? seat(v.players[v.banker], v.banker) : '';
+    const bank = v.banker !== me ? seat(v.players[v.banker], v.banker) : '';
     let opps = '';
-    for (let i = 1; i < g.n; i++) if (i !== v.banker) opps += seat(v.players[i], i);
+    for (let k = 1; k < g.n; k++) { const i = (me + k) % g.n; if (i !== v.banker) opps += seat(v.players[i], i); }
 
-    const me = v.players[0];
+    const own = v.players[me];
     const hand = t('sm.round', { n: v.round, of: v.rounds });
-    const status = v.phase === 'show' ? hand : myTurn ? `${hand} · ${t(v.needBet ? 'sm.betTurn' : v.banker === 0 ? 'sm.bankTurn' : 'sm.turn')}`
-      : v.current > 0 ? t('play.turnOf', { name: N[v.current] }) : '';
+    const status = v.phase === 'show' ? hand : myTurn ? `${hand} · ${t(v.needBet ? 'sm.betTurn' : v.banker === me ? 'sm.bankTurn' : 'sm.turn')}`
+      : v.current >= 0 ? t('play.turnOf', { name: N[v.current] }) : '';
     const b = (act, key, cls = '') => `<button type="button" class="btn ${cls}${hint === act ? ' hinted' : ''}" data-do="${act}"${myTurn ? '' : ' disabled'}>${t(key)}</button>`;
     const bar = v.phase === 'show'
       ? `<button type="button" class="btn primary big" data-do="next">${t(v.round >= v.rounds ? 'sm.final' : 'sm.next')}</button>`
@@ -57,19 +77,21 @@ export function startBanking(root, def, opts, onExit, resume) {
 
     root.innerHTML = `<div class="table bank"><div class="felt">${bank ? `<div class="bank-top">${bank}</div>` : ''}${opps ? `<div class="bank-opps">${opps}</div>` : ''}</div>` +
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
-      `<div class="me${myTurn ? ' active' : ''}"><div class="me-info"><div class="badges">${bk(me)}<span class="badge strong big">${frac(me.total)}</span><span class="badge">● ${me.chips}</span>${outcome(me)}</div>` +
-      `</div><div class="hand bhand">${cards(me.cards, false)}</div></div>` +
+      `<div class="me${myTurn ? ' active' : ''}"><div class="me-info"><div class="badges">${humans === 2 ? `<span class="badge strong">${N[me]}</span>` : ''}${bk(own)}<span class="badge strong big">${frac(own.total)}</span><span class="badge">● ${own.chips}</span>${outcome(own)}</div>` +
+      `</div><div class="hand bhand">${cards(own.cards, own.hidden)}</div></div>` +
       `<div class="rum-bar center">${bar2}</div></div>`;
   }
 
   async function finish() {
     const r = g.result(), N = names();
-    if (!opts.coach) record(def.id, r, opts); clearSession();
-    sfx(r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
-    const body = '<ul class="final">' + r.scores.map((sc, k) => `<li class="${k === 0 ? 'mine' : ''}"><span>${N[k]}</span><b>● ${sc}</b></li>`).join('') + '</ul>';
-    const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
+    if (!opts.coach && humans === 1) record(def.id, r, opts);
+    clearSession();
+    const { lead, title } = verdict(r, N);
+    sfx(humans === 2 || r.outcome === 'win' ? 'win' : r.outcome === 'lose' ? 'lose' : 'take');
+    const body = '<ul class="final">' + r.scores.map((sc, k) => `<li class="${(humans === 2 ? k === lead : k === 0) ? 'mine' : ''}"><span>${N[k]}</span><b>● ${sc}</b></li>`).join('') + '</ul>';
+    const val = await dialog({ title, body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
-    if (val === 'again') { g = createGame(def, opts); log.clear(); seenRound = 0; run(); } else onExit();
+    if (val === 'again') { g = createGame(def, opts); log.clear(); seenRound = 0; me = 0; ready = humans === 1; run(); } else onExit();
   }
 
   // bots and the bank play by themselves; the loop stops whenever the human has to act
@@ -79,13 +101,17 @@ export function startBanking(root, def, opts, onExit, resume) {
     const game = g;
     while (alive && g === game) {
       if (g.phase === 'over') { busy = false; render(); finish(); return; }
-      if (g.phase === 'show' || g.current === 0) break;
+      if (g.phase === 'show') break;
+      if (isHuman(g.current)) {
+        if (humans === 2 && (me !== g.current || !ready)) await handOver(g.current);
+        break;
+      }
       render();
       await sleep(750);
       if (!alive || g !== game) break;
       if (g.phase === 'bank') g.bankStep(); else g.botStep();
       sfx('card'); note();
-      if (g.phase === 'show') sfx(g.view().players[0].delta > 0 ? 'take' : 'card');
+      if (g.phase === 'show') sfx(g.view().players[me].delta > 0 ? 'take' : 'card');
     }
     busy = false;
     render();

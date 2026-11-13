@@ -465,5 +465,9 @@ body[data-screen="play"] { height: 100dvh; overflow: hidden; }
 .card.de .court.r12 { align-items: flex-start; }                 /* the Ober carries the suit high, the Unter low */
 .card.es::after { content: ""; position: absolute; inset: .12em; border: .06em solid var(--xo); border-radius: .38em; pointer-events: none; clip-path: polygon(0 0, 38% 0, 38% 6%, 62% 6%, 62% 0, 100% 0, 100% 100%, 62% 100%, 62% 94%, 38% 94%, 38% 100%, 0 100%); }
 .pips.n8 .si, .pips.n9 .si { width: .9em; height: .9em; }
-.pips.n9, .pips.n10 { width: 3.2em; }
-.pips.n10 .si { width: .84em; height: .84em; }
+.pips.n9 { width: 3.2em; }
+.pips.n10 { width: 2.6em; }
+.pips.n10 .si { width: .7em; height: .7em; }
+
+/* v1.8: Chinchón — cards that already belong to a combination */
+.hand .card.inmeld { box-shadow: 0 0 0 .14em var(--accent), 0 1px 2px rgb(0 0 0 / .25); }

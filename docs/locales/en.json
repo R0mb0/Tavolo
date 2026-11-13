@@ -352,5 +352,11 @@
  "play.mmSkip": "{name} skips a turn",
  "play.mmWish": "{name} asks for {suit}",
  "man.u.pile": "In the middle is the pile: you must match the suit or the rank of its top card. When a suit has been asked for, its symbol appears next to the deck. The \"Draw a card\" button is under the table.",
- "play.sing": "Pair sung: {list}"
+ "play.sing": "Pair sung: {list}",
+ "rum.close": "Close",
+ "rum.cantClose": "To close, the cards outside your combinations must be worth 5 points or less",
+ "rum.dead": "Unmatched: {n}",
+ "rum.chinchon": "{name} makes a chinchón!",
+ "man.ch.hand": "Your hand is at the bottom: cards with a coloured edge already belong to a combination, and a label says how many points are still unmatched. Select one card, then “Discard” or, when it is allowed, “Close”.",
+ "rum.playHand": "Select a card to discard, or close"
 }

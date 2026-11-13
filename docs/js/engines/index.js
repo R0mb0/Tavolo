@@ -9,6 +9,7 @@ import { createMachiavelliGame } from './machiavelli.js';
 import { createBankingGame } from './banking.js';
 import { createCalledGame } from './called.js';
 import { createMauMauGame } from './maumau.js';
+import { createChinchonGame } from './chinchon.js';
 
 export const ENGINES = {
   trick: createTrickGame,
@@ -20,5 +21,6 @@ export const ENGINES = {
   machiavelli: createMachiavelliGame,
   banking: createBankingGame,
   called: createCalledGame,
-  maumau: createMauMauGame
+  maumau: createMauMauGame,
+  chinchon: createChinchonGame
 };

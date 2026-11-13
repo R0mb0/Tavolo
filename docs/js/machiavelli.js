@@ -14,25 +14,48 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
   const ctl = new AbortController();
   let alive = true, busy = false, g, msg = null, hint = null, bySuit = true, drag = null, dragEnd = 0;
   const sel = new Set();
-  const log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items })), you = (key, vars) => log.add(t(key, { name: t('play.you'), ...vars }));
+  const log = createLog(resume && resume.extra && resume.extra.log, items => setExtra({ log: items })), you = (key, vars) => log.add(t(key, { name: who(), ...vars }));
 
-  const names = () => Array.from({ length: opts.players }, (_, i) => (i === 0 ? t('play.you') : t('play.bot', { n: i })));
+  // Two people on one device: the second one sits in seat 1. `me` is the seat the table is drawn for,
+  // `ready` says that this person has taken the device (their cards stay face down until then).
+  const humans = opts.humans === 2 ? 2 : 1, isHuman = i => i < humans;
+  let me = 0, ready = humans === 1;
+  const names = () => Array.from({ length: opts.players }, (_, i) => (humans === 2
+    ? (i < 2 ? t('pass.player', { n: i + 1 }) : t('play.bot', { n: i - 1 }))
+    : i === 0 ? t('play.you') : t('play.bot', { n: i })));
+  const who = () => (humans === 2 ? names()[me] : t('play.you'));
+  const avatar = i => (humans === 2 ? (isHuman(i) ? i + 1 : 'B') : i);
+  // the device changes hands: cards stay face down until the next person is ready
+  const handOver = async seat => {
+    me = seat; ready = false; hint = null; render();
+    await dialog({ title: t('pass.title', { name: names()[seat] }), body: `<p>${t('pass.text')}</p>`, actions: [{ label: t('pass.ready'), val: 1, primary: true }] });
+    ready = true;
+  };
+  // with two people there is no "you": the title of the final dialog names the winner
+  const verdict = (r, N) => {
+    const best = (r.lowWins ? Math.min : Math.max)(...r.scores), lead = r.scores.filter(x => x === best).length === 1 ? r.scores.indexOf(best) : -1;
+    return { lead, title: humans === 2 ? (lead < 0 ? t('end.tie') : t('pass.wins', { name: N[lead] })) : t('end.' + r.outcome) };
+  };
+
   const label = c => `${[1, 11, 12, 13].includes(c.r) ? t('frank.' + c.r) : c.r} · ${t('suit.' + c.s)}`;
-  const mine = () => g.phase === 'play' && g.current === 0 && !busy;
+  const mine = () => g.phase === 'play' && g.current === me && ready && !busy;
   const say = key => { msg = () => t(key); };
 
   function render() {
     if (!alive) return;
     if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
-    const v = g.view(), N = names(), me = v.players[0], myTurn = mine();
+    const v = g.view(), N = names(), own = v.players[me], myTurn = mine();
+    const secret = humans === 2 && !(g.phase === 'play' && g.current === me && ready);   // nobody else may see this hand
     const cls = c => (sel.has(c.id) ? 'sel ' : '') + (hint && hint.ids && hint.ids.includes(c.id) ? 'hinted' : '');
     const btn = c => cardHTML(c, { tag: 'button', label: label(c), disabled: !myTurn, cls: cls(c) });
 
     let opps = '';
-    for (let i = 1; i < g.n; i++)
+    for (let k = 1; k < g.n; k++) {
+      const i = (me + k) % g.n;
       opps += `<div class="opp${g.phase === 'play' && g.current === i ? ' active' : ''}"><div class="opp-main">` +
-        `<div class="opp-name"><span class="avatar">${i}</span>${N[i]}</div>` +
+        `<div class="opp-name"><span class="avatar">${avatar(i)}</span>${N[i]}</div>` +
         `<div class="opp-hand"><i class="mini"></i><span class="badge">× ${v.players[i].handCount}</span></div></div></div>`;
+    }
 
     const pile = `<div class="side"><button type="button" class="pile-btn${hint && hint.pile ? ' hinted' : ''}" data-do="stock" aria-label="${t('play.deck')}"${myTurn ? '' : ' disabled'}>` +
       (v.stock ? `<span class="stack">${cardHTML(null)}<span class="count">${v.stock}</span></span>` : '<span class="pile empty"><span class="glyph">✕</span></span>') + '</button></div>';
@@ -42,7 +65,7 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
       `<button type="button" class="plus" data-group="${i}" aria-label="${t('mach.add')}" title="${t('mach.add')}"${myTurn && sel.size ? '' : ' disabled'}>+</button></div>`).join('');
 
     const order = c => (bySuit ? SUITS.indexOf(c.s) * 20 + c.r : c.r * 10 + SUITS.indexOf(c.s));
-    const hand = me.hand.slice().sort((a, b) => order(a) - order(b)).map(btn).join('');
+    const hand = secret ? own.hand.map(() => cardHTML(null)).join('') : own.hand.slice().sort((a, b) => order(a) - order(b)).map(btn).join('');
 
     const status = msg ? msg() : !myTurn ? (g.phase === 'play' ? t('play.turnOf', { name: N[g.current] }) : '') : t('mach.turn');
     const b = (act, key, on, extra = '') => `<button type="button" class="btn ${extra}" data-do="${act}"${on ? '' : ' disabled'}>${t(key)}</button>`;
@@ -50,11 +73,11 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
       `<div class="table rum mach"><div class="opps n${g.n - 1}">${opps}</div>` +
       `<div class="felt">${pile}<div class="melds">${groups}</div></div>` +
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
-      `<div class="rum-bar">` + b('new', 'mach.new', myTurn && sel.size > 0, 'primary') +
+      `<div class="rum-bar">${humans === 2 ? `<span class="badge strong">${N[me]}</span>` : ''}` + b('new', 'mach.new', myTurn && sel.size > 0, 'primary') +
       b('end', 'mach.end', myTurn && v.canEnd, hint && hint.end ? 'primary hinted' : 'primary') + b('reset', 'mach.undo', myTurn && v.dirty) +
       `<span class="grow"></span>` + b('sort', 'rum.sort', true) +
       `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>${log.button()}</div>` +
-      `<div class="me${myTurn ? ' active' : ''}"><div class="hand many${me.hand.length > 10 ? ' huge' : ''}">${hand}</div></div></div>`;
+      `<div class="me${myTurn ? ' active' : ''}"><div class="hand many${own.hand.length > 10 ? ' huge' : ''}">${hand}</div></div></div>`;
   }
 
   const WHY = { machFix: 'mach.fix', machPlayOne: 'mach.playOne', machReset: 'mach.reset' };
@@ -66,12 +89,14 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
 
   async function finish() {
     const r = g.result(), N = names();
-    if (!opts.coach) record(def.id, r, opts); clearSession();
-    sfx(r.outcome === 'win' ? 'win' : 'lose');
-    const body = `<p>${t('end.cardsLeft')}</p><ul class="final">` + r.scores.map((sc, k) => `<li class="${k === 0 ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
-    const val = await dialog({ title: t('end.' + r.outcome), body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
+    if (!opts.coach && humans === 1) record(def.id, r, opts);
+    clearSession();
+    const { lead, title } = verdict(r, N);
+    sfx(humans === 2 || r.outcome === 'win' ? 'win' : 'lose');
+    const body = `<p>${t('end.cardsLeft')}</p><ul class="final">` + r.scores.map((sc, k) => `<li class="${(humans === 2 ? k === lead : k === 0) ? 'mine' : ''}"><span>${N[k]}</span><b>${sc}</b></li>`).join('') + '</ul>';
+    const val = await dialog({ title, body, actions: [{ label: t('end.again'), val: 'again', primary: true }, { label: t('end.home'), val: 'home' }] });
     if (!alive) return;
-    if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; log.clear(); run(); } else onExit();
+    if (val === 'again') { g = createGame(def, opts); sel.clear(); msg = null; log.clear(); me = 0; ready = humans === 1; run(); } else onExit();
   }
 
   // bot turns and end of game
@@ -79,7 +104,11 @@ export function startMachiavelli(root, def, opts, onExit, resume) {
     if (busy) return;
     busy = true;
     const game = g;
-    while (alive && g === game && g.phase === 'play' && g.current !== 0) {
+    while (alive && g === game && g.phase === 'play') {
+      if (isHuman(g.current)) {
+        if (humans === 2 && (me !== g.current || !ready)) { sel.clear(); await handOver(g.current); }
+        break;
+      }
       render();
       await sleep(650);
       if (!alive || g !== game) break;

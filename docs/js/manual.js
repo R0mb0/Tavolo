@@ -27,6 +27,7 @@ export function manualParts(def) {
     else if (kind === 'maumau') tb.push('man.u.pile');
     else if (kind === 'shedding') { tb.push('man.d.pile', 'man.d.table'); if (R.swap) tb.push('man.d.swap'); }
     else if (kind === 'machiavelli') tb = ['man.t.opps', 'man.t.turn', 'man.m.table', 'man.m.buttons', 'man.m.drag', 'man.m.draw'];
+    else if (kind === 'chinchon') tb = ['man.t.opps', 'man.t.turn', 'man.r.piles', 'man.ch.hand'];
     else if (kind === 'rummy' || kind === 'burraco') tb = ['man.t.opps', 'man.t.turn', 'man.r.piles', 'man.r.melds', 'man.r.hand'];
     else tb.push('man.t.center.fishing', 'man.t.pile');
   }

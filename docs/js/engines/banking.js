@@ -93,18 +93,19 @@ export function createBankingGame(def, opts) {
 
   g.nextRound = () => { if (g.round >= g.rounds) g.phase = 'over'; else deal(); };
 
-  g.view = () => {
+  /** `viewer`: the seat whose face-down card may be seen (-1: nobody's). */
+  g.view = (viewer = 0) => {
     const open = g.phase === 'show' || g.phase === 'over';
     return {
       players: P.map((p, i) => {
-        const seen = i === 0 || open || p.state === 'bust' || (i === g.banker && g.phase === 'bank');
+        const seen = i === viewer || open || p.state === 'bust' || (i === g.banker && g.phase === 'bank');
         return { cards: p.cards, hidden: !seen, total: seen ? total(p.cards) : null, state: p.state, chips: p.chips, delta: open ? p.delta : 0, banker: i === g.banker, bet: p.bet };
       }),
       current: g.current, banker: g.banker, needBet: g.phase === 'play' && g.current >= 0 && !P[g.current].bet, maxBet: R.maxBet, phase: g.phase, round: g.round, rounds: g.rounds
     };
   };
 
-  g.hint = () => (g.phase === 'play' && !P[0].bet ? 'bet' + botBet(P[0], 'hard') : total(P[0].cards) < 5 ? 'hit' : 'stand');
+  g.hint = () => { const p = P[g.current] || P[0]; return g.phase === 'play' && !p.bet ? 'bet' + botBet(p, 'hard') : total(p.cards) < 5 ? 'hit' : 'stand'; };
 
   g.result = () => {
     const scores = P.map(p => p.chips), mine = scores[0], other = Math.max(...scores.slice(1));

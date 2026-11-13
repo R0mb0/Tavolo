@@ -352,5 +352,11 @@
  "play.mmSkip": "{name} perde a vez",
  "play.mmWish": "{name} pede {suit}",
  "man.u.pile": "No centro está a pilha: tem de seguir o naipe ou o valor da carta de cima. Quando foi pedido um naipe, o seu símbolo aparece junto ao baralho. O botão «Comprar uma carta» está por baixo da mesa.",
- "play.sing": "Par cantado: {list}"
+ "play.sing": "Par cantado: {list}",
+ "rum.close": "Fechar",
+ "rum.cantClose": "Para fechar, as cartas fora das combinações têm de valer 5 pontos ou menos",
+ "rum.dead": "Fora de combinação: {n}",
+ "rum.chinchon": "{name} faz chinchón!",
+ "man.ch.hand": "Em baixo está a sua mão: as cartas com a borda colorida já fazem parte de uma combinação e uma etiqueta diz quantos pontos ficam de fora. Selecione uma carta e depois «Descartar» ou, quando for permitido, «Fechar».",
+ "rum.playHand": "Selecione uma carta para descartar, ou feche"
 }

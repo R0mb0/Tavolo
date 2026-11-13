@@ -352,5 +352,11 @@
  "play.mmSkip": "{name} passe son tour",
  "play.mmWish": "{name} demande {suit}",
  "man.u.pile": "Au centre se trouve la pile : vous devez suivre la couleur ou la valeur de la carte du dessus. Quand une couleur a été demandée, son symbole apparaît à côté du talon. Le bouton « Piocher une carte » est sous la table.",
- "play.sing": "Paire chantée : {list}"
+ "play.sing": "Paire chantée : {list}",
+ "rum.close": "Fermer",
+ "rum.cantClose": "Pour fermer, les cartes hors combinaison doivent valoir 5 points ou moins",
+ "rum.dead": "Hors combinaison : {n}",
+ "rum.chinchon": "{name} fait chinchón !",
+ "man.ch.hand": "Votre main est en bas : les cartes au bord coloré font déjà partie d’une combinaison et une étiquette indique combien de points restent hors combinaison. Sélectionnez une carte, puis « Défausser » ou, quand c’est permis, « Fermer ».",
+ "rum.playHand": "Sélectionnez une carte à défausser, ou fermez"
 }

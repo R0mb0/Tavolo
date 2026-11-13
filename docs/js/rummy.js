@@ -1,5 +1,5 @@
 // Table for rummy games (Scala 40, Burraco): deck and discard pile, combinations on the table, a large hand with selection.
-import { cardHTML } from './cards.js';
+import { cardHTML, cardLabel } from './cards.js';
 import { newGame as createGame, clearSession, setExtra } from './session.js';
 import { t } from './i18n.js';
 import { dialog } from './ui.js';
@@ -27,7 +27,7 @@ export function startRummy(root, def, opts, onExit, resume) {
   const you = (key, vars) => log.add(t(key, { name: who(), ...vars }));
   const teamNames = () => { const N = names(); return g.teams ? [`${N[0]} + ${N[2]}`, `${N[1]} + ${N[3]}`] : N; };
   const potBadge = p => (p.pot ? `<span class="badge gold">✓ ${t('bur.pot')}</span>` : '');
-  const label = c => (c.r === 0 ? t('rum.joker') : `${[1, 11, 12, 13].includes(c.r) ? t('frank.' + c.r) : c.r} · ${t('suit.' + c.s)}`);
+  const label = c => (c.r === 0 ? t('rum.joker') : cardLabel(c, t));
   const mine = () => g.phase === 'play' && g.current === me && ready && !busy;
   const say = (key, vars) => { msg = () => t(key, vars); };
 
@@ -36,7 +36,7 @@ export function startRummy(root, def, opts, onExit, resume) {
     if (opts.coach && mine() && !hint) hint = g.hint();      // practice game: the suggested move is always shown
     const v = g.view(), N = names(), own = v.players[me], myTurn = mine(), B = g.kind === 'burraco', myTeam = g.teamOf(me);
     const secret = humans === 2 && !(g.phase === 'play' && g.current === me && ready);   // nobody else may see this hand
-    const canPlay = myTurn && v.step === 'play';
+    const canPlay = myTurn && v.step === 'play', H = !!v.handOnly;       // H: a game played in the hand only (Chinchón)
 
     let opps = '';
     for (let k = 1; k < g.n; k++) {
@@ -60,27 +60,29 @@ export function startRummy(root, def, opts, onExit, resume) {
     const melds = !B ? v.melds.map(meldBtn).join('') : [myTeam, 1 - myTeam].map(tm =>
       `<div class="mgroup"><span class="mlabel">${teamNames()[tm]}</span>${v.melds.map((m, i) => (m.team === tm ? meldBtn(m, i) : '')).join('')}</div>`).join('');
 
-    const order = c => (bySuit ? SUITS.indexOf(c.s) * 20 + c.r : (c.r || 99) * 10 + SUITS.indexOf(c.s));
+    const suitAt = c => (c.deck === 'french' ? SUITS.indexOf(c.s) : ['oros', 'copas', 'espadas', 'bastos'].indexOf(c.s));
+    const order = c => (bySuit ? suitAt(c) * 20 + c.r : (c.r || 99) * 10 + suitAt(c));
     const hand = secret ? own.hand.map(() => cardHTML(null)).join('') : own.hand.slice().sort((a, b) => order(a) - order(b)).map(c => cardHTML(c, {
       tag: 'button', label: label(c), disabled: !canPlay,
-      cls: (sel.has(c.id) ? 'sel ' : '') + (hint && hint.ids && hint.ids.includes(c.id) ? 'hinted' : '')
+      cls: (sel.has(c.id) ? 'sel ' : '') + (hint && hint.ids && hint.ids.includes(c.id) ? 'hinted' : '') + (H && v.matched.includes(c.id) ? ' inmeld' : '')
     })).join('');
 
-    const status = msg ? msg() : !myTurn ? (g.phase === 'play' ? t('play.turnOf', { name: N[g.current] }) : '') : v.step === 'draw' ? t('rum.draw') : t('rum.play');
-    const open = B ? potBadge(own) : own.opened ? `<span class="badge gold">✓ ${t('rum.opened')}</span>` : `<span class="badge strong">${t('rum.opening', { n: v.provSum, of: v.opening })}</span>`;
+    const status = msg ? msg() : !myTurn ? (g.phase === 'play' ? t('play.turnOf', { name: N[g.current] }) : '') : v.step === 'draw' ? t('rum.draw') : t(H ? 'rum.playHand' : 'rum.play');
+    const open = H ? (myTurn ? `<span class="badge strong">${t('rum.dead', { n: v.dead })}</span>` : '') : B ? potBadge(own) : own.opened ? `<span class="badge gold">✓ ${t('rum.opened')}</span>` : `<span class="badge strong">${t('rum.opening', { n: v.provSum, of: v.opening })}</span>`;
     const b = (act, key, on, cls = '') => `<button type="button" class="btn ${cls}" data-do="${act}"${on ? '' : ' disabled'}>${t(key)}</button>`;
     root.innerHTML =
       `<div class="table rum"><div class="opps n${g.n - 1}">${opps}</div>` +
       `<div class="felt">${piles}<div class="melds">${melds}</div></div>` +
       `<div class="status${myTurn ? ' mine' : ''}" role="status" aria-live="polite">${status}</div>` +
       `<div class="rum-bar">${humans === 2 ? `<span class="badge strong">${N[me]}</span>` : ''}<span class="badge strong">${own.total} ${t('play.pts')}</span>${open}<span class="grow"></span>` +
-      b('meld', 'rum.meld', canPlay && sel.size >= 3, 'primary') + b('discard', 'rum.discard', canPlay && sel.size === 1) +
+      (H ? b('close', 'rum.close', canPlay && sel.size === 1 && v.closable.includes([...sel][0]), 'primary' + (hint && hint.close ? ' hinted' : ''))
+        : b('meld', 'rum.meld', canPlay && sel.size >= 3, 'primary')) + b('discard', 'rum.discard', canPlay && sel.size === 1) +
       (v.hasProv && canPlay ? b('revert', 'rum.revert', true) : '') + (v.mustUse && canPlay ? b('putback', 'rum.putBack', true, hint && hint.putBack ? 'hinted' : '') : '') + b('sort', 'rum.sort', true) +
       `<button type="button" class="icon hint" data-do="hint" title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>${log.button()}</div>` +
       `<div class="me${myTurn ? ' active' : ''}"><div class="hand many${own.hand.length > 10 ? ' huge' : ''}">${hand}</div></div></div>`;
   }
 
-  const WHY = { invalid: 'rum.invalid', keepOne: 'rum.keepOne', needOpen: 'rum.needOpen', openFirst: 'rum.openFirst', noDiscardPick: 'rum.noPick', sameCard: 'rum.sameCard', mustOpen: 'rum.mustOpen', wildClose: 'bur.wildClose', needBurraco: 'bur.needBurraco', notYours: 'bur.notYours' };
+  const WHY = { invalid: 'rum.invalid', keepOne: 'rum.keepOne', needOpen: 'rum.needOpen', openFirst: 'rum.openFirst', noDiscardPick: 'rum.noPick', sameCard: 'rum.sameCard', mustOpen: 'rum.mustOpen', wildClose: 'bur.wildClose', cantClose: 'rum.cantClose', needBurraco: 'bur.needBurraco', notYours: 'bur.notYours' };
   function done(res, sound = 'card') {
     hint = null;
     if (res.ok) { sel.clear(); msg = null; sfx(sound); if (res.pot) say('bur.takePot', { name: who() }); } else if (WHY[res.reason]) say(WHY[res.reason], { n: g.view().provSum, of: g.view().opening });
@@ -89,12 +91,12 @@ export function startRummy(root, def, opts, onExit, resume) {
 
   async function showSummary() {
     const s = g.summary, B = g.kind === 'burraco', N = B ? teamNames() : names();
-    const title = s.winner >= 0 ? t('rum.out', { name: N[s.winner] }) : t('round.title', { n: s.round });
+    const title = s.chinchon ? t('rum.chinchon', { name: N[s.winner] }) : s.winner >= 0 ? t('rum.out', { name: N[s.winner] }) : t('round.title', { n: s.round });
     const sign = v => (v > 0 ? '+' + v : v);
     const body = (B ? '' : `<p>${t('rum.lowWins')}</p>`) + `<table class="sum"><thead><tr><th></th>${N.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>` +
       (B ? s.rows.map(r => `<tr><th>${t('score.' + r.key)}</th>${r.vals.map(v => `<td class="${r.winner === -2 && v > 0 ? 'won' : ''}">${sign(v)}</td>`).join('')}</tr>`).join('') +
         `<tr class="tot"><th>${t('round.points')}</th>${s.roundPts.map(v => `<td>${sign(v)}</td>`).join('')}</tr>`
-        : `<tr><th>${t('score.penalty')}</th>${s.roundPts.map((v, k) => `<td class="${k === s.winner ? 'won' : ''}">+${v}</td>`).join('')}</tr>`) +
+        : `<tr><th>${t('score.penalty')}</th>${s.roundPts.map((v, k) => `<td class="${k === s.winner ? 'won' : ''}">${v >= 0 ? '+' : ''}${v}</td>`).join('')}</tr>`) +
       `<tr class="tot big"><th>${t('round.total')}</th>${s.totals.map(v => `<td>${v}</td>`).join('')}</tr></tbody></table>`;
     log.add(`${title} — ${N.map((x, k) => `${x} ${s.totals[k]}`).join(' · ')}`);
     await dialog({ title, body, actions: [{ label: t('round.continue'), val: 1, primary: true }] });
@@ -146,7 +148,7 @@ export function startRummy(root, def, opts, onExit, resume) {
       if (a.type === 'draw') say(a.from === 'discard' ? 'rum.bPick' : 'rum.bDraw', { name });
       else if (a.type === 'meld') say('rum.bMeld', { name });
       else if (a.type === 'layoff') say('rum.bLay', { name });
-      else { msg = null; const top = g.view().top; if (a.type === 'discard' && top) log.add(t('rum.bDiscard', { name, card: label(top) })); }
+      else { msg = null; const top = g.view().top; if ((a.type === 'discard' || a.type === 'close') && top) log.add(t('rum.bDiscard', { name, card: label(top) })); }
       if (msg) log.add(msg());
       if (a.pot) { say('bur.takePot', { name }); log.add(msg()); }
     }
@@ -172,8 +174,10 @@ export function startRummy(root, def, opts, onExit, resume) {
         else say('rum.selectOne');
       } else if (what === 'meld') { if (done(g.meld([...sel]), 'take')) you('rum.bMeld'); }
       else if (what === 'discard') { toss(); run(); return; }
+      else if (what === 'close') { if (done(g.close([...sel][0]), 'take')) { if (one) you('rum.bDiscard', { card: label(one) }); run(); return; } }
       else if (what === 'revert') { g.revert(); sel.clear(); msg = null; }
       else if (what === 'putback') { if (g.putBack().ok) { sel.clear(); msg = null; hint = null; } }
+      if (g.phase !== 'play') { run(); return; }       // the deal can end on a draw (deck finished)
       render(); return;
     }
     const m = e.target.closest('[data-meld]');

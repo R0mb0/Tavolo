@@ -352,5 +352,11 @@
  "play.mmSkip": "{name} pierde el turno",
  "play.mmWish": "{name} pide {suit}",
  "man.u.pile": "En el centro está la pila: debes seguir el palo o el valor de la carta de encima. Cuando se ha pedido un palo, su símbolo aparece junto al mazo. El botón «Robar una carta» está debajo de la mesa.",
- "play.sing": "Cante: {list}"
+ "play.sing": "Cante: {list}",
+ "rum.close": "Cerrar",
+ "rum.cantClose": "Para cerrar, las cartas que no ligan deben valer 5 puntos o menos",
+ "rum.dead": "Sin ligar: {n}",
+ "rum.chinchon": "¡{name} hace chinchón!",
+ "man.ch.hand": "Abajo está tu mano: las cartas con el borde de color ya forman parte de una combinación y una etiqueta dice cuántos puntos quedan sin ligar. Selecciona una carta y luego «Descartar» o, cuando se permite, «Cerrar».",
+ "rum.playHand": "Selecciona una carta para descartar, o cierra"
 }

@@ -219,5 +219,6 @@
     3,
     5
   ],
-  "matchLabel": "setup.deals"
+  "matchLabel": "setup.deals",
+  "passPlay": true
 }

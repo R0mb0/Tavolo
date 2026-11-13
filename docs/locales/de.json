@@ -352,5 +352,11 @@
  "play.mmSkip": "{name} setzt aus",
  "play.mmWish": "{name} wünscht sich {suit}",
  "man.u.pile": "In der Mitte liegt der Stapel: du musst Farbe oder Wert der obersten Karte bedienen. Wurde eine Farbe gewünscht, erscheint ihr Symbol neben dem Talon. Die Schaltfläche „Karte ziehen“ ist unter dem Tisch.",
- "play.sing": "Paar angesagt: {list}"
+ "play.sing": "Paar angesagt: {list}",
+ "rum.close": "Schließen",
+ "rum.cantClose": "Zum Schließen dürfen die Karten ohne Kombination höchstens 5 Punkte wert sein",
+ "rum.dead": "Ohne Kombination: {n}",
+ "rum.chinchon": "{name} macht einen Chinchón!",
+ "man.ch.hand": "Unten liegt deine Hand: Karten mit farbigem Rand gehören schon zu einer Kombination, ein Etikett zeigt, wie viele Punkte noch übrig sind. Wähle eine Karte, dann „Abwerfen“ oder, wenn erlaubt, „Schließen“.",
+ "rum.playHand": "Wähle eine Karte zum Abwerfen oder schließe"
 }

@@ -31,14 +31,16 @@
       "games": [
         "brisca",
         "escoba",
-        "tute"
+        "tute",
+        "chinchon"
       ],
       "planned": []
     },
     {
       "id": "german",
       "games": [
-        "mau-mau"
+        "mau-mau",
+        "schnapsen"
       ],
       "planned": []
     }

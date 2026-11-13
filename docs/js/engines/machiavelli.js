@@ -75,7 +75,7 @@ export function createMachiavelliGame(def, opts) {
     stock: stock.length, dirty, played: played(), canEnd: groups.every(valid) && played() > 0
   });
 
-  g.result = () => ({ outcome: g.winner === 0 ? 'win' : 'lose', score: 0, scores: P.map(p => p.hand.length) });
+  g.result = () => ({ outcome: g.winner === 0 ? 'win' : 'lose', score: 0, scores: P.map(p => p.hand.length), lowWins: true });
 
   // ---------- bots and hints ----------
   // a combination inside `cards`; with `must`, one that contains that card

@@ -115,7 +115,7 @@ export function createCalledGame(def, opts) {
     players: P.map((p, i) => ({ hand: p.hand, handCount: p.hand.length, score: own[i] })),
     center: g.trick.map(t => ({ card: t.card, p: t.p, hl: g.pending && t.p === g.winner })),
     need, deckCount: 0, trumpCard: calledId ? { id: calledId, r: order[bid], s: trump, deck: def.deck } : null, trumpSuit: trump, staged: null,
-    ask: g.phase === 'play' && !g.pending && g.current === 0 ? ask() : null
+    ask: g.phase === 'play' && !g.pending ? ask() : null          // the table shows it only to whoever has the turn
   });
 
   g.result = () => {

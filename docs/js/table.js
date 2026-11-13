@@ -104,7 +104,7 @@ export function startTable(root, def, opts, onExit, resume) {
     const lastBtn = g.kind === 'trick' || g.kind === 'fishing'
       ? `<button type="button" class="icon hint" data-last title="${t('play.last')}" aria-label="${t('play.last')}"${last ? '' : ' disabled'}><svg><use href="#i-last"/></svg></button>` : '';
     const hintBtn = `<button type="button" class="icon hint" data-hint title="${t('nav.hint')}" aria-label="${t('nav.hint')}"${myTurn ? '' : ' disabled'}><svg><use href="#i-hint"/></svg></button>`;
-    const actions = (myTurn || g.swap ? v.actions || [] : []).map(a => `<button type="button" class="btn primary${hintId === a ? ' hinted' : ''}" data-move="${a}">${t('play.' + a + 'Btn')}</button>`).join('');
+    const actions = (myTurn ? v.actions || [] : []).map(a => `<button type="button" class="btn primary${hintId === a ? ' hinted' : ''}" data-move="${a}">${t('play.' + a + 'Btn')}</button>`).join('');
 
     let overlay = '';
     if (chooser) {
@@ -227,7 +227,7 @@ export function startTable(root, def, opts, onExit, resume) {
     if (s.players) {                       // one line per player: easier to read with five of them
       const role = s.rows.find(r => r.key === 'role'), tr = s.rows.find(r => r.key === 'tricks');
       body = `<table class="sum byp"><thead><tr><th></th><th>${t('score.cards')}</th><th>${t('round.points')}</th><th>${t('round.total')}</th></tr></thead><tbody>` +
-        TN.map((x, k) => `<tr class="${k === 0 ? 'me-row' : ''}"><th>${x}<small>${t(role.vals[k])}</small></th><td>${tr.vals[k]}</td>` +
+        TN.map((x, k) => `<tr class="${k === me ? 'me-row' : ''}"><th>${x}<small>${t(role.vals[k])}</small></th><td>${tr.vals[k]}</td>` +
           `<td class="${s.roundPts[k] > 0 ? 'won' : ''}">${sign(s.roundPts[k])}</td><td><b>${sign(s.totals[k])}</b></td></tr>`).join('') + '</tbody></table>' +
         (s.need > 61 ? `<p class="note">${t('play.needPts', { pts: s.need })}</p>` : '');
     }
@@ -287,6 +287,7 @@ export function startTable(root, def, opts, onExit, resume) {
       if (g.phase === 'over') { finish(); return; }
       if (g.phase === 'roundEnd') { g.nextRound(); msg = null; continue; }
       if (g.swap) {                          // Danish: exchange of cards before the first turn
+        if (humans === 2 && (me !== g.current || !ready)) { await handOver(g.current); if (!alive || g !== mine) return; render(); }
         const mv = await humanMove();
         if (!alive || g !== mine) return;
         hintId = null; g.play(mv.id, mv.opt); sfx('card'); continue;

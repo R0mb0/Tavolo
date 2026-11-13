@@ -217,7 +217,7 @@ function render() {
     const o = resume ? resume.opts : coach ? { ...optsFor(def), difficulty: def.difficulty[0], coach: true } : optsFor(def);
     fresh = false; coach = false;
     app.innerHTML = '';
-    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, machiavelli: startMachiavelli, banking: startBanking }[def.engine] || startTable)(app, def, o, () => go('game/' + b), resume);
+    active = ({ patience: startSolitaire, rummy: startRummy, burraco: startRummy, chinchon: startRummy, machiavelli: startMachiavelli, banking: startBanking }[def.engine] || startTable)(app, def, o, () => go('game/' + b), resume);
   } else {
     app.innerHTML = a === 'deck' ? screenDeck(b) : a === 'game' ? screenSetup(b) : a === 'help' ? screenHelp(b) : a === 'learn' && defs[b] ? learnHTML(defs[b], route()[2]) : a === 'stats' ? screenStats() : screenHome();
     window.scrollTo(0, 0);
