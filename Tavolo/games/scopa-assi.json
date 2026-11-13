@@ -1,0 +1,244 @@
+{
+  "id": "scopa-assi",
+  "version": 1,
+  "deck": "italian",
+  "engine": "fishing",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 2,
+    "teamsAt": [
+      4
+    ]
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 3,
+    "tableCards": 4
+  },
+  "rules": {
+    "captureSums": true,
+    "singleFirst": true,
+    "sweeps": true,
+    "steal": false,
+    "lastCaptureTakesTable": true,
+    "aceTakesAll": true
+  },
+  "scoring": {
+    "type": "scopa",
+    "items": [
+      "cards",
+      "coins",
+      "settebello",
+      "primiera",
+      "sweeps"
+    ],
+    "coinSuit": "denari",
+    "settebello": "7-denari",
+    "primiera": {
+      "1": 16,
+      "2": 12,
+      "3": 13,
+      "4": 14,
+      "5": 15,
+      "6": 18,
+      "7": 21,
+      "8": 10,
+      "9": 10,
+      "10": 10
+    },
+    "target": 11
+  },
+  "i18n": {
+    "en": {
+      "name": "Scopa d’Assi",
+      "tagline": "Scopa with a twist: an Ace takes every card on the table.",
+      "rules": [
+        "Play a card to capture a table card of the same value, or several cards that add up to it (Knave 8, Knight 9, King 10). If a single card matches, you must take that one.",
+        "Playing an Ace captures all the cards on the table, but it does not count as a scopa. If an Ace is already on the table, your Ace takes only that one.",
+        "If your card captures nothing it stays on the table. Clearing the whole table is a scopa: 1 point.",
+        "At the end of each round, 1 point each for: most cards, most coins, the seven of coins, and the best primiera (best card of each suit: 7 is worth most, then 6 and Ace).",
+        "The last player to capture takes the cards left on the table. The first to reach 11 points wins."
+      ],
+      "goal": "Capture more and better cards than your opponents — above all coins and sevens — and be the first to reach 11 points.",
+      "tips": [
+        "Keep an Ace for when the table is full of coins and sevens.",
+        "Avoid leaving cards on the table that add up to 10 or less: an opponent could sweep them.",
+        "Sevens and coins count towards several scores: take them whenever you can."
+      ]
+    },
+    "it": {
+      "name": "Scopa d’assi",
+      "tagline": "La Scopa con l’asso pigliatutto: un Asso prende tutte le carte sul tavolo.",
+      "rules": [
+        "Gioca una carta per prendere dal tavolo una carta dello stesso valore, oppure più carte la cui somma è uguale (Fante 8, Cavallo 9, Re 10). Se c’è una carta singola uguale, devi prendere quella.",
+        "Giocando un Asso si prendono tutte le carte sul tavolo, ma non vale come scopa. Se sul tavolo c’è già un Asso, il tuo Asso prende solo quello.",
+        "Se la tua carta non prende nulla resta sul tavolo. Se svuoti il tavolo fai scopa: 1 punto.",
+        "A fine mano, 1 punto ciascuno per: più carte, più denari, il settebello e la primiera (la carta migliore di ogni seme: il 7 vale di più, poi 6 e Asso).",
+        "Chi ha fatto l’ultima presa prende le carte rimaste sul tavolo. Vince chi arriva per primo a 11 punti."
+      ],
+      "goal": "Prendi più carte e carte migliori degli avversari, soprattutto denari e sette, e arriva per primo a 11 punti.",
+      "tips": [
+        "Tieni un Asso per quando il tavolo è pieno di denari e di sette.",
+        "Evita di lasciare sul tavolo carte la cui somma è 10 o meno: un avversario potrebbe fare scopa.",
+        "I sette e i denari contano per più punteggi: prendili appena puoi."
+      ]
+    },
+    "es": {
+      "name": "Scopa d’assi",
+      "tagline": "La Scopa con un giro: un As se lleva todas las cartas de la mesa.",
+      "rules": [
+        "Juega una carta para capturar de la mesa otra del mismo valor, o varias que sumen ese valor (Sota 8, Caballo 9, Rey 10). Si hay una carta suelta igual, debes llevarte esa.",
+        "Al jugar un As te llevas todas las cartas de la mesa, pero no cuenta como scopa. Si ya hay un As en la mesa, tu As solo se lleva ese.",
+        "Si tu carta no captura nada, se queda en la mesa. Dejar la mesa vacía es una scopa: 1 punto.",
+        "Al final de cada ronda, 1 punto por: más cartas, más oros, el siete de oros y la mejor primiera (mejor carta de cada palo: el 7 vale más, luego el 6 y el As).",
+        "Quien hizo la última captura se lleva las cartas que quedan. Gana el primero en llegar a 11 puntos."
+      ],
+      "goal": "Captura más y mejores cartas que tus rivales, sobre todo oros y sietes, y llega primero a 11 puntos.",
+      "tips": [
+        "Guarda un As para cuando la mesa esté llena de oros y sietes.",
+        "Evita dejar en la mesa cartas que sumen 10 o menos: un rival podría hacer scopa.",
+        "Los sietes y los oros cuentan para varias puntuaciones: llévatelos siempre que puedas."
+      ]
+    },
+    "fr": {
+      "name": "Scopa d’assi",
+      "tagline": "La Scopa avec une surprise : un As ramasse toutes les cartes de la table.",
+      "rules": [
+        "Jouez une carte pour ramasser une carte de même valeur, ou plusieurs cartes dont la somme est égale (Valet 8, Cavalier 9, Roi 10). Si une carte seule correspond, vous devez prendre celle-là.",
+        "Jouer un As ramasse toutes les cartes de la table, mais ne compte pas comme une scopa. S’il y a déjà un As sur la table, votre As ne prend que celui-là.",
+        "Si votre carte ne ramasse rien, elle reste sur la table. Vider la table est une scopa : 1 point.",
+        "À la fin de chaque manche, 1 point pour : le plus de cartes, le plus de deniers, le sept de deniers et la meilleure primiera (meilleure carte de chaque couleur : le 7 vaut le plus, puis le 6 et l’As).",
+        "Le dernier joueur à avoir ramassé prend les cartes restantes. Le premier à 11 points gagne."
+      ],
+      "goal": "Ramassez plus de cartes, et de meilleures, que vos adversaires — surtout les deniers et les sept — et atteignez 11 points en premier.",
+      "tips": [
+        "Gardez un As pour le moment où la table est pleine de deniers et de sept.",
+        "Évitez de laisser sur la table des cartes dont la somme fait 10 ou moins : un adversaire pourrait faire scopa.",
+        "Les sept et les deniers comptent pour plusieurs scores : prenez-les dès que possible."
+      ]
+    },
+    "de": {
+      "name": "Scopa d’assi",
+      "tagline": "Scopa mit Pfiff: Ein Ass nimmt alle Karten vom Tisch.",
+      "rules": [
+        "Spiele eine Karte, um eine Tischkarte mit gleichem Wert zu fangen oder mehrere Karten, deren Summe passt (Bube 8, Reiter 9, König 10). Passt eine einzelne Karte, musst du diese nehmen.",
+        "Ein gespieltes Ass fängt alle Karten auf dem Tisch, zählt aber nicht als Scopa. Liegt schon ein Ass auf dem Tisch, nimmt dein Ass nur dieses.",
+        "Fängt deine Karte nichts, bleibt sie auf dem Tisch. Den ganzen Tisch abzuräumen ist eine Scopa: 1 Punkt.",
+        "Am Rundenende gibt es je 1 Punkt für: die meisten Karten, die meisten Münzen, die Münz-Sieben und die beste Primiera (beste Karte jeder Farbe: die 7 zählt am meisten, dann 6 und Ass).",
+        "Wer zuletzt gefangen hat, erhält die restlichen Tischkarten. Wer zuerst 11 Punkte erreicht, gewinnt."
+      ],
+      "goal": "Fange mehr und bessere Karten als deine Gegner – vor allem Münzen und Siebenen – und erreiche als Erster 11 Punkte.",
+      "tips": [
+        "Hebe ein Ass auf, bis der Tisch voller Münzen und Siebenen liegt.",
+        "Lass möglichst keine Karten liegen, die zusammen 10 oder weniger ergeben: Ein Gegner könnte eine Scopa machen.",
+        "Siebenen und Münzen zählen für mehrere Wertungen: Nimm sie, wann immer du kannst."
+      ]
+    },
+    "pt": {
+      "name": "Scopa d’assi",
+      "tagline": "A Scopa com um toque especial: um Ás leva todas as cartas da mesa.",
+      "rules": [
+        "Jogue uma carta para capturar da mesa outra de mesmo valor, ou várias que somem esse valor (Valete 8, Cavalo 9, Rei 10). Se houver uma carta igual, deve levar essa.",
+        "Ao jogar um Ás leva todas as cartas da mesa, mas não conta como scopa. Se já houver um Ás na mesa, o seu Ás leva só esse.",
+        "Se a sua carta não captura nada, fica na mesa. Limpar a mesa é uma scopa: 1 ponto.",
+        "No fim de cada rodada, 1 ponto para: mais cartas, mais ouros, o sete de ouros e a melhor primiera (melhor carta de cada naipe: o 7 vale mais, depois o 6 e o Ás).",
+        "Quem fez a última captura leva as cartas que sobraram. Ganha o primeiro a chegar a 11 pontos."
+      ],
+      "goal": "Capture mais cartas, e melhores, do que os adversários — sobretudo ouros e setes — e chegue primeiro a 11 pontos.",
+      "tips": [
+        "Guarde um Ás para quando a mesa estiver cheia de ouros e setes.",
+        "Evite deixar na mesa cartas que somem 10 ou menos: um adversário pode fazer scopa.",
+        "Os setes e os ouros contam para vários pontos: leve-os sempre que puder."
+      ]
+    },
+    "zh": {
+      "name": "Scopa d’assi",
+      "tagline": "带变化的 Scopa：一张 A 可以收走桌上所有的牌。",
+      "rules": [
+        "打出一张牌，收走桌上点数相同的一张牌，或点数之和相同的几张牌（侍从 8、骑士 9、国王 10）。如果有单张相同的牌，必须收那一张。",
+        "打出 A 可以收走桌上所有的牌，但不算 scopa。如果桌上已经有一张 A，你的 A 只能收走那一张。",
+        "如果什么都收不到，这张牌留在桌上。清空桌面即为 scopa，得 1 分。",
+        "每局结束时，以下各得 1 分：牌数最多、钱币最多、钱币七、最佳 primiera（每门花色最好的一张牌：7 最大，其次是 6 和 A）。",
+        "最后一个收牌的玩家拿走桌上剩余的牌。先达到 11 分者获胜。"
+      ],
+      "goal": "比对手收到更多、更好的牌（尤其是钱币和 7），率先拿到 11 分。",
+      "tips": [
+        "留一张 A，等桌上堆满钱币牌和 7 时再用。",
+        "尽量不要让桌上的牌点数之和小于等于 10：对手可能一次清台。",
+        "7 和钱币牌在多项计分中都有用：能收就收。"
+      ]
+    },
+    "ja": {
+      "name": "スコーパ・ダッシ",
+      "tagline": "ひと味違うスコーパ。エース1枚で場のカードをすべて取れます。",
+      "rules": [
+        "カードを1枚出して、場にある同じ数のカード1枚、または合計が同じになる複数枚を取ります（ジャック8、ナイト9、キング10）。同じ数の1枚があれば、それを取らなければなりません。",
+        "エースを出すと場のカードをすべて取れますが、スコーパにはなりません。場にすでにエースがある場合は、そのエースだけを取ります。",
+        "何も取れなければ、そのカードは場に残ります。場を空にするとスコーパで1点。",
+        "ラウンド終了時、枚数最多、コイン最多、コインの7、最良のプリミエラ（各スートの最良カード。7が最も高く、次に6とエース）にそれぞれ1点。",
+        "最後に取ったプレイヤーが場に残ったカードをもらいます。先に11点に達した側の勝ちです。"
+      ],
+      "goal": "相手より多く、より良いカード（特にコインと7）を取り、先に11点に到達することを目指します。",
+      "tips": [
+        "場にコインや7がたまったときのために、エースを取っておきましょう。",
+        "場のカードの合計が10以下にならないようにしましょう。相手にスコーパされるおそれがあります。",
+        "7とコインは複数の得点に関わります。取れるときは必ず取りましょう。"
+      ]
+    },
+    "ko": {
+      "name": "스코파 다시",
+      "tagline": "색다른 스코파. 에이스 한 장으로 바닥의 카드를 모두 가져옵니다.",
+      "rules": [
+        "카드 한 장을 내서 바닥의 같은 숫자 카드 한 장, 또는 합이 같은 여러 장을 가져옵니다(잭 8, 기사 9, 킹 10). 같은 숫자 한 장이 있으면 그 카드를 가져와야 합니다.",
+        "에이스를 내면 바닥의 카드를 모두 가져오지만 스코파로 치지는 않습니다. 바닥에 이미 에이스가 있으면 그 에이스만 가져옵니다.",
+        "아무것도 가져오지 못하면 그 카드는 바닥에 남습니다. 바닥을 모두 비우면 스코파로 1점입니다.",
+        "라운드가 끝나면 카드 최다, 동전 최다, 동전 7, 최고의 프리미에라(무늬별 가장 좋은 카드. 7이 가장 높고 다음은 6과 에이스)에 각각 1점.",
+        "마지막으로 카드를 가져간 사람이 바닥에 남은 카드를 가져갑니다. 먼저 11점에 도달하면 승리합니다."
+      ],
+      "goal": "상대보다 더 많고 더 좋은 카드(특히 동전과 7)를 가져와 먼저 11점에 도달하는 것이 목표입니다.",
+      "tips": [
+        "바닥에 동전과 7이 가득할 때를 위해 에이스를 아껴 두세요.",
+        "바닥 카드의 합이 10 이하가 되지 않게 하세요. 상대가 스코파를 할 수 있습니다.",
+        "7과 동전은 여러 점수 항목에 들어갑니다. 가져올 수 있을 때 꼭 가져오세요."
+      ]
+    }
+  },
+  "manual": {
+    "examples": [
+      {
+        "play": "1-spade",
+        "table": [
+          "7-denari",
+          "10-coppe",
+          "4-bastoni"
+        ],
+        "take": [
+          "7-denari",
+          "10-coppe",
+          "4-bastoni"
+        ]
+      },
+      {
+        "play": "7-spade",
+        "table": [
+          "3-coppe",
+          "4-denari",
+          "9-bastoni"
+        ],
+        "take": [
+          "3-coppe",
+          "4-denari"
+        ]
+      }
+    ]
+  },
+  "passPlay": true
+}

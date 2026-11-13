@@ -1,0 +1,202 @@
+{
+  "id": "machiavelli",
+  "version": 1,
+  "deck": "french",
+  "engine": "machiavelli",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 2,
+    "teamsAt": []
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 13
+  },
+  "rules": {
+    "decks": 2
+  },
+  "manual": {
+    "examples": [
+      {
+        "trick": [
+          "8-hearts",
+          "8-spades",
+          "8-clubs",
+          "8-diamonds"
+        ]
+      },
+      {
+        "trick": [
+          "3-spades",
+          "4-spades",
+          "5-spades",
+          "6-spades"
+        ]
+      }
+    ]
+  },
+  "i18n": {
+    "en": {
+      "name": "Machiavelli",
+      "tagline": "The rummy where the whole table is yours: take combinations apart and rebuild them to place your cards.",
+      "rules": [
+        "Two decks without jokers; each player receives 13 cards. There is no discard pile.",
+        "On your turn either play at least one card from your hand or draw one card from the deck.",
+        "Valid combinations are sets (three or four cards of the same value in different suits) and runs (three or more consecutive cards of the same suit; the Ace goes before the 2 or after the King).",
+        "To place your cards you may rearrange everything on the table: split combinations, move cards from one to another, build new ones. At the end of your turn every combination must be valid, and the cards that were on the table must still be there.",
+        "The first player to play all their cards wins."
+      ],
+      "goal": "Be the first to get rid of all the cards in your hand.",
+      "tips": [
+        "Look at the table before your hand: a long run can give up a card at either end.",
+        "A set of four can lend one card and still be valid.",
+        "If a rearrangement goes wrong, “Undo all” puts everything back as it was at the start of your turn."
+      ]
+    },
+    "it": {
+      "name": "Machiavelli",
+      "tagline": "Il ramino in cui tutto il tavolo è tuo: smonta e ricomponi le combinazioni per piazzare le tue carte.",
+      "rules": [
+        "Due mazzi senza jolly; ogni giocatore riceve 13 carte. Non ci sono scarti.",
+        "Al tuo turno giochi almeno una carta dalla mano, oppure peschi una carta dal mazzo.",
+        "Le combinazioni valide sono i tris o poker (tre o quattro carte dello stesso valore di semi diversi) e le scale (tre o più carte consecutive dello stesso seme; l’Asso va prima del 2 o dopo il Re).",
+        "Per piazzare le tue carte puoi rimaneggiare tutto il tavolo: dividere le combinazioni, spostare carte dall’una all’altra, crearne di nuove. A fine turno ogni combinazione deve essere valida e le carte che erano sul tavolo devono restarci.",
+        "Vince chi per primo gioca tutte le sue carte."
+      ],
+      "goal": "Essere il primo a liberarsi di tutte le carte in mano.",
+      "tips": [
+        "Guarda il tavolo prima della mano: una scala lunga può cedere una carta a un’estremità.",
+        "Un poker può prestare una carta e restare valido.",
+        "Se un rimaneggiamento non riesce, «Annulla tutto» rimette ogni cosa com’era all’inizio del turno."
+      ]
+    },
+    "es": {
+      "name": "Machiavelli",
+      "tagline": "El rummy en el que toda la mesa es tuya: deshaz y recompón las combinaciones para colocar tus cartas.",
+      "rules": [
+        "Dos barajas sin comodines; cada jugador recibe 13 cartas. No hay descarte.",
+        "En tu turno juegas al menos una carta de tu mano, o robas una carta del mazo.",
+        "Las combinaciones válidas son tríos o póker (tres o cuatro cartas del mismo valor de palos distintos) y escaleras (tres o más cartas consecutivas del mismo palo; el As va antes del 2 o después del Rey).",
+        "Para colocar tus cartas puedes reorganizar toda la mesa: dividir combinaciones, mover cartas de una a otra, crear nuevas. Al final de tu turno todas las combinaciones deben ser válidas y las cartas que estaban en la mesa deben seguir en ella.",
+        "Gana el primero que juega todas sus cartas."
+      ],
+      "goal": "Ser el primero en quedarse sin cartas en la mano.",
+      "tips": [
+        "Mira la mesa antes que tu mano: una escalera larga puede ceder una carta de un extremo.",
+        "Un póker puede prestar una carta y seguir siendo válido.",
+        "Si una reorganización sale mal, «Deshacer todo» lo deja todo como estaba al empezar tu turno."
+      ]
+    },
+    "fr": {
+      "name": "Machiavelli",
+      "tagline": "Le rami où toute la table est à vous : défaites et recomposez les combinaisons pour placer vos cartes.",
+      "rules": [
+        "Deux jeux sans jokers ; chaque joueur reçoit 13 cartes. Il n’y a pas de défausse.",
+        "À votre tour, jouez au moins une carte de votre main, ou piochez une carte.",
+        "Les combinaisons valables sont les brelans ou carrés (trois ou quatre cartes de même valeur et de couleurs différentes) et les suites (trois cartes consécutives ou plus de la même couleur ; l’As se place avant le 2 ou après le Roi).",
+        "Pour placer vos cartes, vous pouvez réorganiser toute la table : diviser des combinaisons, déplacer des cartes de l’une à l’autre, en créer de nouvelles. À la fin de votre tour, toutes les combinaisons doivent être valables et les cartes qui étaient sur la table doivent y rester.",
+        "Le premier joueur à jouer toutes ses cartes gagne."
+      ],
+      "goal": "Être le premier à se débarrasser de toutes ses cartes.",
+      "tips": [
+        "Regardez la table avant votre main : une longue suite peut céder une carte à une extrémité.",
+        "Un carré peut prêter une carte et rester valable.",
+        "Si une réorganisation tourne mal, « Tout annuler » remet tout comme au début de votre tour."
+      ]
+    },
+    "de": {
+      "name": "Machiavelli",
+      "tagline": "Das Rommé, bei dem dir der ganze Tisch gehört: Zerlege und baue Kombinationen neu, um deine Karten unterzubringen.",
+      "rules": [
+        "Zwei Blätter ohne Joker; jeder Spieler erhält 13 Karten. Es gibt keine Ablage.",
+        "In deinem Zug spielst du mindestens eine Handkarte oder ziehst eine Karte vom Stapel.",
+        "Gültige Kombinationen sind Sätze (drei oder vier Karten gleichen Werts in verschiedenen Farben) und Folgen (drei oder mehr aufeinanderfolgende Karten derselben Farbe; das Ass liegt vor der 2 oder nach dem König).",
+        "Um deine Karten unterzubringen, darfst du den ganzen Tisch umbauen: Kombinationen teilen, Karten verschieben, neue bilden. Am Ende deines Zuges muss jede Kombination gültig sein, und Karten, die auf dem Tisch lagen, müssen dort bleiben.",
+        "Wer zuerst alle Karten gespielt hat, gewinnt."
+      ],
+      "goal": "Werde als Erster alle Handkarten los.",
+      "tips": [
+        "Schau erst auf den Tisch, dann auf die Hand: Eine lange Folge kann an einem Ende eine Karte abgeben.",
+        "Ein Vierersatz kann eine Karte verleihen und bleibt gültig.",
+        "Geht ein Umbau schief, stellt „Alles zurück“ den Stand vom Zugbeginn wieder her."
+      ]
+    },
+    "pt": {
+      "name": "Machiavelli",
+      "tagline": "O rummy em que a mesa inteira é sua: desfaça e recomponha as combinações para colocar as suas cartas.",
+      "rules": [
+        "Dois baralhos sem jokers; cada jogador recebe 13 cartas. Não há descarte.",
+        "Na sua vez joga pelo menos uma carta da mão, ou compra uma carta do baralho.",
+        "As combinações válidas são trincas ou quadras (três ou quatro cartas do mesmo valor de naipes diferentes) e sequências (três ou mais cartas seguidas do mesmo naipe; o Ás fica antes do 2 ou depois do Rei).",
+        "Para colocar as suas cartas pode reorganizar toda a mesa: dividir combinações, mover cartas de uma para outra, criar novas. No fim da sua vez todas as combinações têm de ser válidas e as cartas que estavam na mesa têm de lá continuar.",
+        "Ganha o primeiro a jogar todas as suas cartas."
+      ],
+      "goal": "Ser o primeiro a ficar sem cartas na mão.",
+      "tips": [
+        "Olhe para a mesa antes da mão: uma sequência longa pode ceder uma carta numa das pontas.",
+        "Uma quadra pode emprestar uma carta e continuar válida.",
+        "Se uma reorganização correr mal, «Desfazer tudo» repõe tudo como estava no início da sua vez."
+      ]
+    },
+    "zh": {
+      "name": "Machiavelli",
+      "tagline": "整张桌面都归你用的拉米：拆开并重组牌组，把手牌放上去。",
+      "rules": [
+        "两副牌，不含王牌；每人发 13 张。没有弃牌堆。",
+        "轮到你时，要么至少出一张手牌，要么从牌堆摸一张牌。",
+        "有效的牌组是同点牌组（三张或四张点数相同、花色不同的牌）和顺子（三张或更多同花色的连续牌；A 可以放在 2 之前或 K 之后）。",
+        "为了出牌，你可以重新整理桌上所有的牌：拆分牌组、在牌组之间移动牌、组成新的牌组。回合结束时每个牌组都必须有效，而且原本在桌上的牌必须留在桌上。",
+        "最先出完所有手牌的玩家获胜。"
+      ],
+      "goal": "最先出完手里所有的牌。",
+      "tips": [
+        "先看桌面再看手牌：长顺子两端的牌可以借走一张。",
+        "四张的同点牌组借出一张后仍然有效。",
+        "如果重组失败，“全部撤销”会把一切恢复到回合开始时的样子。"
+      ]
+    },
+    "ja": {
+      "name": "マキャヴェリ",
+      "tagline": "テーブル全体を自由に使えるラミー。組み合わせを崩して組み直し、手札を出します。",
+      "rules": [
+        "ジョーカーなしの2組のトランプを使い、各自13枚ずつ配ります。捨て札はありません。",
+        "自分の番では、手札を1枚以上出すか、山札から1枚引きます。",
+        "有効な組み合わせは、セット（同じ数でスートの違う3〜4枚）とラン（同じスートで連続する3枚以上。エースは2の前かキングの後）です。",
+        "手札を出すために、テーブルのカードを自由に組み替えられます。組み合わせを分けたり、カードを移したり、新しく作ったりできます。ターン終了時にはすべての組み合わせが有効で、テーブルにあったカードはテーブルに残っていなければなりません。",
+        "最初に手札をすべて出した人の勝ちです。"
+      ],
+      "goal": "誰よりも先に手札をすべてなくします。",
+      "tips": [
+        "手札より先にテーブルを見ましょう。長いランは端のカードを1枚借りられます。",
+        "4枚のセットは1枚貸しても有効なままです。",
+        "組み替えに失敗したら、「すべて戻す」でターン開始時の状態に戻せます。"
+      ]
+    },
+    "ko": {
+      "name": "마키아벨리",
+      "tagline": "테이블 전체를 마음대로 쓰는 러미. 조합을 해체하고 다시 짜서 손패를 내려놓습니다.",
+      "rules": [
+        "조커 없는 카드 두 벌을 쓰며 각자 13장씩 받습니다. 버리는 더미는 없습니다.",
+        "내 차례에는 손패를 한 장 이상 내거나 덱에서 한 장을 뽑습니다.",
+        "유효한 조합은 세트(숫자가 같고 무늬가 다른 3~4장)와 런(같은 무늬의 연속된 3장 이상, 에이스는 2 앞이나 킹 뒤)입니다.",
+        "손패를 내려놓기 위해 테이블의 카드를 마음대로 재배치할 수 있습니다. 조합을 나누고, 카드를 옮기고, 새 조합을 만들 수 있습니다. 차례가 끝날 때 모든 조합이 유효해야 하며 테이블에 있던 카드는 테이블에 남아야 합니다.",
+        "가장 먼저 손패를 모두 낸 사람이 이깁니다."
+      ],
+      "goal": "가장 먼저 손패를 모두 없앱니다.",
+      "tips": [
+        "손패보다 테이블을 먼저 보세요. 긴 런은 양 끝의 카드를 한 장 내줄 수 있습니다.",
+        "4장 세트는 한 장을 빌려줘도 유효합니다.",
+        "재배치가 꼬이면 ‘모두 되돌리기’로 차례 시작 상태로 돌아갑니다."
+      ]
+    }
+  },
+  "passPlay": true
+}

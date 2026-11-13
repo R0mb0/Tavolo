@@ -1,0 +1,48 @@
+{
+  "decks": [
+    {
+      "id": "italian",
+      "games": [
+        "briscola",
+        "briscola-chiamata",
+        "tressette",
+        "scopa",
+        "scopa-assi",
+        "scopone",
+        "rubamazzo",
+        "sette-e-mezzo",
+        "solitario"
+      ],
+      "planned": []
+    },
+    {
+      "id": "french",
+      "games": [
+        "scala40",
+        "burraco",
+        "machiavelli",
+        "danish",
+        "klondike"
+      ],
+      "planned": []
+    },
+    {
+      "id": "spanish",
+      "games": [
+        "brisca",
+        "escoba",
+        "tute",
+        "chinchon"
+      ],
+      "planned": []
+    },
+    {
+      "id": "german",
+      "games": [
+        "mau-mau",
+        "schnapsen"
+      ],
+      "planned": []
+    }
+  ]
+}

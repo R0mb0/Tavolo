@@ -1,0 +1,219 @@
+{
+  "id": "danish",
+  "version": 1,
+  "deck": "french",
+  "engine": "shedding",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 3,
+    "teamsAt": []
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "rules": {
+    "stack": 3,
+    "wild": [
+      2,
+      10
+    ],
+    "burn": 10,
+    "swap": true
+  },
+  "manual": {
+    "examples": [
+      {
+        "trick": [
+          "7-hearts",
+          "9-clubs"
+        ],
+        "win": "9-clubs"
+      },
+      {
+        "trick": [
+          "13-spades",
+          "2-diamonds"
+        ],
+        "win": "2-diamonds"
+      },
+      {
+        "trick": [
+          "1-hearts",
+          "10-clubs"
+        ],
+        "win": "10-clubs"
+      }
+    ]
+  },
+  "i18n": {
+    "en": {
+      "name": "Danish",
+      "tagline": "Get rid of all your cards before the others: play equal or higher, burn the pile with a 10.",
+      "rules": [
+        "Each player has three face-down cards, three face-up cards on top of them and three cards in hand. The rest is the deck.",
+        "Before the first turn everyone may swap cards between their hand and their face-up cards, to leave the best ones on the table for later.",
+        "On your turn play a card equal to or higher than the top card of the pile (Ace is high), or several cards of the same value together. Then draw back up to three cards while the deck lasts.",
+        "A 2 can be played on anything and restarts the pile from the bottom. A 10 can be played on anything and burns the pile: it is removed and you play again. Four cards of the same value in a row burn the pile too.",
+        "If you cannot play, you pick up the whole pile. When your hand and the deck are empty you play your face-up cards, then your face-down cards blind: if the card you turn over cannot be played, you pick up the pile.",
+        "The first player to get rid of all their cards wins."
+      ],
+      "goal": "Be the first to play all your cards: the hand, then the face-up cards, then the face-down ones.",
+      "tips": [
+        "Get rid of your low cards early, while the pile is still low.",
+        "Keep your 2s and 10s for the moment you would otherwise have to pick up the pile.",
+        "Playing several cards of the same value at once empties your hand faster."
+      ]
+    },
+    "it": {
+      "name": "Danish",
+      "tagline": "Liberati di tutte le carte prima degli altri: gioca uguale o più alto e brucia il mazzo con un 10.",
+      "rules": [
+        "Ogni giocatore ha tre carte coperte, tre carte scoperte sopra di esse e tre carte in mano. Il resto forma il mazzo.",
+        "Prima del primo turno ognuno può scambiare le carte in mano con le proprie carte scoperte, per lasciare sul tavolo le migliori per il finale.",
+        "Al tuo turno gioca una carta di valore uguale o superiore a quella in cima alla pila (l’Asso è la più alta), oppure più carte dello stesso valore insieme. Poi peschi fino a tornare a tre carte, finché il mazzo dura.",
+        "Il 2 si può giocare su qualsiasi carta e fa ripartire la pila dal basso. Il 10 si può giocare su qualsiasi carta e brucia la pila: viene eliminata e giochi di nuovo. Anche quattro carte dello stesso valore di fila bruciano la pila.",
+        "Se non puoi giocare, raccogli tutta la pila. Quando mano e mazzo sono finiti giochi le carte scoperte, poi quelle coperte alla cieca: se la carta girata non si può giocare, raccogli la pila.",
+        "Vince chi per primo si libera di tutte le carte."
+      ],
+      "goal": "Essere il primo a giocare tutte le proprie carte: la mano, poi le carte scoperte, poi quelle coperte.",
+      "tips": [
+        "Liberati presto delle carte basse, finché la pila è ancora bassa.",
+        "Tieni i 2 e i 10 per quando altrimenti dovresti raccogliere la pila.",
+        "Giocare più carte dello stesso valore insieme svuota la mano più in fretta."
+      ]
+    },
+    "es": {
+      "name": "Danish",
+      "tagline": "Quédate sin cartas antes que los demás: juega igual o más alto y quema el montón con un 10.",
+      "rules": [
+        "Cada jugador tiene tres cartas tapadas, tres descubiertas encima y tres en la mano. El resto es el mazo.",
+        "Antes del primer turno cada jugador puede cambiar cartas entre su mano y sus cartas descubiertas, para dejar las mejores en la mesa para el final.",
+        "En tu turno juega una carta de valor igual o superior a la de arriba del montón (el As es la más alta), o varias del mismo valor a la vez. Después roba hasta volver a tener tres cartas mientras quede mazo.",
+        "Un 2 se puede jugar sobre cualquier carta y reinicia el montón desde abajo. Un 10 se puede jugar sobre cualquier carta y quema el montón: se retira y vuelves a jugar. Cuatro cartas seguidas del mismo valor también lo queman.",
+        "Si no puedes jugar, recoges todo el montón. Cuando se acaban la mano y el mazo juegas tus cartas descubiertas y luego las tapadas a ciegas: si la carta girada no se puede jugar, recoges el montón.",
+        "Gana el primero que se queda sin cartas."
+      ],
+      "goal": "Ser el primero en jugar todas tus cartas: la mano, luego las descubiertas y después las tapadas.",
+      "tips": [
+        "Deshazte pronto de las cartas bajas, mientras el montón sigue bajo.",
+        "Guarda los 2 y los 10 para cuando, de otro modo, tendrías que recoger el montón.",
+        "Jugar varias cartas del mismo valor a la vez vacía la mano más rápido."
+      ]
+    },
+    "fr": {
+      "name": "Danish",
+      "tagline": "Débarrassez-vous de toutes vos cartes avant les autres : jouez égal ou plus fort, brûlez la pile avec un 10.",
+      "rules": [
+        "Chaque joueur a trois cartes cachées, trois cartes visibles posées dessus et trois cartes en main. Le reste forme la pioche.",
+        "Avant le premier tour, chacun peut échanger des cartes entre sa main et ses cartes visibles, pour garder les meilleures sur la table pour la fin.",
+        "À votre tour, jouez une carte de valeur égale ou supérieure à celle du dessus de la pile (l’As est la plus forte), ou plusieurs cartes de même valeur ensemble. Puis piochez pour revenir à trois cartes tant qu’il reste une pioche.",
+        "Un 2 se joue sur n’importe quelle carte et fait repartir la pile du bas. Un 10 se joue sur n’importe quelle carte et brûle la pile : elle est retirée et vous rejouez. Quatre cartes de même valeur d’affilée brûlent aussi la pile.",
+        "Si vous ne pouvez pas jouer, vous ramassez toute la pile. Quand la main et la pioche sont épuisées, vous jouez vos cartes visibles, puis vos cartes cachées à l’aveugle : si la carte retournée n’est pas jouable, vous ramassez la pile.",
+        "Le premier joueur à se débarrasser de toutes ses cartes gagne."
+      ],
+      "goal": "Être le premier à jouer toutes ses cartes : la main, puis les cartes visibles, puis les cartes cachées.",
+      "tips": [
+        "Débarrassez-vous tôt de vos petites cartes, tant que la pile est basse.",
+        "Gardez vos 2 et vos 10 pour le moment où vous devriez sinon ramasser la pile.",
+        "Jouer plusieurs cartes de même valeur d’un coup vide la main plus vite."
+      ]
+    },
+    "de": {
+      "name": "Danish",
+      "tagline": "Werde alle Karten vor den anderen los: Spiele gleich oder höher und verbrenne den Stapel mit einer 10.",
+      "rules": [
+        "Jeder Spieler hat drei verdeckte Karten, darauf drei offene Karten und drei Karten auf der Hand. Der Rest ist der Nachziehstapel.",
+        "Vor dem ersten Zug darf jeder Handkarten mit seinen offenen Karten tauschen, um die besten für später auf dem Tisch zu lassen.",
+        "Spiele in deinem Zug eine Karte, die gleich hoch oder höher ist als die oberste des Stapels (Ass ist hoch), oder mehrere Karten mit gleichem Wert zusammen. Ziehe danach auf drei Karten nach, solange der Nachziehstapel reicht.",
+        "Eine 2 darf auf alles gespielt werden und lässt den Stapel wieder unten beginnen. Eine 10 darf auf alles gespielt werden und verbrennt den Stapel: Er wird entfernt und du spielst noch einmal. Auch vier gleiche Karten in Folge verbrennen den Stapel.",
+        "Kannst du nicht spielen, nimmst du den ganzen Stapel auf. Sind Hand und Nachziehstapel leer, spielst du deine offenen Karten, dann die verdeckten blind: Ist die aufgedeckte Karte nicht spielbar, nimmst du den Stapel auf.",
+        "Wer zuerst alle Karten los ist, gewinnt."
+      ],
+      "goal": "Spiele als Erster alle deine Karten aus: erst die Hand, dann die offenen, dann die verdeckten Karten.",
+      "tips": [
+        "Werde niedrige Karten früh los, solange der Stapel noch niedrig ist.",
+        "Hebe 2er und 10er für den Moment auf, in dem du sonst den Stapel aufnehmen müsstest.",
+        "Mehrere gleiche Karten auf einmal leeren die Hand schneller."
+      ]
+    },
+    "pt": {
+      "name": "Danish",
+      "tagline": "Livre-se de todas as cartas antes dos outros: jogue igual ou mais alto e queime o monte com um 10.",
+      "rules": [
+        "Cada jogador tem três cartas cobertas, três cartas viradas por cima e três cartas na mão. O resto é o baralho.",
+        "Antes da primeira vez cada jogador pode trocar cartas entre a mão e as suas cartas viradas para cima, para deixar as melhores na mesa para o fim.",
+        "Na sua vez jogue uma carta de valor igual ou superior à do topo do monte (o Ás é a mais alta), ou várias do mesmo valor juntas. Depois compre até voltar a ter três cartas enquanto houver baralho.",
+        "Um 2 pode ser jogado sobre qualquer carta e recomeça o monte de baixo. Um 10 pode ser jogado sobre qualquer carta e queima o monte: é retirado e joga de novo. Quatro cartas seguidas do mesmo valor também queimam o monte.",
+        "Se não puder jogar, apanha o monte inteiro. Quando a mão e o baralho acabarem, joga as cartas viradas e depois as cobertas às cegas: se a carta virada não puder ser jogada, apanha o monte.",
+        "Ganha o primeiro jogador a ficar sem cartas."
+      ],
+      "goal": "Ser o primeiro a jogar todas as cartas: a mão, depois as viradas e por fim as cobertas.",
+      "tips": [
+        "Livre-se cedo das cartas baixas, enquanto o monte ainda está baixo.",
+        "Guarde os 2 e os 10 para quando, de outro modo, teria de apanhar o monte.",
+        "Jogar várias cartas do mesmo valor de uma vez esvazia a mão mais depressa."
+      ]
+    },
+    "zh": {
+      "name": "Danish",
+      "tagline": "抢在别人之前出完所有的牌：出相同或更大的牌，用 10 烧掉牌堆。",
+      "rules": [
+        "每位玩家有三张背面朝上的牌，上面叠三张正面朝上的牌，另有三张手牌。其余的牌作为牌堆。",
+        "第一回合之前，每位玩家都可以交换手牌和自己的明牌，把最好的牌留在桌面上备用。",
+        "轮到你时，出一张点数等于或大于牌堆顶牌的牌（A 最大），也可以同时出多张点数相同的牌。然后从牌堆补牌到三张，直到牌堆摸完。",
+        "2 可以压在任何牌上，并让牌堆从最小重新开始。10 可以压在任何牌上并烧掉牌堆：牌堆被移走，你再出一次。连续四张点数相同的牌也会烧掉牌堆。",
+        "如果无牌可出，就要收起整个牌堆。手牌和牌堆都用完后，先出正面朝上的牌，再盲出背面朝上的牌：翻开的牌不能出时，要收起牌堆。",
+        "最先出完所有牌的玩家获胜。"
+      ],
+      "goal": "最先出完自己所有的牌：先出手牌，再出正面朝上的牌，最后出背面朝上的牌。",
+      "tips": [
+        "趁牌堆点数还小时，尽早出掉小牌。",
+        "把 2 和 10 留到不出就得收牌堆的时候。",
+        "一次出多张点数相同的牌，可以更快清空手牌。"
+      ]
+    },
+    "ja": {
+      "name": "ダニッシュ",
+      "tagline": "誰よりも早く手札をなくそう。同じか強いカードを出し、10で場札を流します。",
+      "rules": [
+        "各プレイヤーは裏向き3枚、その上に表向き3枚、手札3枚を持ちます。残りは山札です。",
+        "最初のターンの前に、各プレイヤーは手札と自分の表向きのカードを交換でき、強いカードを終盤用に場に残せます。",
+        "自分の番には、場札の一番上と同じか、それより強いカードを出します（エースが最強）。同じ数のカードは複数枚まとめて出せます。その後、山札があるかぎり手札が3枚になるまで引きます。",
+        "2はどのカードにも出せ、場を一番下からやり直します。10もどのカードにも出せ、場札を流します。場札は取り除かれ、もう一度あなたの番です。同じ数が4枚続いても場札は流れます。",
+        "出せないときは場札をすべて引き取ります。手札と山札がなくなったら表向きのカードを出し、その後は裏向きのカードを見ずに出します。めくったカードが出せなければ場札を引き取ります。",
+        "最初にすべてのカードをなくした人の勝ちです。"
+      ],
+      "goal": "手札、表向きのカード、裏向きのカードの順に、誰よりも先にすべて出し切ることを目指します。",
+      "tips": [
+        "場札がまだ弱いうちに、弱いカードを早めに出しましょう。",
+        "2と10は、出せるカードがなくて場札を引き取りそうなときのために取っておきましょう。",
+        "同じ数のカードをまとめて出すと、手札が早く減ります。"
+      ]
+    },
+    "ko": {
+      "name": "대니시",
+      "tagline": "누구보다 먼저 카드를 모두 없애세요. 같거나 높은 카드를 내고 10으로 더미를 태웁니다.",
+      "rules": [
+        "각 플레이어는 뒷면 카드 3장, 그 위에 앞면 카드 3장, 손패 3장을 가집니다. 나머지는 덱입니다.",
+        "첫 턴 전에 각 플레이어는 손패와 자신의 앞면 카드를 교환해, 좋은 카드를 나중을 위해 테이블에 남겨 둘 수 있습니다.",
+        "내 차례에는 더미 맨 위 카드와 같거나 더 높은 카드를 냅니다(에이스가 가장 높음). 같은 숫자 카드는 여러 장을 함께 낼 수 있습니다. 그 뒤 덱이 남아 있는 동안 손패가 3장이 되도록 뽑습니다.",
+        "2는 어떤 카드 위에도 낼 수 있고 더미를 가장 낮은 수부터 다시 시작하게 합니다. 10도 어떤 카드 위에나 낼 수 있고 더미를 태웁니다. 더미가 치워지고 한 번 더 냅니다. 같은 숫자 4장이 연속으로 나와도 더미가 태워집니다.",
+        "낼 수 없으면 더미를 전부 가져갑니다. 손패와 덱이 다 떨어지면 앞면 카드를 내고, 그다음 뒷면 카드를 보지 않고 냅니다. 뒤집은 카드를 낼 수 없으면 더미를 가져갑니다.",
+        "가장 먼저 카드를 모두 없앤 사람이 이깁니다."
+      ],
+      "goal": "손패, 앞면 카드, 뒷면 카드 순으로 누구보다 먼저 모든 카드를 내는 것이 목표입니다.",
+      "tips": [
+        "더미가 아직 낮을 때 낮은 카드를 일찍 내세요.",
+        "2와 10은 더미를 가져가야 할 상황을 위해 아껴 두세요.",
+        "같은 숫자 카드를 한꺼번에 내면 손패가 더 빨리 줄어듭니다."
+      ]
+    }
+  },
+  "passPlay": true
+}

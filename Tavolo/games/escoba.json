@@ -1,0 +1,210 @@
+{
+  "id": "escoba",
+  "version": 1,
+  "deck": "spanish",
+  "engine": "fishing",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 2,
+    "teamsAt": [
+      4
+    ]
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 3,
+    "tableCards": 4
+  },
+  "rules": {
+    "sumTo": 15,
+    "sweeps": true,
+    "steal": false,
+    "lastCaptureTakesTable": true
+  },
+  "scoring": {
+    "type": "scopa",
+    "items": [
+      "cards",
+      "golds",
+      "sevenGold",
+      "sevens",
+      "sweeps"
+    ],
+    "coinSuit": "oros",
+    "settebello": "7-oros",
+    "target": 21
+  },
+  "manual": {
+    "examples": [
+      {
+        "play": "7-copas",
+        "table": [
+          "5-oros",
+          "3-bastos",
+          "9-espadas"
+        ],
+        "take": [
+          "5-oros",
+          "3-bastos"
+        ]
+      },
+      {
+        "play": "10-oros",
+        "table": [
+          "5-copas",
+          "2-espadas",
+          "6-bastos"
+        ],
+        "take": [
+          "5-copas"
+        ]
+      }
+    ]
+  },
+  "passPlay": true,
+  "i18n": {
+    "en": {
+      "name": "Escoba",
+      "tagline": "The Spanish Scopa: capture cards that add up to fifteen.",
+      "rules": [
+        "Each player gets three cards and four are laid face up on the table. When the hands are empty three more cards are dealt, until the deck runs out.",
+        "Play one card: if together with one or more cards on the table it adds up to exactly 15, you take them all. Sota counts 8, Caballo 9, Rey 10. Otherwise the card stays on the table.",
+        "Taking every card on the table is an escoba and is worth one point. At the end of the deal the cards left on the table go to whoever captured last.",
+        "One point each for: most cards, most coins, the 7 of coins, most sevens, plus one per escoba. In a tie nobody scores that point."
+      ],
+      "goal": "Reach 21 points, deal after deal, by capturing cards from the table.",
+      "tips": [
+        "After your move, try to leave on the table a total above 14 or below 5: it cannot be swept with a single card.",
+        "Sevens and coins are worth chasing even with a small capture."
+      ]
+    },
+    "it": {
+      "name": "Escoba",
+      "tagline": "La Scopa spagnola: si prendono le carte che fanno quindici.",
+      "rules": [
+        "Ogni giocatore riceve tre carte e quattro vengono scoperte sul tavolo. Quando le mani sono vuote se ne distribuiscono altre tre, finché il mazzo finisce.",
+        "Gioca una carta: se insieme a una o più carte del tavolo fa esattamente 15, le prendi tutte. La Sota vale 8, il Caballo 9, il Rey 10. Altrimenti la carta resta sul tavolo.",
+        "Prendere tutte le carte del tavolo è una escoba e vale un punto. A fine mano le carte rimaste sul tavolo vanno a chi ha fatto l’ultima presa.",
+        "Un punto ciascuno per: più carte, più ori, il 7 di ori, più sette, più uno per ogni escoba. In caso di parità quel punto non va a nessuno."
+      ],
+      "goal": "Arriva a 21 punti, mano dopo mano, prendendo le carte dal tavolo.",
+      "tips": [
+        "Dopo la tua mossa cerca di lasciare sul tavolo un totale sopra 14 o sotto 5: non si può spazzare con una sola carta.",
+        "I sette e gli ori valgono la pena anche con una presa piccola."
+      ]
+    },
+    "es": {
+      "name": "Escoba",
+      "tagline": "La Scopa española: se capturan cartas que suman quince.",
+      "rules": [
+        "Cada jugador recibe tres cartas y se ponen cuatro boca arriba en la mesa. Cuando las manos se vacían se reparten otras tres, hasta que se acaba el mazo.",
+        "Juega una carta: si junto con una o más cartas de la mesa suma exactamente 15, te las llevas todas. La Sota vale 8, el Caballo 9 y el Rey 10. Si no, la carta se queda en la mesa.",
+        "Llevarse todas las cartas de la mesa es una escoba y vale un punto. Al final de la mano las cartas que quedan en la mesa son para quien hizo la última captura.",
+        "Un punto por cada cosa: más cartas, más oros, el 7 de oros, más sietes, y uno por cada escoba. En caso de empate nadie se lleva ese punto."
+      ],
+      "goal": "Llega a 21 puntos, mano tras mano, capturando cartas de la mesa.",
+      "tips": [
+        "Después de tu jugada intenta dejar en la mesa un total por encima de 14 o por debajo de 5: no se puede barrer con una sola carta.",
+        "Los sietes y los oros merecen la pena incluso con una captura pequeña."
+      ]
+    },
+    "fr": {
+      "name": "Escoba",
+      "tagline": "La Scopa espagnole : on capture les cartes qui font quinze.",
+      "rules": [
+        "Chaque joueur reçoit trois cartes et quatre sont posées face visible sur la table. Quand les mains sont vides, on en redistribue trois, jusqu’à épuisement du talon.",
+        "Jouez une carte : si avec une ou plusieurs cartes de la table elle fait exactement 15, vous les prenez toutes. La Sota vaut 8, le Caballo 9, le Rey 10. Sinon la carte reste sur la table.",
+        "Prendre toutes les cartes de la table est une escoba et vaut un point. À la fin de la manche, les cartes restées sur la table vont à celui qui a capturé en dernier.",
+        "Un point chacun pour : le plus de cartes, le plus de deniers, le 7 de deniers, le plus de sept, plus un par escoba. En cas d’égalité, personne ne marque ce point."
+      ],
+      "goal": "Atteignez 21 points, manche après manche, en capturant les cartes de la table.",
+      "tips": [
+        "Après votre coup, essayez de laisser sur la table un total supérieur à 14 ou inférieur à 5 : il ne peut pas être balayé avec une seule carte.",
+        "Les sept et les deniers valent la peine, même pour une petite prise."
+      ]
+    },
+    "de": {
+      "name": "Escoba",
+      "tagline": "Die spanische Scopa: gefangen werden Karten, die zusammen fünfzehn ergeben.",
+      "rules": [
+        "Jeder Spieler erhält drei Karten, vier werden offen auf den Tisch gelegt. Sind die Hände leer, werden drei neue ausgeteilt, bis der Stapel aufgebraucht ist.",
+        "Spiele eine Karte: Ergibt sie mit einer oder mehreren Tischkarten genau 15, nimmst du alle. Sota zählt 8, Caballo 9, Rey 10. Sonst bleibt die Karte auf dem Tisch.",
+        "Wer alle Tischkarten nimmt, macht eine Escoba und bekommt einen Punkt. Am Ende der Runde gehen die übrigen Tischkarten an den, der zuletzt gefangen hat.",
+        "Je ein Punkt für: die meisten Karten, die meisten Münzen, die Münz-7, die meisten Siebenen, dazu einer pro Escoba. Bei Gleichstand bekommt niemand den Punkt."
+      ],
+      "goal": "Erreiche Runde für Runde 21 Punkte, indem du Karten vom Tisch fängst.",
+      "tips": [
+        "Lass nach deinem Zug möglichst eine Summe über 14 oder unter 5 auf dem Tisch: sie lässt sich nicht mit einer einzigen Karte abräumen.",
+        "Siebenen und Münzen lohnen sich auch bei einem kleinen Fang."
+      ]
+    },
+    "pt": {
+      "name": "Escoba",
+      "tagline": "A Scopa espanhola: capturam-se cartas que somam quinze.",
+      "rules": [
+        "Cada jogador recebe três cartas e quatro são postas viradas para cima na mesa. Quando as mãos ficam vazias dão-se mais três, até o baralho acabar.",
+        "Jogue uma carta: se com uma ou mais cartas da mesa somar exatamente 15, leva-as todas. A Sota vale 8, o Caballo 9, o Rey 10. Caso contrário a carta fica na mesa.",
+        "Levar todas as cartas da mesa é uma escoba e vale um ponto. No fim da mão as cartas que ficaram na mesa vão para quem fez a última captura.",
+        "Um ponto por cada: mais cartas, mais ouros, o 7 de ouros, mais setes, e um por cada escoba. Em caso de empate ninguém marca esse ponto."
+      ],
+      "goal": "Chegue a 21 pontos, mão após mão, capturando cartas da mesa.",
+      "tips": [
+        "Depois da sua jogada tente deixar na mesa um total acima de 14 ou abaixo de 5: não pode ser varrido com uma só carta.",
+        "Os setes e os ouros valem a pena mesmo numa captura pequena."
+      ]
+    },
+    "zh": {
+      "name": "Escoba",
+      "tagline": "西班牙版斯科帕：收走合计十五点的牌。",
+      "rules": [
+        "每位玩家发三张牌，桌面明放四张。手牌出完后再各发三张，直到牌堆用完。",
+        "出一张牌：如果它与桌面上一张或多张牌合计正好15点，就把它们全部收走。Sota算8点，Caballo算9点，Rey算10点。否则这张牌留在桌面上。",
+        "收走桌面上所有的牌称为 escoba，得一分。一局结束时，桌面剩下的牌归最后收牌的人。",
+        "以下各得一分：牌最多、金币最多、金币7、7最多，另外每个 escoba 一分。平局时该分无人获得。"
+      ],
+      "goal": "一局接一局地从桌面收牌，先达到21分。",
+      "tips": [
+        "出牌后，尽量让桌面合计大于14或小于5：这样对手无法用一张牌清空桌面。",
+        "即使收得不多，7和金币也值得争取。"
+      ]
+    },
+    "ja": {
+      "name": "Escoba",
+      "tagline": "スペイン版スコーパ：合計15になるカードを取ります。",
+      "rules": [
+        "各プレイヤーに3枚配り、場に4枚を表向きに置きます。手札がなくなると、山札がなくなるまで3枚ずつ配り直します。",
+        "1枚出します。場の1枚以上のカードと合わせてちょうど15になれば、すべて取れます。Sotaは8、Caballoは9、Reyは10と数えます。そうでなければカードは場に残ります。",
+        "場のカードをすべて取るとエスコバで、1点です。回の終わりに場に残ったカードは、最後に取った人のものになります。",
+        "次のそれぞれに1点：カード枚数が最多、コインが最多、コインの7、7が最多、さらにエスコバ1回につき1点。同数の場合、その点は誰にも入りません。"
+      ],
+      "goal": "場のカードを取りながら、回を重ねて21点を目指します。",
+      "tips": [
+        "自分の手番の後、場の合計が14より大きいか5より小さくなるようにしましょう。1枚では一掃できません。",
+        "7とコインは、小さな取りでも狙う価値があります。"
+      ]
+    },
+    "ko": {
+      "name": "Escoba",
+      "tagline": "스페인식 스코파: 합이 15가 되는 카드를 가져갑니다.",
+      "rules": [
+        "각 플레이어는 카드 세 장을 받고 네 장을 테이블에 앞면으로 놓습니다. 손패가 떨어지면 덱이 다할 때까지 세 장씩 다시 나눕니다.",
+        "카드 한 장을 냅니다. 테이블의 카드 한 장 이상과 합쳐 정확히 15가 되면 모두 가져갑니다. Sota는 8, Caballo는 9, Rey는 10으로 셉니다. 그렇지 않으면 카드는 테이블에 남습니다.",
+        "테이블의 카드를 모두 가져가면 에스코바이며 1점입니다. 판이 끝나면 테이블에 남은 카드는 마지막으로 가져간 사람의 것이 됩니다.",
+        "다음 각각 1점: 카드 최다, 금화 최다, 금화 7, 7 최다, 그리고 에스코바 하나당 1점. 동률이면 그 점수는 아무도 얻지 못합니다."
+      ],
+      "goal": "판을 거듭하며 테이블의 카드를 가져가 21점에 도달하세요.",
+      "tips": [
+        "내 차례가 끝난 뒤 테이블 합계가 14보다 크거나 5보다 작게 남기세요. 카드 한 장으로는 쓸어 갈 수 없습니다.",
+        "7과 금화는 작은 수확이라도 노릴 가치가 있습니다."
+      ]
+    }
+  }
+}

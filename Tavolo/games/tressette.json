@@ -1,0 +1,236 @@
+{
+  "id": "tressette",
+  "version": 1,
+  "deck": "italian",
+  "engine": "trick",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 4,
+    "teamsAt": [
+      4
+    ]
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 10,
+    "removeForPlayers": {
+      "3": [
+        "4-denari"
+      ]
+    }
+  },
+  "rules": {
+    "trump": "none",
+    "followSuit": true,
+    "drawAfterTrick": true,
+    "rankOrder": [
+      3,
+      2,
+      1,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4
+    ],
+    "cardPoints": {
+      "1": 3,
+      "2": 1,
+      "3": 1,
+      "8": 1,
+      "9": 1,
+      "10": 1
+    },
+    "scoreDivisor": 3,
+    "lastTrickPoints": 3,
+    "declarations": true
+  },
+  "win": {
+    "type": "mostPoints",
+    "target": 21
+  },
+  "manual": {
+    "examples": [
+      {
+        "trick": [
+          "1-coppe",
+          "3-coppe"
+        ],
+        "win": "3-coppe"
+      },
+      {
+        "trick": [
+          "7-spade",
+          "10-denari"
+        ],
+        "win": "7-spade"
+      }
+    ]
+  },
+  "i18n": {
+    "en": {
+      "name": "Tressette",
+      "tagline": "Follow suit, no trumps: the trick-taking classic where the Three is the top card.",
+      "rules": [
+        "Each player gets 10 cards. Four players play in two teams with all the cards dealt; with two players, both draw a card from the deck after every trick. With three players everyone plays for themselves: the 4 of coins is removed and, as with two, after each trick everybody draws a card from the deck.",
+        "You must follow the suit led if you can; otherwise you may play any card. There is no trump: the highest card of the suit led wins the trick.",
+        "Card order: Three, Two, Ace, King, Knight, Knave, 7, 6, 5, 4. Points: Ace 1; Threes, Twos and court cards ⅓ each; the last trick is worth 1 extra point.",
+        "A deal is worth 11 points (fractions are dropped). The match goes on over several deals: the first side to reach 21 points wins.",
+        "Declarations are scored automatically when the cards are dealt: Ace, Two and Three of the same suit, or three Aces, three Twos or three Threes, are worth 3 points (4 points for four of a kind)."
+      ],
+      "goal": "Win the tricks that contain Aces and court cards, and try to take the last trick.",
+      "tips": [
+        "The Three and the Two are the strongest cards: use them to capture Aces.",
+        "Do not lead an Ace while the Three and the Two of that suit are still around.",
+        "The last trick is worth a whole point: keep a strong card for the end."
+      ]
+    },
+    "it": {
+      "name": "Tressette",
+      "tagline": "Si risponde al seme e non c’è briscola: il classico di prese dove comanda il Tre.",
+      "rules": [
+        "Ogni giocatore riceve 10 carte. In quattro si gioca a coppie con tutte le carte distribuite; in due, dopo ogni presa entrambi pescano una carta dal mazzo. In tre ognuno gioca per sé: si toglie il 4 di denari e, come in due, dopo ogni presa tutti pescano una carta dal mazzo.",
+        "Bisogna rispondere al seme d’uscita se si può; altrimenti si gioca una carta qualsiasi. Non c’è briscola: vince la presa la carta più alta del seme d’uscita.",
+        "Ordine delle carte: Tre, Due, Asso, Re, Cavallo, Fante, 7, 6, 5, 4. Punti: Asso 1; Tre, Due e figure ⅓ ciascuno; l’ultima presa vale 1 punto in più.",
+        "Una mano vale 11 punti (le frazioni si scartano). La partita prosegue per più mani: vince chi arriva per primo a 21 punti.",
+        "Le accuse vengono contate automaticamente alla distribuzione: Asso, Due e Tre dello stesso seme (napoletana), oppure tre Assi, tre Due o tre Tre, valgono 3 punti (4 punti con quattro carte uguali)."
+      ],
+      "goal": "Vinci le prese che contengono Assi e figure, e cerca di fare l’ultima presa.",
+      "tips": [
+        "Il Tre e il Due sono le carte più forti: usale per catturare gli Assi.",
+        "Non uscire con un Asso finché il Tre e il Due di quel seme sono ancora in giro.",
+        "L’ultima presa vale un punto intero: tieni una carta forte per la fine."
+      ]
+    },
+    "es": {
+      "name": "Tressette",
+      "tagline": "Se sigue el palo y no hay triunfo: el clásico de bazas donde manda el Tres.",
+      "rules": [
+        "Cada jugador recibe 10 cartas. Con cuatro jugadores se juega por parejas con todas las cartas repartidas; con dos, ambos roban una carta del mazo tras cada baza. Con tres jugadores cada uno juega por su cuenta: se retira el 4 de oros y, como con dos, tras cada baza todos roban una carta del mazo.",
+        "Hay que seguir el palo de salida si se puede; si no, se juega cualquier carta. No hay triunfo: gana la baza la carta más alta del palo de salida.",
+        "Orden: Tres, Dos, As, Rey, Caballo, Sota, 7, 6, 5, 4. Puntos: As 1; Treses, Doses y figuras ⅓ cada uno; la última baza vale 1 punto más.",
+        "Una mano vale 11 puntos (las fracciones se descartan). La partida sigue durante varias manos: gana quien llega primero a 21 puntos.",
+        "Los acuses se cuentan automáticamente al repartir: As, Dos y Tres del mismo palo, o tres Ases, tres Doses o tres Treses, valen 3 puntos (4 puntos con cuatro iguales)."
+      ],
+      "goal": "Gana las bazas que contienen Ases y figuras, e intenta llevarte la última baza.",
+      "tips": [
+        "El Tres y el Dos son las cartas más fuertes: úsalas para capturar los Ases.",
+        "No salgas con un As mientras el Tres y el Dos de ese palo sigan en juego.",
+        "La última baza vale un punto entero: guarda una carta fuerte para el final."
+      ]
+    },
+    "fr": {
+      "name": "Tressette",
+      "tagline": "On fournit à la couleur, sans atout : le classique de plis où le Trois est le maître.",
+      "rules": [
+        "Chaque joueur reçoit 10 cartes. À quatre, on joue en deux équipes avec toutes les cartes distribuées ; à deux, chacun pioche une carte après chaque pli. À trois, chacun joue pour soi : on retire le 4 de deniers et, comme à deux, chacun pioche une carte après chaque pli.",
+        "Il faut fournir à la couleur demandée si possible ; sinon on joue n’importe quelle carte. Pas d’atout : la plus forte carte de la couleur demandée remporte le pli.",
+        "Ordre : Trois, Deux, As, Roi, Cavalier, Valet, 7, 6, 5, 4. Points : As 1 ; Trois, Deux et figures ⅓ chacun ; le dernier pli vaut 1 point de plus.",
+        "Une donne vaut 11 points (les fractions sont abandonnées). La partie se joue en plusieurs donnes : le premier camp à 21 points gagne.",
+        "Les annonces sont comptées automatiquement à la distribution : As, Deux et Trois de la même couleur, ou trois As, trois Deux ou trois Trois, valent 3 points (4 points pour un carré)."
+      ],
+      "goal": "Remportez les plis qui contiennent des As et des figures, et essayez de faire le dernier pli.",
+      "tips": [
+        "Le Trois et le Deux sont les cartes les plus fortes : utilisez-les pour capturer les As.",
+        "N’entamez pas d’un As tant que le Trois et le Deux de cette couleur sont encore en jeu.",
+        "Le dernier pli vaut un point entier : gardez une carte forte pour la fin."
+      ]
+    },
+    "de": {
+      "name": "Tressette",
+      "tagline": "Farbzwang, kein Trumpf: der Stichspiel-Klassiker, in dem die Drei die höchste Karte ist.",
+      "rules": [
+        "Jeder Spieler erhält 10 Karten. Zu viert spielt man in zwei Teams mit allen Karten; zu zweit ziehen beide nach jedem Stich eine Karte vom Stapel. Zu dritt spielt jeder für sich: die Münz-4 wird entfernt und, wie zu zweit, ziehen alle nach jedem Stich eine Karte vom Stapel.",
+        "Die angespielte Farbe muss bedient werden, wenn möglich; sonst darf jede Karte gespielt werden. Es gibt keinen Trumpf: Die höchste Karte der angespielten Farbe gewinnt den Stich.",
+        "Rangfolge: Drei, Zwei, Ass, König, Reiter, Bube, 7, 6, 5, 4. Punkte: Ass 1; Dreien, Zweien und Bildkarten je ⅓; der letzte Stich zählt 1 Punkt extra.",
+        "Ein Spiel hat 11 Punkte (Bruchteile verfallen). Die Partie geht über mehrere Spiele: Wer zuerst 21 Punkte erreicht, gewinnt.",
+        "Ansagen werden beim Austeilen automatisch gewertet: Ass, Zwei und Drei derselben Farbe oder drei Asse, drei Zweien oder drei Dreien zählen 3 Punkte (4 Punkte für vier gleiche)."
+      ],
+      "goal": "Gewinne die Stiche mit Assen und Bildkarten und versuche, den letzten Stich zu machen.",
+      "tips": [
+        "Die Drei und die Zwei sind die stärksten Karten: Fange damit die Asse.",
+        "Spiele kein Ass aus, solange Drei und Zwei dieser Farbe noch im Spiel sind.",
+        "Der letzte Stich ist einen ganzen Punkt wert: Hebe eine starke Karte für das Ende auf."
+      ]
+    },
+    "pt": {
+      "name": "Tressette",
+      "tagline": "Segue-se o naipe e não há trunfo: o clássico de vazas onde manda o Três.",
+      "rules": [
+        "Cada jogador recebe 10 cartas. Com quatro jogadores joga-se em duplas com todas as cartas distribuídas; com dois, ambos compram uma carta do baralho depois de cada vaza. Com três jogadores cada um joga por si: retira-se o 4 de ouros e, como a dois, depois de cada vaza todos compram uma carta do baralho.",
+        "É obrigatório seguir o naipe de saída quando possível; caso contrário joga-se qualquer carta. Não há trunfo: ganha a vaza a carta mais alta do naipe de saída.",
+        "Ordem: Três, Dois, Ás, Rei, Cavalo, Valete, 7, 6, 5, 4. Pontos: Ás 1; Três, Dois e figuras ⅓ cada; a última vaza vale 1 ponto extra.",
+        "Uma mão vale 11 pontos (as frações são desprezadas). A partida continua por várias mãos: ganha quem chegar primeiro a 21 pontos.",
+        "As acusações são contadas automaticamente ao distribuir: Ás, Dois e Três do mesmo naipe, ou três Ases, três Dois ou três Três, valem 3 pontos (4 pontos com quatro iguais)."
+      ],
+      "goal": "Ganhe as vazas que têm Ases e figuras, e tente fazer a última vaza.",
+      "tips": [
+        "O Três e o Dois são as cartas mais fortes: use-os para capturar os Ases.",
+        "Não saia com um Ás enquanto o Três e o Dois desse naipe ainda estiverem em jogo.",
+        "A última vaza vale um ponto inteiro: guarde uma carta forte para o fim."
+      ]
+    },
+    "zh": {
+      "name": "Tressette",
+      "tagline": "必须跟花色、没有王牌：以 3 为最大牌的经典吃墩游戏。",
+      "rules": [
+        "每人 10 张牌。四人时分两队，所有牌发完；两人时每墩之后双方各从牌堆摸一张。三人游戏时各自为战：去掉金币4，并且和两人游戏一样，每墩之后所有人各摸一张牌。",
+        "能跟花色时必须跟花色，否则可以出任意牌。没有王牌：领出花色中最大的牌赢得这一墩。",
+        "大小顺序：3、2、A、国王、骑士、侍从、7、6、5、4。分值：A 1 分；3、2 和人头牌各 ⅓ 分；最后一墩另加 1 分。",
+        "一局共 11 分（舍去零头）。比赛进行多局：先达到 21 分的一方获胜。",
+        "发牌后自动计算宣告分：同花色的 A、2、3，或者三张 A、三张 2、三张 3，各得 3 分（四张相同得 4 分）。"
+      ],
+      "goal": "赢下含有 A 和人头牌的墩，并争取拿下最后一墩。",
+      "tips": [
+        "3 和 2 是最大的牌：用它们吃掉 A。",
+        "同花色的 3 和 2 还没出时，不要先出 A。",
+        "最后一墩值整整 1 分：留一张大牌到最后。"
+      ]
+    },
+    "ja": {
+      "name": "トレセッテ",
+      "tagline": "マストフォロー、切り札なし。3が最強のカードになる定番トリックテイキング。",
+      "rules": [
+        "各プレイヤーに10枚配ります。4人のときは2チームに分かれてすべてのカードを配り、2人のときはトリックごとに山札から1枚ずつ引きます。3人の場合は個人戦です。コインの4を取り除き、2人のときと同じく、各トリックの後に全員が山札から1枚引きます。",
+        "出されたスートを持っていれば必ず従います。なければ好きなカードを出せます。切り札はなく、最初に出されたスートで最も強いカードがトリックを取ります。",
+        "強さ：3、2、エース、キング、ナイト、ジャック、7、6、5、4。点数：エース1点、3・2・絵札は各⅓点、最後のトリックは1点追加。",
+        "1ディールは11点です（端数は切り捨て）。複数ディールを行い、先に21点に達した側の勝ちです。",
+        "宣言は配札時に自動で計算されます。同じスートのエース・2・3、またはエース3枚、2が3枚、3が3枚で3点（4枚そろうと4点）です。"
+      ],
+      "goal": "エースや絵札を含むトリックを取り、最後のトリックも狙いましょう。",
+      "tips": [
+        "3と2が最強のカードです。エースを取るために使いましょう。",
+        "同じスートの3と2が残っているうちは、エースをリードしないようにしましょう。",
+        "最後のトリックは1点分の価値があります。強いカードを最後まで残しましょう。"
+      ]
+    },
+    "ko": {
+      "name": "트레세테",
+      "tagline": "무늬를 따라 내야 하고 트럼프가 없습니다. 3이 가장 강한 고전 트릭테이킹 게임.",
+      "rules": [
+        "각자 10장씩 받습니다. 4인은 두 팀으로 모든 카드를 나누고, 2인은 트릭마다 덱에서 한 장씩 뽑습니다. 3인 게임은 개인전입니다. 동전 4를 빼고, 2인 게임처럼 매 트릭 후 모두가 덱에서 한 장씩 뽑습니다.",
+        "처음 나온 무늬가 있으면 반드시 따라 내야 합니다. 없으면 아무 카드나 낼 수 있습니다. 트럼프는 없으며, 처음 나온 무늬에서 가장 높은 카드가 트릭을 가져갑니다.",
+        "서열: 3, 2, 에이스, 킹, 기사, 잭, 7, 6, 5, 4. 점수: 에이스 1점, 3·2·그림 카드는 각 ⅓점, 마지막 트릭은 1점 추가.",
+        "한 판은 11점입니다(끝수는 버림). 여러 판을 이어서 하며 먼저 21점에 도달한 쪽이 이깁니다.",
+        "선언 점수는 카드를 나눌 때 자동으로 계산됩니다. 같은 무늬의 에이스·2·3, 또는 에이스 3장, 2 세 장, 3 세 장이면 3점(네 장이면 4점)입니다."
+      ],
+      "goal": "에이스와 그림 카드가 든 트릭을 따고, 마지막 트릭도 노리세요.",
+      "tips": [
+        "3과 2가 가장 강한 카드입니다. 에이스를 잡는 데 쓰세요.",
+        "같은 무늬의 3과 2가 아직 남아 있을 때는 에이스를 먼저 내지 마세요.",
+        "마지막 트릭은 온전한 1점입니다. 강한 카드를 끝까지 남겨 두세요."
+      ]
+    }
+  },
+  "passPlay": true
+}

@@ -1,0 +1,166 @@
+{
+  "id": "chinchon",
+  "version": 1,
+  "deck": "spanish",
+  "engine": "chinchon",
+  "players": {
+    "options": [
+      2,
+      3,
+      4
+    ],
+    "default": 2
+  },
+  "difficulty": [
+    "easy",
+    "medium",
+    "hard"
+  ],
+  "setup": {
+    "handSize": 7
+  },
+  "rules": {
+    "closeAt": 5,
+    "cleanBonus": 10,
+    "target": 100,
+    "reshuffles": 3
+  },
+  "passPlay": true,
+  "i18n": {
+    "en": {
+      "name": "Chinchón",
+      "tagline": "The Spanish rummy played in the hand: combine your seven cards and close first.",
+      "rules": [
+        "Everyone gets seven cards and one card is turned up to start the discard pile. On your turn draw one card, from the deck or from the top of the discards, then discard one.",
+        "In your hand you build combinations: three or four cards of the same rank, or three or more cards in a row of the same suit (Sota, Caballo and Rey follow the 7). Nothing is laid on the table: cards that already belong to a combination have a coloured edge.",
+        "You may close with your discard when the cards that fit no combination are worth 5 points or less: select the card to throw away and press “Close”. Cards count their number; Sota 10, Caballo 11, Rey 12.",
+        "When someone closes, everybody adds the points of their unmatched cards to their total. Closing with no card left over takes 10 points off. A run of seven cards of one suit is a chinchón and wins the whole game at once. If the deck runs out again and again, the deal is called off and everybody counts the cards they hold."
+      ],
+      "goal": "Collect as few points as possible: whoever goes over 100 is out, the last player left wins.",
+      "tips": [
+        "Throw away the high cards that fit nowhere first: a Rey left in your hand costs 12 points.",
+        "Take a discard only if it completes or extends a combination: everyone sees what you are collecting."
+      ]
+    },
+    "it": {
+      "name": "Chinchón",
+      "tagline": "Il ramino spagnolo che si gioca tutto in mano: combina le tue sette carte e chiudi per primo.",
+      "rules": [
+        "Ognuno riceve sette carte e una carta viene scoperta per iniziare gli scarti. Al tuo turno peschi una carta, dal mazzo o dalla cima degli scarti, poi ne scarti una.",
+        "In mano formi le combinazioni: tre o quattro carte dello stesso valore, oppure tre o più carte in fila dello stesso seme (Sota, Caballo e Rey seguono il 7). Non si cala nulla sul tavolo: le carte che fanno già parte di una combinazione hanno il bordo colorato.",
+        "Puoi chiudere con il tuo scarto quando le carte fuori dalle combinazioni valgono 5 punti o meno: seleziona la carta da buttare e premi «Chiudi». Le carte valgono il loro numero; Sota 10, Caballo 11, Rey 12.",
+        "Quando qualcuno chiude, tutti sommano al proprio totale i punti delle carte rimaste fuori dalle combinazioni. Chi chiude senza carte spaiate toglie 10 punti. Una scala di sette carte dello stesso seme è un chinchón e vince subito l’intera partita. Se il mazzo finisce più volte, la mano viene annullata e tutti contano le carte che hanno in mano."
+      ],
+      "goal": "Fai meno punti possibile: chi supera i 100 è eliminato, vince l’ultimo rimasto.",
+      "tips": [
+        "Butta per prime le carte alte che non legano: un Rey rimasto in mano costa 12 punti.",
+        "Prendi dagli scarti solo se la carta completa o allunga una combinazione: tutti vedono che cosa stai raccogliendo."
+      ]
+    },
+    "es": {
+      "name": "Chinchón",
+      "tagline": "El rummy español que se juega en la mano: liga tus siete cartas y cierra primero.",
+      "rules": [
+        "Cada uno recibe siete cartas y se descubre una para empezar el descarte. En tu turno robas una carta, del mazo o de encima del descarte, y luego descartas una.",
+        "En la mano formas combinaciones: tres o cuatro cartas del mismo valor, o tres o más cartas seguidas del mismo palo (Sota, Caballo y Rey siguen al 7). No se baja nada a la mesa: las cartas que ya forman parte de una combinación tienen el borde de color.",
+        "Puedes cerrar con tu descarte cuando las cartas que no ligan valen 5 puntos o menos: selecciona la carta que tiras y pulsa «Cerrar». Las cartas valen su número; Sota 10, Caballo 11, Rey 12.",
+        "Cuando alguien cierra, todos suman a su total los puntos de las cartas que no ligan. Quien cierra sin cartas sueltas resta 10 puntos. Una escalera de siete cartas del mismo palo es un chinchón y gana la partida al instante. Si el mazo se acaba una y otra vez, la mano se anula y todos cuentan las cartas que tienen."
+      ],
+      "goal": "Suma los menos puntos posibles: quien pasa de 100 queda eliminado y gana el último que queda.",
+      "tips": [
+        "Tira primero las cartas altas que no ligan: un Rey en la mano cuesta 12 puntos.",
+        "Toma del descarte solo si la carta completa o alarga una combinación: todos ven lo que estás juntando."
+      ]
+    },
+    "fr": {
+      "name": "Chinchón",
+      "tagline": "Le rami espagnol qui se joue en main : combinez vos sept cartes et fermez le premier.",
+      "rules": [
+        "Chacun reçoit sept cartes et une carte est retournée pour commencer la défausse. À votre tour, piochez une carte, au talon ou sur la défausse, puis défaussez-en une.",
+        "En main, vous formez des combinaisons : trois ou quatre cartes de même valeur, ou trois cartes ou plus qui se suivent dans la même couleur (Sota, Caballo et Rey suivent le 7). Rien n’est posé sur la table : les cartes qui font déjà partie d’une combinaison ont un bord coloré.",
+        "Vous pouvez fermer avec votre défausse quand les cartes hors combinaison valent 5 points ou moins : sélectionnez la carte à jeter et appuyez sur « Fermer ». Les cartes valent leur nombre ; Sota 10, Caballo 11, Rey 12.",
+        "Quand quelqu’un ferme, chacun ajoute à son total les points de ses cartes hors combinaison. Fermer sans carte isolée retire 10 points. Une suite de sept cartes de la même couleur est un chinchón et gagne aussitôt toute la partie. Si le talon s’épuise à plusieurs reprises, la manche est annulée et chacun compte les cartes qu’il tient."
+      ],
+      "goal": "Marquez le moins de points possible : celui qui dépasse 100 est éliminé, le dernier en lice gagne.",
+      "tips": [
+        "Jetez d’abord les grosses cartes qui ne vont nulle part : un Rey resté en main coûte 12 points.",
+        "Ne prenez sur la défausse que si la carte complète ou allonge une combinaison : tout le monde voit ce que vous ramassez."
+      ]
+    },
+    "de": {
+      "name": "Chinchón",
+      "tagline": "Das spanische Rommé auf der Hand: kombiniere deine sieben Karten und schließe zuerst.",
+      "rules": [
+        "Jeder erhält sieben Karten, eine Karte wird als Beginn der Ablage aufgedeckt. In deinem Zug ziehst du eine Karte, vom Stapel oder von der Ablage, und wirfst dann eine ab.",
+        "Auf der Hand bildest du Kombinationen: drei oder vier Karten gleichen Werts oder drei und mehr aufeinanderfolgende Karten einer Farbe (Sota, Caballo und Rey folgen auf die 7). Nichts wird ausgelegt: Karten, die schon zu einer Kombination gehören, haben einen farbigen Rand.",
+        "Du darfst mit deinem Abwurf schließen, wenn die Karten ohne Kombination höchstens 5 Punkte wert sind: wähle die Abwurfkarte und drücke „Schließen“. Karten zählen ihren Wert; Sota 10, Caballo 11, Rey 12.",
+        "Schließt jemand, zählen alle die Punkte ihrer Karten ohne Kombination zu ihrer Summe. Wer ohne Restkarte schließt, zieht 10 Punkte ab. Eine Folge aus sieben Karten einer Farbe ist ein Chinchón und gewinnt sofort die ganze Partie. Ist der Stapel mehrmals aufgebraucht, wird die Runde abgebrochen und alle zählen ihre Handkarten."
+      ],
+      "goal": "Sammle möglichst wenige Punkte: wer über 100 kommt, scheidet aus, der letzte Verbliebene gewinnt.",
+      "tips": [
+        "Wirf zuerst hohe Karten ab, die nirgends passen: ein Rey auf der Hand kostet 12 Punkte.",
+        "Nimm eine Ablagekarte nur, wenn sie eine Kombination vervollständigt oder verlängert: alle sehen, was du sammelst."
+      ]
+    },
+    "pt": {
+      "name": "Chinchón",
+      "tagline": "O rummy espanhol que se joga na mão: combine as suas sete cartas e feche primeiro.",
+      "rules": [
+        "Cada um recebe sete cartas e vira-se uma para começar os descartes. Na sua vez compra uma carta, do baralho ou do topo dos descartes, e depois descarta uma.",
+        "Na mão forma combinações: três ou quatro cartas do mesmo valor, ou três ou mais cartas seguidas do mesmo naipe (Sota, Caballo e Rey seguem o 7). Nada se baixa para a mesa: as cartas que já fazem parte de uma combinação têm a borda colorida.",
+        "Pode fechar com o seu descarte quando as cartas fora das combinações valerem 5 pontos ou menos: selecione a carta a deitar fora e carregue em «Fechar». As cartas valem o seu número; Sota 10, Caballo 11, Rey 12.",
+        "Quando alguém fecha, todos somam ao seu total os pontos das cartas fora das combinações. Quem fecha sem cartas soltas tira 10 pontos. Uma sequência de sete cartas do mesmo naipe é um chinchón e ganha de imediato a partida inteira. Se o baralho acabar várias vezes, a mão é anulada e todos contam as cartas que têm."
+      ],
+      "goal": "Faça o menor número de pontos possível: quem passar de 100 é eliminado e ganha o último que restar.",
+      "tips": [
+        "Deite fora primeiro as cartas altas que não combinam: um Rey na mão custa 12 pontos.",
+        "Tire dos descartes só se a carta completar ou alongar uma combinação: todos veem o que está a juntar."
+      ]
+    },
+    "zh": {
+      "name": "Chinchón",
+      "tagline": "在手中完成的西班牙拉米：组合七张牌，抢先收牌。",
+      "rules": [
+        "每人发七张牌，翻开一张牌作为弃牌堆的开始。轮到你时，从牌堆或弃牌堆顶摸一张牌，然后弃一张。",
+        "在手中组成组合：三张或四张同点数的牌，或同花色三张及以上的连牌（Sota、Caballo、Rey 接在7之后）。不需要把牌放到桌面上：已属于某个组合的牌带有彩色边框。",
+        "当未入组合的牌合计不超过5点时，可以用弃牌来收牌：选中要弃的牌并按“收牌”。牌按点数计分；Sota 10，Caballo 11，Rey 12。",
+        "有人收牌时，每个人把未入组合的牌的点数加到自己的总分上。收牌时没有剩余散牌可减10分。同花色七张连牌称为 chinchón，立即赢得整场比赛。如果牌堆多次用完，本局作废，所有人计算手中的牌。"
+      ],
+      "goal": "尽量少得分：超过100分的玩家被淘汰，最后留下的人获胜。",
+      "tips": [
+        "先弃掉凑不上的大牌：手里留一张 Rey 要付出12分。",
+        "只有当弃牌能凑成或延长组合时才拿：大家都看得到你在收集什么。"
+      ]
+    },
+    "ja": {
+      "name": "Chinchón",
+      "tagline": "手札だけで遊ぶスペインのラミー：7枚を組み合わせて先にあがります。",
+      "rules": [
+        "全員に7枚ずつ配り、1枚を表にして捨て札の山を始めます。自分の番では山札か捨て札のいちばん上から1枚引き、1枚捨てます。",
+        "手札の中で組み合わせを作ります。同じ数字3〜4枚、または同じスートで3枚以上の連番です（Sota、Caballo、Reyは7の次）。場には何も出しません。すでに組み合わせに入っているカードは縁に色がつきます。",
+        "組み合わせに入らないカードの合計が5点以下なら、捨て札と同時にあがれます。捨てるカードを選んで「あがる」を押します。カードは数字どおりの点数で、Sota 10、Caballo 11、Rey 12です。",
+        "誰かがあがると、全員が組み合わせに入らなかったカードの点数を自分の合計に加えます。余りのカードなしであがると10点引かれます。同じスートの7枚連番はチンチョンで、その場でゲーム全体の勝ちになります。山札が何度もなくなった場合、その回は無効となり、全員が手札を数えます。"
+      ],
+      "goal": "できるだけ点を取らないこと。100点を超えると脱落し、最後まで残った人の勝ちです。",
+      "tips": [
+        "どこにも入らない大きいカードから捨てましょう。Reyが手に残ると12点です。",
+        "捨て札は、組み合わせが完成するか伸びるときだけ取りましょう。何を集めているかが全員に見えます。"
+      ]
+    },
+    "ko": {
+      "name": "Chinchón",
+      "tagline": "손패로만 하는 스페인식 러미: 일곱 장을 조합해 먼저 끝내세요.",
+      "rules": [
+        "모두 일곱 장씩 받고 한 장을 뒤집어 버린 카드 더미를 시작합니다. 차례가 되면 덱이나 버린 카드 더미 맨 위에서 한 장을 뽑고 한 장을 버립니다.",
+        "손패 안에서 조합을 만듭니다. 같은 숫자 서너 장 또는 같은 무늬로 이어지는 세 장 이상입니다(Sota, Caballo, Rey는 7 다음). 테이블에는 아무것도 내려놓지 않으며, 이미 조합에 속한 카드는 테두리에 색이 표시됩니다.",
+        "조합에 들지 않은 카드의 합이 5점 이하이면 버리면서 끝낼 수 있습니다. 버릴 카드를 선택하고 “끝내기”를 누르세요. 카드는 숫자만큼의 점수이며 Sota 10, Caballo 11, Rey 12입니다.",
+        "누군가 끝내면 모두 조합에 들지 않은 카드의 점수를 자기 합계에 더합니다. 남는 카드 없이 끝내면 10점을 뺍니다. 같은 무늬 일곱 장 연속은 친촌이며 즉시 게임 전체를 이깁니다. 덱이 여러 번 떨어지면 그 판은 무효가 되고 모두 손에 든 카드를 셉니다."
+      ],
+      "goal": "점수를 최대한 적게 얻으세요. 100점을 넘으면 탈락하고 마지막까지 남은 사람이 승리합니다.",
+      "tips": [
+        "어디에도 들어가지 않는 높은 카드부터 버리세요. Rey가 손에 남으면 12점입니다.",
+        "버린 카드는 조합을 완성하거나 늘릴 때만 가져오세요. 무엇을 모으는지 모두가 보게 됩니다."
+      ]
+    }
+  }
+}
