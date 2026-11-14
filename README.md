@@ -240,7 +240,13 @@ All card faces are drawn by the app itself (original SVG shapes and text glyphs)
 - Cards scale with the screen and with the zoom setting
 - Large hands fan out or wrap so every card stays reachable by touch
 
-See the [roadmap](ROADMAP.md) for what has been done and what comes next.
+<br>
+
+<div align="center">
+  <h3>Dedicated with love to Simona ❤️</h3>
+</div>
+
+<br>
 
 <a href="https://github.com/R0mb0/Crafted_with_AI">
   <picture>
